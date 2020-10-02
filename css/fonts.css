@@ -1,0 +1,80 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3497196, 2017-12-13T13:52:04-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Typold-Regular by The Northern Block Ltd
+ * URL: https://www.myfonts.com/fonts/northernblock/typold/regular/
+ * Copyright: Copyright &#x00A9; 2017 by Jonathan Hill. All rights reserved.
+ *
+ * Webfont: Typold-Italic by The Northern Block Ltd
+ * URL: https://www.myfonts.com/fonts/northernblock/typold/italic/
+ * Copyright: Copyright &#x00A9; 2017 by Jonathan Hill. All rights reserved.
+ *
+ * Webfont: Typold-Bold by The Northern Block Ltd
+ * URL: https://www.myfonts.com/fonts/northernblock/typold/bold/
+ * Copyright: Copyright &#x00A9; 2017 by Jonathan Hill. All rights reserved.
+ *
+ * Webfont: Typold-ExtraBold by The Northern Block Ltd
+ * URL: https://www.myfonts.com/fonts/northernblock/typold/extra-bold/
+ * Copyright: Copyright &#x00A9; 2017 by Jonathan Hill. All rights reserved.
+ **
+ *
+ * License: https://www.myfonts.com/viewlicense?type=web&buildid=3497196
+ * Licensed pageviews: 20,000
+ *
+ * © 2017 MyFonts Inc
+*/
+
+
+
+
+@font-face {font-family: 'Typold-Regular';src: url('webfonts/355CEC_14_0.eot');src: url('webfonts/355CEC_14_0.eot?#iefix') format('embedded-opentype'),url('webfonts/355CEC_14_0.woff2') format('woff2'),url('webfonts/355CEC_14_0.woff') format('woff'),url('webfonts/355CEC_14_0.ttf') format('truetype');}
+
+@font-face {font-family: 'Typold-Bold';src: url('webfonts/355CEC_18_0.eot');src: url('webfonts/355CEC_18_0.eot?#iefix') format('embedded-opentype'),url('webfonts/355CEC_18_0.woff2') format('woff2'),url('webfonts/355CEC_18_0.woff') format('woff'),url('webfonts/355CEC_18_0.ttf') format('truetype');}
+
+
+html{
+	overflow-y:	scroll ;
+}
+body{
+	font-family: 'Typold-Regular' !important;
+	overflow-x: hidden;
+	
+	line-height: 1;
+
+}
+
+a, select{
+	font-family: 'Typold-Regular' !important;
+	text-decoration: none;
+	color: #ed1843 !important;
+}
+ul{
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-padding-start: 20px;
+
+}
+::selection {
+	color: #ffffff;
+  background: #ed1843;
+}
+::-moz-selection {
+	color: #ffffff;
+  background: #ed1843;
+}
+.bold, strong{
+	font-family: 'Typold-Bold' !important;
+}
+.light{
+	font-family: 'Typold-Regular' !important;
+}
+body{
+	color: #071e22;
+}
