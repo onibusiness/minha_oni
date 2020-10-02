@@ -2,25 +2,6 @@
 /************************ CRIANDO SUPORTE PARA THUMNS **************************************/
 add_theme_support( 'post-thumbnails' );
 
-/************************ AJUSTANDO O MENU INTERNO ************************************
-function remove_menus() {
-	remove_menu_page( 'index.php' );                  //Dashboard
-	remove_menu_page( 'jetpack' );                    //Jetpack* 
-	remove_menu_page( 'edit.php' );                   //Posts
-	remove_menu_page( 'upload.php' );                 //Media
-	//remove_menu_page( 'edit.php?post_type=page' );    //Pages
-	remove_menu_page( 'edit-comments.php' );          //Comments
-	remove_menu_page( 'themes.php' );                 //Appearance
-	remove_menu_page( 'plugins.php' );                //Plugins
-	//remove_menu_page( 'users.php' );                  //Users
-	remove_menu_page( 'tools.php' );                  //Tools
-    remove_menu_page( 'options-general.php' );        //Settings
-    add_menu_page('Menus', 'Menus', 'manage_options', 'nav-menus.php', '', 'dashicons-admin-appearance', 90 );
-    add_menu_page('Transients', 'Transients', 'manage_options', 'tools.php?page=pw-transients-manager', '', 'dashicons-book-alt', 91 );
-    add_menu_page('CRON', 'CRON', 'manage_options', 'tools.php?page=crontrol_admin_manage_page', '', 'dashicons-backup', 92 );
-    add_menu_page('Bi settings', 'Bi settings', 'manage_options', 'options-general.php?page=onibi', '', 'dashicons-admin-settings', 93 );
-}
-add_action( 'admin_menu', 'remove_menus' );
 */
 
 /************************ PUXANDO JQUERY *************************************/
