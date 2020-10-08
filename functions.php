@@ -2,7 +2,7 @@
 /************************ CRIANDO SUPORTE PARA THUMNS **************************************/
 add_theme_support( 'post-thumbnails' );
 
-*/
+
 
 /************************ PUXANDO JQUERY *************************************/
 function custom_jquery() {

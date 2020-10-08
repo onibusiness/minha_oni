@@ -1,5 +1,5 @@
 <?php get_header(); ?>
 
-Conteúdo da home aqui
+Conteúdo da home aqui!!
 
 <?php get_footer();?>
