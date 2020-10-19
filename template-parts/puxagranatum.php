@@ -21,13 +21,13 @@ $dias_uteis = getWorkdays(strtotime($p_dia), strtotime($u_dia));
 
 /********** PEGA A CHAVE DA API DO GRANATUM*************/
 $chave_granatum = get_field('chave_granatum', 'option');
-$url_granatum = 'https://api.granatum.com.br/v1/contas?access_token='.$chave_granatum;
+
 /********** CONTAS *************/
 
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, $url_granatum);
+curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/contas?access_token='.$chave_granatum);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
@@ -51,7 +51,7 @@ curl_close($ch);
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/centros_custo_lucro?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/centros_custo_lucro?access_token='.$chave_granatum);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
@@ -86,7 +86,7 @@ foreach($centros_custo_lucro as $value){
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/categorias?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/categorias?access_token='.$chave_granatum);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
@@ -132,7 +132,7 @@ foreach($categorias as $value){
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token='.$chave_granatum);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 curl_setopt($ch, CURLOPT_POSTFIELDS, "conta_id=55632&data_inicio=".$p_dia."&data_fim=".$h_dia."&tipo_view=count");
@@ -156,7 +156,7 @@ curl_close($ch);
 
 $ch = curl_init();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+curl_setopt($ch, CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token='.$chave_granatum);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 curl_setopt($ch, CURLOPT_POSTFIELDS, "conta_id=39820&data_inicio=".$p_dia."&data_fim=".$h_dia."&tipo_view=count");
@@ -192,7 +192,7 @@ $running = null;
 $i = 0;
 while($i <= $n_paginas):
     $chs[$i] = curl_init();
-    curl_setopt($chs[$i], CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+    curl_setopt($chs[$i], CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token='.$chave_granatum);
     curl_setopt($chs[$i], CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($chs[$i], CURLOPT_CUSTOMREQUEST, 'GET');
     curl_setopt($chs[$i], CURLOPT_POSTFIELDS, "conta_id=55632&data_inicio=".$p_dia."&data_fim=".$h_dia."&start=".$i*50);
@@ -236,7 +236,7 @@ $running = null;
 $i = 0;
 while($i <= $n_paginas):
     $chs[$i] = curl_init();
-    curl_setopt($chs[$i], CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token=3ba65c05142ae3896005fea29d67dffb9390dbf1ad3eeb9cfd53a1f4a14a2c22');
+    curl_setopt($chs[$i], CURLOPT_URL, 'https://api.granatum.com.br/v1/lancamentos?access_token='.$chave_granatum);
     curl_setopt($chs[$i], CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($chs[$i], CURLOPT_CUSTOMREQUEST, 'GET');
     curl_setopt($chs[$i], CURLOPT_POSTFIELDS, "conta_id=39820&data_inicio=".$p_dia."&data_fim=".$h_dia."&start=".$i*50);
