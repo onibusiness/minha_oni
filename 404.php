@@ -1,6 +1,6 @@
 
 <?php get_header(); ?>
-
+ 
 <div id="intro" class="grid-container full " >
 	<div class="grid-x espacador_p ">
 	</div>

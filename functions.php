@@ -15,6 +15,52 @@ add_action('wp_enqueue_scripts', 'custom_jquery');
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
 
+
+/********** FUNÇÃO QUE CONTA OS DIAS ÚTEIS *************/
+function getWorkdays($date1, $date2, $workSat = FALSE, $patron = NULL) {
+  if (!defined('SATURDAY')) define('SATURDAY', 6);
+  if (!defined('SUNDAY')) define('SUNDAY', 0);
+  if ($patron) {
+    $publicHolidays[] = $patron;
+  }
+  $start =  $date1;
+  $end   =  $date2;
+  $ano = date('Y', $start);
+  $pascoa = easter_date($ano);
+  $dia_pascoa = date('j', $pascoa);
+  $mes_pascoa = date('n', $pascoa);
+  $carnaval1 = mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 48,  $ano);//2ºferia Carnaval
+  $carnaval2 =  mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 47,  $ano);//3ºferia Carnaval	
+  $carnaval3 =  mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 46,  $ano);//4ºferia Carnaval	
+  $sexta_santa = mktime(0, 0, 0, $mes_pascoa, $dia_pascoa - 2 ,  $ano);//6ºfeira Santa  
+  $corpus = mktime(0, 0, 0, $mes_pascoa, $dia_pascoa + 60,  $ano);//Corpus Cirist
+  $data_pascoa = date('m-d', $pascoa);
+  $data_carnaval1 = date('m-d', $carnaval1);
+  $data_carnaval2 = date('m-d', $carnaval2);
+  $data_carnaval3 = date('m-d', $carnaval3);
+  $data_sexta_santa = date('m-d', $sexta_santa);
+  $data_corpus = date('m-d', $corpus);
+  $halfdays = array($data_carnaval3);
+  $publicHolidays = array('01-01', '04-21', '05-01', '09-07','10-12','11-02','11-15', '12-25', $data_pascoa, $data_carnaval1, $data_carnaval2, $data_sexta_santa, $data_sexta_santa);
+  $workdays = 0;
+  for ($i = $start; $i <= $end; $i = strtotime("+1 day", $i)) {
+    $day = date("w", $i);  // 0=sun, 1=mon, ..., 6=sat
+    $mmgg = date('m-d', $i);
+
+    if ($day != SUNDAY &&
+      !in_array($mmgg, $publicHolidays) &&
+      !($day == SATURDAY && $workSat == FALSE)) {
+        if(in_array($mmgg, $halfdays)){
+            $workdays += 0.5;
+        }else{
+            $workdays++;
+        }     
+    }
+  }
+  return round( $workdays, 2);
+}
+
+
 /************************ CRIANDO OS POST TYPES *************************************/
 function custom_post_type() {
   /* TUTORIAIS */
