@@ -15,8 +15,11 @@ add_action('wp_enqueue_scripts', 'custom_jquery');
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
 
-
-/********** FUNÇÃO QUE CONTA OS DIAS ÚTEIS *************/
+/**
+ * Conta os dias úteis entre duas datas.
+ *
+ * @return Int  com o número de dias
+ */
 function getWorkdays($date1, $date2, $workSat = FALSE, $patron = NULL) {
   if (!defined('SATURDAY')) define('SATURDAY', 6);
   if (!defined('SUNDAY')) define('SUNDAY', 0);
@@ -58,6 +61,15 @@ function getWorkdays($date1, $date2, $workSat = FALSE, $patron = NULL) {
     }
   }
   return round( $workdays, 2);
+}
+
+/**
+ * Retorna o post type sendo carregado no archive
+ *
+ * @return String  com o slug do Custom post Type
+ */
+function get_archive_post_type() {
+  return is_archive() ? get_queried_object()->name : false;
 }
 
 
