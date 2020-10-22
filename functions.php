@@ -471,6 +471,10 @@ function declare_sensei_support() {
     add_theme_support( 'sensei' );
 }
 
+
+
+
+
 /************************ INTEGRANDO O ACFFORM COM O BOOTSTRAP *************************************/
 
 add_action('wp_enqueue_scripts', 'acf_form_deregister_styles');
@@ -512,9 +516,11 @@ add_filter('acf/prepare_field', 'acf_form_fields_bootstrap_styles');
 function acf_form_fields_bootstrap_styles($field){
     
     // Target ACF Form Front only
-    if(is_admin() && !wp_doing_ajax())
+    if(is_admin() && !wp_doing_ajax()){
         return $field;
+    };
     
+
     // Add .form-group & .col-12 fallback on fields wrappers
     $field['wrapper']['class'] .= ' form-group col-12';
     
@@ -539,3 +545,47 @@ function acf_form_fields_required_bootstrap_styles($label){
     return $label;
     
 }
+
+/************************ DESATIVANDO O MÓDULO DE AUTOR DO ACFext *************************************/
+add_action('acf/init', 'my_acfe_modules');
+function my_acfe_modules(){
+    acf_update_setting('acfe/modules/author', false);
+    
+}
+
+/************************ PREENCHENDO O CAMPO DE ONI COM OS DADOS DO USUÁRIO LOGADO *************************************/
+add_filter('acf/prepare_field/name=oni', 'only_show_oni_in_admin', 1, 1);
+function only_show_oni_in_admin($field) {
+  /* Deixando o admin editar o rolê no front e no back */
+  if (is_admin() || current_user_can('administrator') ) {
+ 
+  }else{
+    $field['wrapper']['class'] .= ' d-none';
+  }
+  return $field;
+}
+
+
+add_filter('acf/update_value/name=oni', 'update_oni_field', 10, 3);
+function update_oni_field($value, $post_id, $field ) {
+  /* Deixando o admin editar o rolê no front e no back */
+  if (is_admin() || current_user_can('administrator') ) {
+    return;
+  }else{
+    $value = get_current_user_id();
+    return $value;
+  }
+}
+
+/************************ MONTANDO O TÍTULO DO POST *************************************/
+function acf_review_before_save_post($post_id) {
+	if (empty($_POST['acf']))
+    return;
+  $user_atual = wp_get_current_user();
+  $post_type_atual = get_archive_post_type();
+  $_POST['acf']['_post_title'] = $post_type_atual." do ".$user_atual->display_name;
+
+  return $post_id;
+}
+add_action('acf/pre_save_post', 'acf_review_before_save_post', -1);
+
