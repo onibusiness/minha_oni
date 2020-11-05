@@ -1,23 +1,7 @@
 <?php
-$primeiro_dia_mes_passado = strtotime("first day of last month");
-    $ultimo_dia_mes_passado = strtotime("last day of last month");
-    $p_dia = date('Y-m-d', $primeiro_dia_mes_passado);
-    $u_dia = date('Y-m-d', $ultimo_dia_mes_passado);
-
-if (!empty($_POST['form_action'])){
-    $p_dia = $_POST['data_inicial'];
-    $u_dia = $_POST['data_final'];
-    $h_dia = $_POST['data_final'];
-}   
-    $u_dia_date= strtotime($u_dia);
-    $uu_dia = strtotime("last day of next month",$u_dia_date);
-    $h_dia = date('Y-m-d', $uu_dia);
-
+include( 'variaveis_datas.php' );
  
-/********** DIAS *************/
 
-
-$dias_uteis = getWorkdays(strtotime($p_dia), strtotime($u_dia));
 
 /********** PEGA A CHAVE DA API DO GRANATUM*************/
 $chave_granatum = get_field('chave_granatum', 'option');
@@ -112,7 +96,21 @@ foreach($categorias as $categoria){
        
     }
 }
-
+/**
+ * Construindo o array de reembolsos
+ *
+ * @return Array  com todos os reembolsos do período
+ * @param Array
+ *  [
+ *  'id'    => (string) ID do usuário no granatum
+ *  'nome'  => (string) nome e sobrenome do usuário do granatum
+ *  'valor' => (int) valor somado de todos os lancamentos
+ *  'gastos' => (array) com a lista dos gastos
+ *      [
+ *      (string) descrição do lançamento granatum + R$ + valor do lançamento
+ *      ]
+ *  ]   
+ */
 $reembolsos_onis = [];
 foreach($categorias as $value){
     if($value['descricao'] == 'Reembolsos'){
@@ -338,21 +336,38 @@ $saldo = $receitas+$despesas;
 echo "<pre>";
 var_dump($saldo);
 echo "</pre>";
+
+
+
+// Pegando todos os usuários do wordpress
+$onis = get_users();
+foreach($onis as $oni){
+    $valor_de_reembolso=0;
+    echo "[".$oni->ID."] ".$oni->display_name." é ".$oni->roles[0]."</br>";
+    // Puxando o valor do reembolso do array de reembolsos utilizando o nome e sobrenome como search
+    $id_do_granatum = get_field('id_do_granatum', 'user_'.$oni->ID);
+    if($id_do_granatum){
+        $ir = array_search($id_do_granatum, array_column($reembolsos_onis, 'id'));
+        $valor_de_reembolso = $reembolsos_onis[$ir]['valor'];;
+        echo $valor_de_reembolso;
+    }
+    
+
+}
+
+echo "<div class='grid-x card'>";
+echo "<p class='cell large-18 escala0'><strong class='petro'>Data inicial : </strong> ". $p_dia."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Data final : </strong> ". $u_dia."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Dias úteis : </strong> ". $dias_uteis."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Receitas (- Fora da folha) : </strong> R$ ". number_format($receitas, 2, ',','.')."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Despesas : </strong> R$ ". number_format($despesas, 2, ',','.')."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Saldo : </strong> R$ ".number_format($saldo, 2, ',','.')."</p>";  
+echo "<p class='cell large-18 escala0'><strong class='petro'>Custos de projeto : </strong> R$ ".number_format($custos_de_projeto, 2, ',','.')."</p>"; 
+echo "<p class='cell large-18 escala0'><strong class='petro'>Folha : </strong> R$".number_format($folha, 2, ',','.')."</p>"; 
+echo "</div>";
+
+
 ?>
 
-<div class="row py-5">
-    <div class="col-12 ">
-        <form method="post" action="" class='card '>
-            <p>Data inicial:
-                <input type="date" name="data_inicial" value="<?php echo $p_dia ?>">
-            </p>
-            <p>Data final:
-                <input type="date" name="data_final" value="<?php echo $u_dia ?>">
-            </p>
-            <input name="form_action[Filtrar]" type="submit" value="Filtrar">
-        
-            <input name="form_action[Salvar]" type="submit" value="Salvar"  onclick="return confirm('Você quer consolidar a folha??');">
-            
-        </form> 
-    </div>
-</div>
+
+

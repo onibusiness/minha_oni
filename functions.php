@@ -118,6 +118,56 @@ function custom_post_type() {
     ),
   );
   register_post_type( 'tutoriais', $args );  
+
+
+  /* FECHAMENTO FINANCEIRO MENAL */
+  $labels = array(
+    'name'                => _x( 'Fechamentos mensais', 'Post Type General Name'),
+    'singular_name'       => _x( 'Fechamento mensal', 'Post Type Singular Name'),
+    'menu_name'           => __( 'Fechamentos mensais'),
+    'all_items'           => __( 'Todos Fechamentos mensais'),
+    'view_item'           => __( 'Ver fechamento mensal'),
+    'add_new_item'        => __( 'Adicionar novo fechamento mensal'),
+    'add_new'             => __( 'Adicionar novo'),
+    'edit_item'           => __( 'Editar fechamento mensal'),
+    'update_item'         => __( 'Atualizar fechamento mensal'),
+    'search_items'        => __( 'Procurar fechamento mensal'),
+  );     
+  $args = array(
+    'label'               => __( 'Fechamentos mensais'),
+    'description'         => __( 'Fechamentos mensais financeiros'),
+    'labels'              => $labels,
+    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+    'hierarchical'        => false,
+    'public'              => true,
+    'show_ui'             => true,
+    'show_in_menu'        => true,
+    'show_in_nav_menus'   => true,
+    'show_in_admin_bar'   => true,
+    'menu_position'       => 5,
+    'menu_icon' => 'dashicons-chart-area',
+    'can_export'          => true,
+    'has_archive'         => true,
+    'exclude_from_search' => false,
+    'show_in_rest' => true,
+    'publicly_queryable'  => true,
+    'capabilities' => array(
+      'publish_posts' => 'manage_options',
+      'edit_posts' => 'manage_options',
+      'edit_others_posts' => 'manage_options',
+      'delete_posts' => 'manage_options',
+      'delete_others_posts' => 'manage_options',
+      'read_private_posts' => 'manage_options',
+      'edit_post' => 'manage_options',
+      'delete_post' => 'manage_options',
+      'read_post' => 'manage_options',
+    ),
+  );   
+  register_post_type( 'fechamento_mensal', $args );
+
+
+
+
   /* PAGAMENTOS */
   $labels = array(
     'name'                => _x( 'Pagamentos', 'Post Type General Name'),
@@ -162,6 +212,53 @@ function custom_post_type() {
     ),
   );   
   register_post_type( 'pagamentos', $args );
+
+
+
+  /* PAPÉIS */
+  $labels = array(
+    'name'                => _x( 'Papéis', 'Post Type General Name'),
+    'singular_name'       => _x( 'Papel', 'Post Type Singular Name'),
+    'menu_name'           => __( 'Papéis'),
+    'all_items'           => __( 'Todos os Papéis'),
+    'view_item'           => __( 'Ver papel'),
+    'add_new_item'        => __( 'Adicionar novo papel'),
+    'add_new'             => __( 'Adicionar novo'),
+    'edit_item'           => __( 'Editar papel'),
+    'update_item'         => __( 'Atualizar papel'),
+    'search_items'        => __( 'Procurar papel'),
+  );
+  $args = array(
+    'label'               => __( 'Papéis'),
+    'description'         => __( 'Papéis'),
+    'labels'              => $labels,
+    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+    'hierarchical'        => false,
+    'public'              => true,
+    'show_ui'             => true,
+    'show_in_menu'        => true,
+    'show_in_nav_menus'   => true,
+    'show_in_admin_bar'   => true,
+    'menu_position'       => 5,
+    'menu_icon' => 'dashicons-search',
+    'can_export'          => true,
+    'has_archive'         => true,
+    'exclude_from_search' => false,
+    'publicly_queryable'  => true,
+    'capabilities' => array(
+      'publish_posts' => 'manage_options',
+      'edit_posts' => 'manage_options',
+      'edit_others_posts' => 'manage_options',
+      'delete_posts' => 'manage_options',
+      'delete_others_posts' => 'manage_options',
+      'read_private_posts' => 'manage_options',
+      'edit_post' => 'manage_options',
+      'delete_post' => 'manage_options',
+      'read_post' => 'manage_options',
+    ),
+  );
+  register_post_type( 'papeis', $args );  
+
 
   /* COMPETÊNCIAS */
   $labels = array(
@@ -570,7 +667,7 @@ add_filter('acf/update_value/name=oni', 'update_oni_field', 10, 3);
 function update_oni_field($value, $post_id, $field ) {
   /* Deixando o admin editar o rolê no front e no back */
   if (is_admin() || current_user_can('administrator') ) {
-    return;
+    return $value;
   }else{
     $value = get_current_user_id();
     return $value;
@@ -589,3 +686,42 @@ function acf_review_before_save_post($post_id) {
 }
 add_action('acf/pre_save_post', 'acf_review_before_save_post', -1);
 
+/**
+ * Consolida uma evidência em evolução de uma competência
+ *
+ * @return New_Post_Evolucao  com o preenchimento da evidência
+ */
+function acf_consolidar_onion_up($post_id){
+  $post_type_atual = get_post_type($post_id);
+  $data = get_field('data',$post_id);
+  $parecer = get_field('parecer',$post_id);
+  $oni = get_field('oni',$post_id);
+  $competencia = get_field('competencia',$post_id);
+  if($post_type_atual == 'evidencias' && $parecer == 'onion_up' ){
+    $args = array(
+      'numberposts'	=> -1,
+      'post_type'		=> 'evolucao',
+      'meta_key'		=> 'evidencia',
+      'meta_value'	=> $post_id
+    );
+    $the_query = new WP_Query( $args );
+    if( $the_query->have_posts() ){
+      wp_reset_query();
+      return;
+    }else{
+      $my_post = array(
+        'post_title' => $oni->user_nicename." | ".$data,
+        'post_status' => 'publish',
+        'post_type' => 'evolucao',
+      );
+      $nova_evolucao = wp_insert_post($my_post);
+      update_field('data', $data, $nova_evolucao);
+      update_field('competencia', $competencia, $nova_evolucao);
+      update_field('oni', $oni, $nova_evolucao);
+      update_field('evidencia', $post_id, $nova_evolucao);
+    }
+
+
+  }
+}
+add_action('acf/save_post', 'acf_consolidar_onion_up');
