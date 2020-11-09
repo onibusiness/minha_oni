@@ -351,7 +351,23 @@ foreach($onis as $oni){
         $valor_de_reembolso = $reembolsos_onis[$ir]['valor'];;
         echo $valor_de_reembolso;
     }
-    
+
+    // Puxando as evidências
+    $args = array(
+        'numberposts'	=> -1,
+        'post_type'		=> 'evidencias',
+        'meta_key'		=> 'oni',
+        'meta_value'	=> $oni->ID
+    );
+    $the_query = new WP_Query( $args );
+    if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+        echo "<pre>";
+        var_dump($post);
+        echo "</pre>";
+        wp_reset_query();
+    endwhile;endif; 
+ 
+
 
 }
 

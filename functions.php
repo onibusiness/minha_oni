@@ -74,493 +74,40 @@ function get_archive_post_type() {
 
 
 /************************ CRIANDO OS POST TYPES *************************************/
-function custom_post_type() {
-  /* TUTORIAIS */
-  $labels = array(
-    'name'                => _x( 'Tutoriais', 'Post Type General Name'),
-    'singular_name'       => _x( 'Tutorial', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Tutoriais'),
-    'all_items'           => __( 'Todos os Tutoriais'),
-    'view_item'           => __( 'Ver tutorial'),
-    'add_new_item'        => __( 'Adicionar novo tutorial'),
-    'add_new'             => __( 'Novo tutorial'),
-    'edit_item'           => __( 'Editar tutorial'),
-    'update_item'         => __( 'Atualizar tutorial'),
-    'search_items'        => __( 'Procurar tutorial'),
-  );
-  $args = array(
-    'label'               => __( 'Tutoriais'),
-    'description'         => __( 'Tutoriais'),
-    'labels'              => $labels,
-    'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-welcome-learn-more',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'tutoriais', $args );  
+//Tutoriais
+$tutoriais = get_stylesheet_directory() . '/includes/tutoriais/tutoriais_class.php';
+include($tutoriais);
 
+//Competencias e Esferas
+$competencias = get_stylesheet_directory() . '/includes/competencias/competencias_class.php';
+include($competencias);
 
-  /* FECHAMENTO FINANCEIRO MENAL */
-  $labels = array(
-    'name'                => _x( 'Fechamentos mensais', 'Post Type General Name'),
-    'singular_name'       => _x( 'Fechamento mensal', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Fechamentos mensais'),
-    'all_items'           => __( 'Todos Fechamentos mensais'),
-    'view_item'           => __( 'Ver fechamento mensal'),
-    'add_new_item'        => __( 'Adicionar novo fechamento mensal'),
-    'add_new'             => __( 'Adicionar novo'),
-    'edit_item'           => __( 'Editar fechamento mensal'),
-    'update_item'         => __( 'Atualizar fechamento mensal'),
-    'search_items'        => __( 'Procurar fechamento mensal'),
-  );     
-  $args = array(
-    'label'               => __( 'Fechamentos mensais'),
-    'description'         => __( 'Fechamentos mensais financeiros'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-chart-area',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'show_in_rest' => true,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );   
-  register_post_type( 'fechamento_mensal', $args );
+//Evidências e evolução
+$evidencias = get_stylesheet_directory() . '/includes/evidencias/evidencias_class.php';
+include($evidencias);
 
+//Ferramentas e equipamentos
+$ferramentas = get_stylesheet_directory() . '/includes/ferramentas/ferramentas_class.php';
+include($ferramentas);
 
+//Fechamento mensal e pagamento
+$fechamento_mensal = get_stylesheet_directory() . '/includes/fechamento_mensal/fechamento_mensal_class.php';
+include($fechamento_mensal);
 
+//Férias
+$ferias = get_stylesheet_directory() . '/includes/ferias/ferias_class.php';
+include($ferias);
 
-  /* PAGAMENTOS */
-  $labels = array(
-    'name'                => _x( 'Pagamentos', 'Post Type General Name'),
-    'singular_name'       => _x( 'Pagamento', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Pagamentos'),
-    'all_items'           => __( 'Todos pagamentos'),
-    'view_item'           => __( 'Ver pagamento'),
-    'add_new_item'        => __( 'Adicionar novo pagamento'),
-    'add_new'             => __( 'Adicionar novo'),
-    'edit_item'           => __( 'Editar pagamento'),
-    'update_item'         => __( 'Atualizar pagamento'),
-    'search_items'        => __( 'Procurar pagamento'),
-  );     
-  $args = array(
-    'label'               => __( 'pagamentos'),
-    'description'         => __( 'Pagamentos dos Onis'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-chart-area',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'show_in_rest' => true,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );   
-  register_post_type( 'pagamentos', $args );
+//Papeis
+$papeis = get_stylesheet_directory() . '/includes/papeis/papeis_class.php';
+include($papeis);
 
-
-
-  /* PAPÉIS */
-  $labels = array(
-    'name'                => _x( 'Papéis', 'Post Type General Name'),
-    'singular_name'       => _x( 'Papel', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Papéis'),
-    'all_items'           => __( 'Todos os Papéis'),
-    'view_item'           => __( 'Ver papel'),
-    'add_new_item'        => __( 'Adicionar novo papel'),
-    'add_new'             => __( 'Adicionar novo'),
-    'edit_item'           => __( 'Editar papel'),
-    'update_item'         => __( 'Atualizar papel'),
-    'search_items'        => __( 'Procurar papel'),
-  );
-  $args = array(
-    'label'               => __( 'Papéis'),
-    'description'         => __( 'Papéis'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'papeis', $args );  
-
-
-  /* COMPETÊNCIAS */
-  $labels = array(
-    'name'                => _x( 'Competências', 'Post Type General Name'),
-    'singular_name'       => _x( 'Competência', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Competências'),
-    'all_items'           => __( 'Todas as competências'),
-    'view_item'           => __( 'Ver competência'),
-    'add_new_item'        => __( 'Adicionar nova competência'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar competência'),
-    'update_item'         => __( 'Atualizar competência'),
-    'search_items'        => __( 'Procurar competência'),
-  );
-  $args = array(
-    'label'               => __( 'Competências'),
-    'description'         => __( 'Competências'),
-    'labels'              => $labels,
-    'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-awards',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-    'taxonomies'          => array( 'esfera' ),
-    
-  );
-  register_post_type( 'competencias', $args );
-
-  /* EVIDÊNCIAS */
-  $labels = array(
-    'name'                => _x( 'Evidências', 'Post Type General Name'),
-    'singular_name'       => _x( 'Evidência', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Evidências'),
-    'all_items'           => __( 'Todas as evidências'),
-    'view_item'           => __( 'Ver evidência'),
-    'add_new_item'        => __( 'Adicionar nova evidência'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar evidência'),
-    'update_item'         => __( 'Atualizar evidência'),
-    'search_items'        => __( 'Procurar evidência'),
-  );
-  $args = array(
-    'label'               => __( 'Evidências'),
-    'description'         => __( 'Evidências'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'evidencias', $args );  
-
-  /* EVOLUÇÃO */
-  $labels = array(
-    'name'                => _x( 'Evoluções', 'Post Type General Name'),
-    'singular_name'       => _x( 'Evolução', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Evoluções'),
-    'all_items'           => __( 'Todas as Evoluções'),
-    'view_item'           => __( 'Ver Evolução'),
-    'add_new_item'        => __( 'Adicionar nova Evolução'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar Evolução'),
-    'update_item'         => __( 'Atualizar Evolução'),
-    'search_items'        => __( 'Procurar Evolução'),
-  );
-  $args = array(
-    'label'               => __( 'Evoluções'),
-    'description'         => __( 'Evoluções'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'evolucao', $args );  
-  /* FÉRIAS */
-  $labels = array(
-    'name'                => _x( 'Férias', 'Post Type General Name'),
-    'singular_name'       => _x( 'Férias', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Férias'),
-    'all_items'           => __( 'Todas as Férias'),
-    'view_item'           => __( 'Ver Férias'),
-    'add_new_item'        => __( 'Adicionar nova Férias'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar Férias'),
-    'update_item'         => __( 'Atualizar Férias'),
-    'search_items'        => __( 'Procurar Férias'),
-  );
-  $args = array(
-    'label'               => __( 'Férias'),
-    'description'         => __( 'Férias'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'ferias', $args );  
-
-  /* EQUIPAMENTOS */
-  $labels = array(
-    'name'                => _x( 'Equipamentos', 'Post Type General Name'),
-    'singular_name'       => _x( 'Equipamento', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Equipamentos'),
-    'all_items'           => __( 'Todos os Equipamentos'),
-    'view_item'           => __( 'Ver Equipamentos'),
-    'add_new_item'        => __( 'Adicionar novo Equipamentos'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar Equipamentos'),
-    'update_item'         => __( 'Atualizar Equipamentos'),
-    'search_items'        => __( 'Procurar Equipamentos'),
-  );
-  $args = array(
-    'label'               => __( 'Equipamentos'),
-    'description'         => __( 'Equipamentos'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'equipamentos', $args );  
-  /* FERRAMENTAS */
-  $labels = array(
-    'name'                => _x( 'Ferramentas', 'Post Type General Name'),
-    'singular_name'       => _x( 'Ferramenta', 'Post Type Singular Name'),
-    'menu_name'           => __( 'Ferramentas'),
-    'all_items'           => __( 'Todos os Ferramentas'),
-    'view_item'           => __( 'Ver Ferramentas'),
-    'add_new_item'        => __( 'Adicionar novo Ferramentas'),
-    'add_new'             => __( 'Adicionar nova'),
-    'edit_item'           => __( 'Editar Ferramentas'),
-    'update_item'         => __( 'Atualizar Ferramentas'),
-    'search_items'        => __( 'Procurar Ferramentas'),
-  );
-  $args = array(
-    'label'               => __( 'Ferramentas'),
-    'description'         => __( 'Ferramentas'),
-    'labels'              => $labels,
-    'supports'            => array( 'title',  'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
-    'hierarchical'        => false,
-    'public'              => true,
-    'show_ui'             => true,
-    'show_in_menu'        => true,
-    'show_in_nav_menus'   => true,
-    'show_in_admin_bar'   => true,
-    'menu_position'       => 5,
-    'menu_icon' => 'dashicons-search',
-    'can_export'          => true,
-    'has_archive'         => true,
-    'exclude_from_search' => false,
-    'publicly_queryable'  => true,
-    'capabilities' => array(
-      'publish_posts' => 'manage_options',
-      'edit_posts' => 'manage_options',
-      'edit_others_posts' => 'manage_options',
-      'delete_posts' => 'manage_options',
-      'delete_others_posts' => 'manage_options',
-      'read_private_posts' => 'manage_options',
-      'edit_post' => 'manage_options',
-      'delete_post' => 'manage_options',
-      'read_post' => 'manage_options',
-    ),
-  );
-  register_post_type( 'Ferramenta', $args );  
- 
-   
-}
-add_action( 'init', 'custom_post_type', 0 );
 
 
 
 /************************ CRIANDO AS CATEGORIAS *************************************/
  
-function custom_taxonomies() {
- 
-  $labels = array(
-    'name' => _x( 'Esferas', 'taxonomy general name' ),
-    'singular_name' => _x( 'Esfera', 'taxonomy singular name' ),
-    'search_items' =>  __( 'Search Esferas' ),
-    'all_items' => __( 'All Esferas' ),
-    'parent_item' => __( 'Parent Esfera' ),
-    'parent_item_colon' => __( 'Parent Esfera:' ),
-    'edit_item' => __( 'Edit Esfera' ), 
-    'update_item' => __( 'Update Esfera' ),
-    'add_new_item' => __( 'Add New Esfera' ),
-    'new_item_name' => __( 'New Esfera Name' ),
-    'menu_name' => __( 'Esferas' ),
-  );    
- 
- 
-  register_taxonomy('esfera',array('competencias'), array(
-    'hierarchical' => true,
-    'labels' => $labels,
-    'show_ui' => true,
-    'show_admin_column' => true,
-    'query_var' => true,
-    'rewrite' => array( 'slug' => 'esfera' ),
-  ));
- 
-}
 
-add_action( 'init', 'custom_taxonomies', 0 );
 
 
 add_action( 'after_setup_theme', 'declare_sensei_support' );
@@ -700,7 +247,7 @@ function acf_consolidar_onion_up($post_id){
   if($post_type_atual == 'evidencias' && $parecer == 'onion_up' ){
     $args = array(
       'numberposts'	=> -1,
-      'post_type'		=> 'evolucao',
+      'post_type'		=> 'evolucoes',
       'meta_key'		=> 'evidencia',
       'meta_value'	=> $post_id
     );
@@ -712,7 +259,7 @@ function acf_consolidar_onion_up($post_id){
       $my_post = array(
         'post_title' => $oni->user_nicename." | ".$data,
         'post_status' => 'publish',
-        'post_type' => 'evolucao',
+        'post_type' => 'evolucoes',
       );
       $nova_evolucao = wp_insert_post($my_post);
       update_field('data', $data, $nova_evolucao);
