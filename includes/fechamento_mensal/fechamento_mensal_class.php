@@ -24,6 +24,7 @@ class fechamentos_mensais{
 
     //Adicionando o custom post type
     public function adicionar_custom_post_type(){
+        
             $labels = array(
             'name'               => ucwords($this->nome_singular),
             'nome_singular'      => ucwords($this->nome_singular),

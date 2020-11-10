@@ -37,6 +37,7 @@ class minha_oni{
         remove_action('wp_print_styles', 'print_emoji_styles');
 
 
+
     }
     //Setando o diretório do tema
     public function setaDiretorioTema(){

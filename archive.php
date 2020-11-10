@@ -1,7 +1,7 @@
 <?php get_header(); 
 acf_form_head(); 
 acf_enqueue_uploader();
-$post_type_atual = $minha_oni->getArchivePostType();
+$post_type_atual = minha_oni::getArchivePostType();
 $user_atual = get_current_user_id();
 
 

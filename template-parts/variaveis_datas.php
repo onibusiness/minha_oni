@@ -14,5 +14,7 @@ $uu_dia = strtotime("last day of next month",$u_dia_date);
 $h_dia = date('Y-m-d', $uu_dia);
 
 /********** DIAS *************/
-$dias_uteis = getWorkdays(strtotime($p_dia), strtotime($u_dia));
+$dias_uteis = minha_oni::contaDiasUteis( strtotime($p_dia), strtotime($u_dia)); 
+
+
 ?>
