@@ -19,6 +19,7 @@ class evidencias{
         add_action('init', array($this,'adicionar_custom_post_type')); 
         add_action('init', array($this,'adicionar_campos_ACF')); 
         add_action('init', array($this,'check_flush_rewrite_rules')); 
+        add_action('acf/save_post', array($this, 'acf_consolidar_onion_up'));
 
     }
 
@@ -68,6 +69,28 @@ class evidencias{
                 'key' => 'group_5f40103504a5e',
                 'title' => 'Evidências',
                 'fields' => array(
+                    array(
+                        'key' => 'field_5faa986c42eca',
+                        'label' => 'Oni',
+                        'name' => 'oni',
+                        'type' => 'user',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'acfe_permissions' => '',
+                        'role' => '',
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'return_format' => 'object',
+                        'acfe_bidirectional' => array(
+                            'acfe_bidirectional_enabled' => '0',
+                        ),
+                    ),
                     array(
                         'key' => 'field_5f68c03c23222',
                         'label' => 'Data',
@@ -172,6 +195,7 @@ class evidencias{
                         'ajax' => 0,
                         'placeholder' => '',
                     ),
+                   
                 ),
                 'location' => array(
                     array(
@@ -225,6 +249,47 @@ class evidencias{
             update_option($this->post_slug . '_flush_rewrite_rules', true);
         }
     }
+
+    /**
+    * Consolida uma evidência em evolução de uma competência
+    *
+    * @return New_Post_Evolucao  com o preenchimento da evidência
+    */
+    public function acf_consolidar_onion_up($post_id){
+        $post_type_atual = get_post_type($post_id);
+        $data = get_field('data',$post_id);
+        $parecer = get_field('parecer',$post_id);
+        $oni = get_field('oni',$post_id);
+        $competencia = get_field('competencia',$post_id);
+        if($post_type_atual == 'evidencias' && $parecer == 'onion_up' ){
+        $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'evolucoes',
+            'meta_key'		=> 'evidencia',
+            'meta_value'	=> $post_id
+        );
+        $the_query = new WP_Query( $args );
+        if( $the_query->have_posts() ){
+            wp_reset_query();
+            return;
+        }else{
+            $my_post = array(
+            'post_title' => $oni->user_nicename." | ".$data,
+            'post_status' => 'publish',
+            'post_type' => 'evolucoes',
+            );
+            $nova_evolucao = wp_insert_post($my_post);
+            update_field('data', $data, $nova_evolucao);
+            update_field('competencia', $competencia, $nova_evolucao);
+            update_field('oni', $oni, $nova_evolucao);
+            update_field('evidencia', $post_id, $nova_evolucao);
+        }
+    
+    
+        }
+    }
+ 
+
 
 }
 
@@ -424,7 +489,22 @@ class evolucoes{
                 'style' => 'default',
                 'label_placement' => 'left',
                 'instruction_placement' => 'label',
-                'hide_on_screen' => '',
+                'hide_on_screen' => array(
+                    0 => 'permalink',
+                    1 => 'the_content',
+                    2 => 'excerpt',
+                    3 => 'discussion',
+                    4 => 'comments',
+                    5 => 'revisions',
+                    6 => 'slug',
+                    7 => 'author',
+                    8 => 'format',
+                    9 => 'page_attributes',
+                    10 => 'featured_image',
+                    11 => 'categories',
+                    12 => 'tags',
+                    13 => 'send-trackbacks',
+                ),
                 'active' => true,
                 'description' => '',
                 'acfe_display_title' => '',
