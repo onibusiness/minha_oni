@@ -96,7 +96,7 @@ class customizaacf{
 
 
     
-    public function update_oni_field($value, $post_id, $field ) {
+    public function update_oni_field($value) {
     /* Deixando o admin editar o rolê no front e no back */
     if (is_admin() || current_user_can('administrator') ) {
         return $value;

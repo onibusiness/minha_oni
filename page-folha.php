@@ -5,7 +5,7 @@ Template Name: Folha
 ?>
 <?php get_header();?>
 
-<?php include_once( 'template-parts/variaveis_datas.php' );?>
+<?php //include_once( 'template-parts/variaveis_datas.php' );?>
 
 <div class="row py-5">
     <div class="col-12 ">
@@ -24,7 +24,16 @@ Template Name: Folha
     </div>
 </div>
 <div class="container-fluid">
-    <?php get_template_part( 'template-parts/puxagranatum' );?>
+    <?php
+    $processa_folha = get_stylesheet_directory() . '/includes/fechamento_mensal/processa_folha_class.php';
+    include($processa_folha);
+
+    echo "<pre>";
+    var_dump($processa_folha);
+    echo "</pre>";   
+    ?>
+
+    <?php //get_template_part( 'template-parts/puxagranatum' );?>
  
 
     <div class="row py-5">

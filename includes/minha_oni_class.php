@@ -7,7 +7,7 @@
 class minha_oni{
 
     //variaveis
-    private $diretorio_tema = '';
+    public $diretorio_tema = '';
 
     //disparando a classe
     public function __construct(){
@@ -22,6 +22,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/fechamento_mensal/fechamento_mensal_class.php');
         require_once($this->diretorio_tema.'/includes/ferias/ferias_class.php');
         require_once($this->diretorio_tema.'/includes/papeis/papeis_class.php');
+        require_once($this->diretorio_tema.'/includes/advertencias/advertencias_class.php');
 
         //Pegando as customizações do acf 
         require_once($this->diretorio_tema.'/includes/acf/acf_class.php');
@@ -95,18 +96,18 @@ class minha_oni{
         $publicHolidays = array('01-01', '04-21', '05-01', '09-07','10-12','11-02','11-15', '12-25', $data_pascoa, $data_carnaval1, $data_carnaval2, $data_sexta_santa, $data_sexta_santa);
         $workdays = 0;
         for ($i = $date1; $i <= $date2; $i = strtotime("+1 day", $i)) {
-        $day = date("w", $i);  // 0=sun, 1=mon, ..., 6=sat
-        $mmgg = date('m-d', $i);
-    
-        if ($day != SUNDAY &&
-            !in_array($mmgg, $publicHolidays) &&
-            !($day == SATURDAY && $workSat == FALSE)) {
-            if(in_array($mmgg, $halfdays)){
-                $workdays += 0.5;
-            }else{
-                $workdays++;
-            }     
-        }
+            $day = date("w", $i);  // 0=sun, 1=mon, ..., 6=sat
+            $mmgg = date('m-d', $i);
+        
+            if ($day != SUNDAY &&
+                !in_array($mmgg, $publicHolidays) &&
+                !($day == SATURDAY && $workSat == FALSE)) {
+                if(in_array($mmgg, $halfdays)){
+                    $workdays += 0.5;
+                }else{
+                    $workdays++;
+                }     
+            }
         }
         return round( $workdays, 2);
     }
