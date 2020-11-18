@@ -14,7 +14,7 @@ class customizaacf{
         add_filter('acf/get_field_label',  array($this,'acf_form_fields_required_bootstrap_styles'));
         add_filter('acf/prepare_field/name=oni',  array($this,'only_show_oni_in_admin'));
         add_filter('acf/update_value/name=oni',  array($this,'update_oni_field'));
-        add_action('acf/pre_save_post',  array($this,'acf_review_before_save_post'));
+        add_action('acf/save_post',  array($this,'acf_review_before_save_post'),20);
 
     }
 
@@ -108,14 +108,29 @@ class customizaacf{
 
     /************************ MONTANDO O TÍTULO DOS POSTS CRIADOS NO FRONT *************************************/
     public function acf_review_before_save_post($post_id) {
-        if (empty($_POST['acf']))
-        return;
-    $user_atual = wp_get_current_user();
-    $post_type_atual = $minha_oni->getArchivePostType();
-    $_POST['acf']['_post_title'] = $post_type_atual." do ".$user_atual->display_name;
 
-    return $post_id;
+        $user_atual = wp_get_current_user();
+        $post_type_atual =  is_archive() ? get_queried_object()->name : false;
+        $new_title = $post_type_atual." do ".$user_atual->display_name;
+        
+        $new_post = array(
+            'ID'           => $post_id,
+            'post_title'   => $new_title,
+        );
+        
+        // Remove the hook to avoid infinite loop. Please make sure that it has
+        // the same priority (20)
+        remove_action('acf/save_post', 'my_save_post', 20);
+        
+        // Update the post
+        wp_update_post( $new_post );
+        
+        // Add the hook back
+        add_action('acf/save_post', 'my_save_post', 20);
+        
     }
+
+    
    
 
 

@@ -1,7 +1,7 @@
 <?php get_header(); 
 acf_form_head(); 
 acf_enqueue_uploader();
-$post_type_atual = minha_oni::getArchivePostType();
+$post_type_atual = is_archive() ? get_queried_object()->name : false;
 $user_atual = get_current_user_id();
 
 
@@ -24,6 +24,10 @@ while ( $posts_antigos->have_posts() ) : $posts_antigos->the_post();
     foreach($campos as $nome_do_campo => $conteudo_do_campo){
         if($nome_do_campo != 'oni' && $nome_do_campo != '_validate_email' ){
             $objeto_do_campo = get_field_object($nome_do_campo);
+
+            if(is_object($conteudo_do_campo)){
+                $conteudo_do_campo = $conteudo_do_campo->post_title;
+            }
             echo "<p><strong>".$objeto_do_campo['label']."</strong> :".$conteudo_do_campo."</pre>";
         }
     }

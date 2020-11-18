@@ -111,15 +111,7 @@ class minha_oni{
         }
         return round( $workdays, 2);
     }
-    /**
-     * Retorna o post type sendo carregado no archive
-     *
-     * @return String  com o slug do Custom post Type
-     */
-    function getArchivePostType() {
-        return is_archive() ? get_queried_object()->name : false;
-    }
-  
+
 
 
 
