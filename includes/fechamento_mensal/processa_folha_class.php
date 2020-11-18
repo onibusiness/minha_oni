@@ -5,6 +5,8 @@
 *
 */
 class processa_folha{
+    public $p_dia;//primeiro dia da requisição
+    public $u_dia;//ultimo dia da requisicao
     public $reembolsos_onis = [];// reembolsos por oni
     public $centros_custo_oni = [];//centos de custo da Oni
     public $categorias_faturamento = array();//categorias de faturamento dos projetos
@@ -28,6 +30,8 @@ class processa_folha{
     public function __construct(){
         //inserindo todos os custom post types        
         require_once('granatum_class.php');
+        //setando as datas
+        $this->setaDatas($granatum->p_dia,$granatum->u_dia);
         //criando o array reembolsos
         $this->setaReembolsos($granatum->categorias);
         //montandos os centros de custo
@@ -35,17 +39,33 @@ class processa_folha{
         //pegando as categorias de faturamento
         $this->pegaCategoriasFaturamento($granatum->categorias);
         // processa o financeiro
-        $this->processaFinanceiro($granatum->lancamentos_cartao, $granatum->lancamentos_conta, $granatum->p_dia, $granatum->u_dia );
+        $this->processaFinanceiro($granatum->lancamentos_cartao, $granatum->lancamentos_conta, $this->p_dia, $this->u_dia );
 
         // monta o array dos onis
-        $this->montaOnis( $granatum->p_dia, $granatum->u_dia);
+        $this->montaOnis( $this->p_dia, $this->u_dia);
 
         // conta os Onions do sistema
-        $this->contaOnions($granatum->p_dia, $granatum->u_dia);
+        $this->contaOnions($this->p_dia, $this->u_dia);
 
         // fecha a folha
         $this->fechaFolha();
+
+        
+        // consolida a folha
+        $this->consolidaFolha( $granatum->u_dia);
     }
+
+    /**
+    * Setando as datas
+    *
+    * @return Mixed  com p_dia e U_dia setados
+    * 
+    */
+    public function setaDatas($p_dia,$u_dia){
+        $this->p_dia = $p_dia;
+        $this->u_dia = $u_dia;
+    }
+
 
     /**
     * Construindo o array de reembolsos
@@ -243,6 +263,7 @@ class processa_folha{
             );
             $the_query = new WP_Query( $args );
             if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                $this->onis[$user->display_name]['competencias'][get_the_title()]['competencia'] = get_the_title();
                 $this->onis[$user->display_name]['competencias'][get_the_title()]['pontos'] = 0;
             endwhile;endif;
             wp_reset_query();
@@ -261,8 +282,10 @@ class processa_folha{
                 $competencia = get_field('competencia');
                 $competencia = get_the_title($competencia);
                 //preenchendo as competências com as evidências
+                
                 if($competencia !== NULL){
                     $this->onis[$user->display_name]['competencias'][$competencia]['pontos'] += 1;
+                    
                 }  
                 //Checkando se a evolução foi nesse mês
                 $data_evolucao = str_replace('/', '-', $fields['data']);
@@ -396,33 +419,40 @@ class processa_folha{
         //loop por oni
         foreach($this->onis as $key => $oni){
 
-            # FILTRAR STAGS E TRAINEES DEPOIS!!!
+            //Onions do sócio
             if($oni['funcao'] == 'um_socio'){
                 $this->onions_competencia =  $onions_socio;
                 $this->onis[$key]['onions_competencia'] +=  $onions_socio;
+            //Onions dos Onis e trainees
             }else{
                 //somando onions de competências do oni e do sistema
                 foreach($oni['competencias'] as $competencia){
+                    $this->onis[$key]['onions_competencia'] +=  $equivalencia_pontos_onions[$competencia['pontos']];
                     if($oni['funcao'] == 'um_oni'){
                         $this->onions_competencia +=  $equivalencia_pontos_onions[$competencia['pontos']];
                     }
-                    $this->onis[$key]['onions_competencia'] +=  $equivalencia_pontos_onions[$competencia['pontos']];
+                    
                 }
+                //Verifica quantos Onions falta para o trainee alcancar o piso e joga no sistema
                 if($oni['funcao'] == 'um_trainee'){
+                    
                     $this->onis[$key]['gap_trainee'] = $onions_trainee - $this->onis[$key]['onions_competencia'];
+                    $this->onions_competencia +=  $onions_trainee ;
                 }
                 //somando onions de papel do oni e do sistema
                 foreach($oni['guardas'] as $guarda){
+                    //Stags e guardas com rodinhas não contam
                     if($guarda['com_rodinhas'] == false && $oni['funcao'] !== 'um_stag'){
                         $this->onions_papeis += $equivalencia_guarda*$guarda['percentual'];
                         $this->onis[$key]['onions_papeis'] += $equivalencia_guarda*$guarda['percentual'];
                     }
                 }
-                $this->onis[$key]['onions_competencia_dia'] = round(($this->onis[$key]['onions_competencia']/$dias_uteis_periodo) , 2);//onions de competência por dia
+                $this->onis[$key]['onions_competencia_dia'] = round((($this->onis[$key]['onions_competencia']+ $this->onis[$key]['gap_trainee'])/$dias_uteis_periodo) , 2);//onions de competência por dia
                 $this->onis[$key]['onions_papeis_dia'] = round(($this->onis[$key]['onions_papeis']/$dias_uteis_periodo ), 2);//onions de papel por dia
                 $this->onions_advertencias += $oni['advertencias']; //Somando onions de advertência do sistema
-                //Lidando com as férias
-                if($this->onis[$key]['ferias_tres_meses'] > 4){
+                //Lidando com as férias, de forma que só compute férias a partir do dia setado
+                $dias_ferias_pre_desconto =  get_field('dias_ferias_pre_desconto', 'option');
+                if($this->onis[$key]['ferias_tres_meses'] > $dias_ferias_pre_desconto){
                     $this->onis[$key]['onions_de_ferias'] =
                         round(0.33*($this->onis[$key]['onions_competencia_dia'] * $this->onis[$key]['ferias_desconto_padrao']) +
                         $this->onis[$key]['onions_papeis_dia'] * $this->onis[$key]['ferias_desconto_padrao'], 2) +
@@ -435,16 +465,20 @@ class processa_folha{
                 }
 
                 if($oni['funcao'] == 'um_oni'){
-                    $this->onis[$key]['onions'] = $this->onis[$key]['onions_competencia']+$this->onis[$key]['onions_papeis_dia']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do oni
+                    $this->onis[$key]['onions'] = $this->onis[$key]['onions_competencia']+$this->onis[$key]['onions_papeis']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do oni
                 }
 
                 if($oni['funcao'] == 'um_trainee'){
-                    $this->onis[$key]['onions'] = $onions_trainee+$this->onis[$key]['onions_papeis_dia']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do oni
+                    $this->onis[$key]['onions'] = $onions_trainee+$this->onis[$key]['onions_papeis']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do trainee
                 }
                 
             }
-            
-            $this->onions_no_sistema += $this->onis[$key]['onions'];// Onions do sistema
+            if($oni['funcao'] == 'um_socio'){
+                $this->onis[$key]['onions'] = $this->onis[$key]['onions_competencia'];// Onions do sócio
+            }
+            if($oni['funcao'] !== 'um_stag'){
+                $this->onions_no_sistema += $this->onis[$key]['onions'];// Onions do sistema
+            }
             
         }      
        
@@ -457,6 +491,7 @@ class processa_folha{
     *   [$user->display_name]
     *       [
     *       'reembolsos'    => (int) Valor dos reembolsos
+    *       'descricao_reembolsos'    => (array) strings com a descrição dos reembolsos    
     *       'remuneracao'    => (int) Número de onions de competência  
     *       ]
     */
@@ -470,17 +505,121 @@ class processa_folha{
             if($id_do_granatum){
                 $ir = array_search($id_do_granatum, array_column($this->reembolsos_onis, 'id'));
                 $this->onis[$key]['reembolsos'] = $this->reembolsos_onis[$ir]['valor'];
-                
+                $this->onis[$key]['descricao_reembolsos'] = $this->reembolsos_onis[$ir]['gastos'];
             }else{
                 //cadastra o alerta caso não tenha ID cadastrado
                 $this->alerts[] = $key." não tem ID do granatum cadastrada no sistema";
             }
 
-            # FILTRAR STAGS E TRAINEES DEPOIS!!!
-
-            //REMUNERAÇÃO - Colocando os valores por oni
+            //REMUNERAÇÃO - Colocando os valores por sócios, oni e trainees
             $this->onis[$key]['remuneracao'] = $this->onis[$key]['reembolsos']+($this->onis[$key]['onions']*$this->valor_do_onion);
-            
+
+            if($oni['funcao'] == 'um_stag'){
+                $remuneracao_stag = get_field('remuneracao_stag', 'option');//valor da remuneração do stag
+                $this->onis[$key]['remuneracao'] = $remuneracao_stag;
+            }
+        }
+    }
+
+    /**
+    * Consolida toda a folha
+    *
+    * @return Mixed Criando os posts de fechamento da Oni e de pagamento por oni
+    *     
+    */
+    public function consolidaFolha($u_dia){
+        if(count($this->alerts)< 0){
+            # passar um alerta via Ajax de que existem problemas na folha
+            echo "EXISTEM ALERTAS IMPEDINDO O FECHAMENTO";
+            return;
+        }else{
+            if (!empty($_POST['form_action']['Salvar'])){              
+                $ano_mes = substr($u_dia, 0 , 7);//setando o título do post
+                //Fazendo a requisição dos pagametnos
+                $args = array (
+                    'post_type'              => array( 'pagamentos' ),
+                    'post_status'            => array( 'publish' ),
+                    'nopaging'               => true,
+                    's' => $ano_mes
+                );
+                $pagamentos = new WP_Query( $args );
+                //Se tiver posts salvos ele passa batido
+                if ( $pagamentos->have_posts() ) {
+                        #passar via Ajax
+                        echo "já está salvo";
+                } else {
+                    foreach($this->onis as $nome_oni => $oni){
+                        //Criando os posts pagamentos por Oni 
+                        $my_post = array(
+                            'post_title' => $nome_oni." | ".$ano_mes,
+                            'post_status' => 'publish',
+                            'post_type' => 'pagamentos',
+                        );
+                        
+                        $post_id = wp_insert_post($my_post);
+                        update_field('data', $ano_mes, $post_id);
+                        update_field('oni', $oni['ID'], $post_id);
+                        update_field('cargo', $oni['funcao'], $post_id);
+                        update_field('competencias', $oni['competencias'], $post_id);
+                        update_field('guardas', $oni['guardas'], $post_id);
+                        update_field('ferias_desconto_padrao', $oni['ferias_desconto_padrao'], $post_id);
+                        update_field('ferias_desconto_total', $oni['ferias_desconto_total'], $post_id);
+                        update_field('ferias_tres_meses', $oni['ferias_tres_meses'], $post_id);
+                        update_field('advertencias', $oni['advertencias'], $post_id);
+                        if(is_array($oni['explicacoes_advertencias'])){
+                            update_field('explicacoes_advertencias', implode('</br>',$oni['explicacoes_advertencias']), $post_id);
+                        }                        
+                        update_field('onions_competencia', $oni['onions_competencia'], $post_id);
+                        update_field('onions_papeis', $oni['onions_papeis'], $post_id);
+                        update_field('onions_ferias', $oni['onions_ferias'], $post_id);
+                        update_field('onions', $oni['onions'], $post_id);
+                        update_field('reembolsos', $oni['reembolsos'], $post_id);
+                        if(is_array($oni['descricao_reembolsos'])){
+                            update_field('descricao_reembolsos', implode('</br>',$oni['descricao_reembolsos']), $post_id);
+                        }
+                        update_field('remuneracao', $oni['remuneracao'], $post_id);
+                        echo "Folha consolidada";
+                    }
+                }
+                wp_reset_postdata();
+
+                //Fazendo a requisição dos fechamentos mensais
+                $args = array (
+                    'post_type'              => array( 'fechamentos_mensais' ),
+                    'post_status'            => array( 'publish' ),
+                    'nopaging'               => true,
+                    's' => $ano_mes
+                );
+                $pagamentos = new WP_Query( $args );
+                //Se tiver posts salvos ele passa batido
+                if ( $pagamentos->have_posts() ) {
+                        #passar via Ajax
+                        echo "já está salvo";
+                } else {
+                   
+                    //Criando os posts pagamentos por Oni 
+                    $my_post = array(
+                        'post_title' => $ano_mes,
+                        'post_status' => 'publish',
+                        'post_type' => 'fechamentos_mensais',
+                    );
+                    
+                    $post_id = wp_insert_post($my_post);
+                    update_field('data', $ano_mes, $post_id);
+                    update_field('receitas', $this->receitas, $post_id);
+                    update_field('despesas', $this->despesas, $post_id);
+                    update_field('onions_competencia', $this->onions_competencia, $post_id);
+                    update_field('onions_papeis', $this->onions_papeis, $post_id);
+                    update_field('onions_ferias', $this->onions_ferias, $post_id);
+                    update_field('onions_no_sistema', $this->onions_no_sistema, $post_id);
+                    update_field('budget_folha', $this->budget_folha, $post_id);
+                    update_field('valor_do_onion', $this->valor_do_onion, $post_id);
+     
+                    echo "Fechamento mensal consolidado";
+                }
+                
+                wp_reset_postdata();
+            } 
         }
     }
 }
