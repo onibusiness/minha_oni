@@ -415,13 +415,19 @@ pre {
 	background-color: #eee;
 }
 
-.image-profile{
+.image_profile{
 	border-radius:100px;
-	width: 50px;
+	width: 70px;
 }
 
-.competency-sphere{
+.competency_sphere{
 	height: 26px;
     width: 26px;
     border-radius: 16px;
 }
+
+.atomic_card{
+	border: 1px solid black ;
+	padding: 1em;
+}
+

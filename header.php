@@ -39,7 +39,6 @@
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/webfonts/355CEC_14_0.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/webfonts/355CEC_20_0.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css" as="style">
-
 		<link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/apps.css" as="style">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/fonts.css" as="style">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css" as="style">
@@ -47,6 +46,8 @@
 		<link rel="stylesheet" href="<?php echo bloginfo('template_directory'); ?>/css/apps.css">
     <link rel="stylesheet" href="<?php echo bloginfo('template_directory'); ?>/css/fonts.css">
     <link rel="stylesheet" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <script src="https://kit.fontawesome.com/4dad82588a.js" crossorigin="anonymous"></script>
 
    <?php
