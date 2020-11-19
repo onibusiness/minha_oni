@@ -18,6 +18,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/tutoriais/tutoriais_class.php');
         require_once($this->diretorio_tema. '/includes/competencias/competencias_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/evidencias_class.php');
+        require_once($this->diretorio_tema.'/includes/evidencias/processa_evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/ferramentas/ferramentas_class.php');
         require_once($this->diretorio_tema.'/includes/fechamento_mensal/fechamento_mensal_class.php');
         require_once($this->diretorio_tema.'/includes/ferias/ferias_class.php');
@@ -64,7 +65,9 @@ class minha_oni{
         wp_register_style('acf-global', false);
         wp_register_style('acf-input', false);
     }
-    
+
+
+
     
     /**
      * Conta os dias úteis entre duas datas.
