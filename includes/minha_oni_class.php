@@ -19,6 +19,7 @@ class minha_oni{
         require_once($this->diretorio_tema. '/includes/competencias/competencias_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/processa_evidencias_class.php');
+        require_once($this->diretorio_tema.'/includes/competencias/processa_competencias_class.php');
         require_once($this->diretorio_tema.'/includes/ferramentas/ferramentas_class.php');
         require_once($this->diretorio_tema.'/includes/fechamento_mensal/fechamento_mensal_class.php');
         require_once($this->diretorio_tema.'/includes/ferias/ferias_class.php');

@@ -1,4 +1,10 @@
 <?php
+/*
+* Processa evidências
+* Traz operações de processamento, exibição e análise de evidências
+*
+*/
+
 class processa_evidencias{
     public $evidencias;//todas as evidencias
     public $evidencias_filtradas;//evidências de acordo com so parametros de url setados
@@ -116,7 +122,7 @@ class processa_evidencias{
         return $evidencias_da_competencia;
 
     }
-# MONTAR UM ARRAY DE EVIDENCIAS POR ONI CATEGORIZANDO POR COMPETÊNCIA OU FAZER AS FUNÇÕES DE FILTRO DA QUERY????
+
 
 }
 ?>

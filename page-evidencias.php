@@ -32,6 +32,10 @@ $evidencias = new processa_evidencias;
         <?php if($_GET['oni']){?>
             
             <div class="col-3">
+            <?php 
+                $competencias = new processa_competencias;
+                
+            ?>
                 VOU PUXAR A TREE DE COMPETENCIA DO CABRA AQUI
             </div>
         <?php };?>
@@ -80,7 +84,7 @@ $evidencias = new processa_evidencias;
                     <hr>
                     <div class="row">
                         <div class="col">
-                            <div class="collapse" id="<?php echo "evidencia".$post->ID;?>">
+                            <div class="collapse" id="<?php echo "evidencia".$id_evidencia;?>">
                                 <div class="card card-body">
                                 <?php acf_form();?>
                                 </div>
