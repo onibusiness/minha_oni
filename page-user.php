@@ -13,7 +13,7 @@ $profile_atual = get_user_meta($profile_id);
 $permissoes = unserialize($profile_atual['wp_capabilities'][0]);
 
 um_fetch_user( um_profile_id() );
-//echo um_user('display_name'); 
+//echo um_user('display_name');
 
 ?>
 
