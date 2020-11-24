@@ -108,25 +108,27 @@ class customizaacf{
 
     /************************ MONTANDO O TÍTULO DOS POSTS CRIADOS NO FRONT *************************************/
     public function acf_review_before_save_post($post_id) {
+        if(!is_admin()){
+            $user_atual = wp_get_current_user();
+            $post_type_atual =  is_archive() ? get_queried_object()->name : false;
+            $new_title = $post_type_atual." do ".$user_atual->display_name;
+            
+            $new_post = array(
+                'ID'           => $post_id,
+                'post_title'   => $new_title,
+            );
+            
+            // Remove the hook to avoid infinite loop. Please make sure that it has
+            // the same priority (20)
+            remove_action('acf/save_post', 'my_save_post', 20);
+            
+            // Update the post
+            wp_update_post( $new_post );
+            
+            // Add the hook back
+            add_action('acf/save_post', 'my_save_post', 20);
+        }
 
-        $user_atual = wp_get_current_user();
-        $post_type_atual =  is_archive() ? get_queried_object()->name : false;
-        $new_title = $post_type_atual." do ".$user_atual->display_name;
-        
-        $new_post = array(
-            'ID'           => $post_id,
-            'post_title'   => $new_title,
-        );
-        
-        // Remove the hook to avoid infinite loop. Please make sure that it has
-        // the same priority (20)
-        remove_action('acf/save_post', 'my_save_post', 20);
-        
-        // Update the post
-        wp_update_post( $new_post );
-        
-        // Add the hook back
-        add_action('acf/save_post', 'my_save_post', 20);
         
     }
 

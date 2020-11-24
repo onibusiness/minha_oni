@@ -14,7 +14,8 @@ class minha_oni{
 
         $this->setaDiretorioTema();
 
-        //inserindo todos os custom post types        
+        //inserindo todos os custom post types      
+        require_once($this->diretorio_tema.'/includes/comunicados/comunicados_class.php');  
         require_once($this->diretorio_tema.'/includes/tutoriais/tutoriais_class.php');
         require_once($this->diretorio_tema. '/includes/competencias/competencias_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/evidencias_class.php');

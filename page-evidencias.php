@@ -29,14 +29,19 @@ $evidencias = new processa_evidencias;
             }
             ?>
         </div>
-        <?php if($_GET['oni']){?>
+        <?php if($_GET['oni']){
+                $oni_nicename = get_user_by('id', $_GET['oni'])->user_nicename;?>
             
             <div class="col-3">
             <?php 
                 $competencias = new processa_competencias;
-                
+                //Fazendo o loop nas competencias do sistema e apontando para a competencia do oni para pegar o nível
+                while ( $competencias->competencias->have_posts() ) : $competencias->competencias->the_post(); 
+                    echo get_the_title()." - nível : ".$competencias->competencias_por_oni[$oni_nicename][get_the_title()];
+
+                endwhile;
+               
             ?>
-                VOU PUXAR A TREE DE COMPETENCIA DO CABRA AQUI
             </div>
         <?php };?>
 

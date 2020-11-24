@@ -2,7 +2,7 @@
 acf_form_head(); 
 acf_enqueue_uploader();
 $post_type_atual = is_archive() ? get_queried_object()->name : false;
-$user_atual = get_current_user_id();
+
 
 
 //FAZENDO O LOOP DOS ANTIGOS 
@@ -13,7 +13,7 @@ $args = array(
     'meta_query' => array(
 		array(
 			'key' => 'oni',
-			'value' => $user_atual,
+			'value' => $user_atual->ID,
 			'compare' => '=='
         )
     )

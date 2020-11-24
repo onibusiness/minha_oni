@@ -424,10 +424,10 @@ class equipamentos{
                         'acfe_form' => true,
                     ),
                     array(
-                        'key' => 'field_5f6b604bec8d1',
-                        'label' => 'Usuários',
-                        'name' => 'usuarios',
-                        'type' => 'repeater',
+                        'key' => 'field_5f6b6074ec8d2',
+                        'label' => 'Oni',
+                        'name' => 'oni',
+                        'type' => 'user',
                         'instructions' => '',
                         'required' => 0,
                         'conditional_logic' => 0,
@@ -437,39 +437,14 @@ class equipamentos{
                             'id' => '',
                         ),
                         'acfe_permissions' => '',
-                        'acfe_repeater_stylised_button' => 0,
-                        'collapsed' => '',
-                        'min' => 0,
-                        'max' => 0,
-                        'layout' => 'table',
-                        'button_label' => 'Adicionar usuário',
-                        'acfe_settings' => '',
-                        'acfe_form' => true,
-                        'sub_fields' => array(
-                            array(
-                                'key' => 'field_5f6b6074ec8d2',
-                                'label' => 'Oni',
-                                'name' => 'oni',
-                                'type' => 'user',
-                                'instructions' => '',
-                                'required' => 0,
-                                'conditional_logic' => 0,
-                                'wrapper' => array(
-                                    'width' => '',
-                                    'class' => '',
-                                    'id' => '',
-                                ),
-                                'acfe_permissions' => '',
-                                'role' => '',
-                                'allow_null' => 0,
-                                'multiple' => 0,
-                                'return_format' => 'array',
-                                'acfe_bidirectional' => array(
-                                    'acfe_bidirectional_enabled' => '0',
-                                ),
-                                'acfe_form' => true,
-                            ),
+                        'role' => '',
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'return_format' => 'array',
+                        'acfe_bidirectional' => array(
+                            'acfe_bidirectional_enabled' => '0',
                         ),
+                        'acfe_form' => true,
                     ),
                 ),
                 'location' => array(
@@ -513,7 +488,7 @@ class equipamentos{
                 'acfe_note' => '',
             ));
             
-        endif;
+            endif;
     }
 
     //Função pronta que dá um refresh nos permalinks
@@ -526,10 +501,39 @@ class equipamentos{
         }
     }
 
+     /**
+    * Busca os posts de acordo com o usuário
+    *
+    * @return Query com os posts  
+    */
+    public function filtraEquipamentos($current_user){       
+        $meta_query[] = 
+        array(
+        ); 
+ 
+        $meta_query[] =
+        array(
+            'key' => 'oni',
+            'value' => $current_user->ID,
+            'compare' => '=='
+        );
+     
+
+        $args = array(  
+            'post_type' => 'equipamentos' ,
+            'post_status' => array('publish'),
+            'posts_per_page' => -1,
+            'meta_query' => $meta_query
+        );
+        $equipamentos_filtrados = new WP_Query( $args ); 
+        return $equipamentos_filtrados;
+    }
+
+
 }
 
 //Criando o objeto
-$tutoriais = new tutoriais;
+$equipamentos = new equipamentos;
 //Criando o objeto
 $ferramentas = new ferramentas;
 

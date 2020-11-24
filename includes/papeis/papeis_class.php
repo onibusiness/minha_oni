@@ -2,6 +2,7 @@
 /*
 * Papeis
 * Cria um post type chamado papeis e todas as suas configurações no ACF
+* Função de papéis filtrados por oni
 */
 
 class papeis{
@@ -296,6 +297,34 @@ class papeis{
             flush_rewrite_rules(true);
             update_option($this->post_slug . '_flush_rewrite_rules', true);
         }
+    }
+
+    /**
+    * Busca os posts de acordo com o usuário
+    *
+    * @return Query com os posts  
+    */
+    public function filtraPapeis($current_user){       
+        $meta_query[] = 
+        array(
+        ); 
+ 
+        $meta_query[] =
+        array(
+            'key' => 'oni',
+            'value' => $current_user->ID,
+            'compare' => '=='
+        );
+     
+
+        $args = array(  
+            'post_type' => 'papeis' ,
+            'post_status' => array('publish'),
+            'posts_per_page' => -1,
+            'meta_query' => $meta_query
+        );
+        $papeis_filtrados = new WP_Query( $args ); 
+        return $papeis_filtrados;
     }
 
 }

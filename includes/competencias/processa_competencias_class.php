@@ -83,12 +83,13 @@ class processa_competencias{
                 }
             endwhile;
         }
+
     }
 
     /**
     * Processa as competencias do sistema
     *
-    * @return Array $competencias_por_oni 
+    * @return Array $competencias_no_sistema 
     *   
     *   ['nome_da_competencia'] 
     *       [1] => array(['user_nicename]),
@@ -102,26 +103,17 @@ class processa_competencias{
         while ( $this->competencias->have_posts() ) : $this->competencias->the_post(); 
             $competencia = get_the_title();
             for ($i=1; $i < 6 ; $i++) { 
-               
-                echo "<pre>";
-                var_dump(
-                    array_filter( $this->competencias_por_oni, function($v, $k){
-                        echo reset($v);
-                        return  key($v) == $competencia && reset($v) == $i;
-                    }, ARRAY_FILTER_USE_BOTH)
-                );
-                echo "</pre>";
-                $this->competencias_no_sistema[$competencia][$i] = 
-                array_filter( $this->competencias_por_oni, function($v, $k){
-                    echo reset($v);
+                //Filtrando o array de competencia por oni pelo nível da competencia
+                $onis_com_nivel =  array_filter( $this->competencias_por_oni, function($v, $k) use($i, $competencia){
                     return  key($v) == $competencia && reset($v) == $i;
                 }, ARRAY_FILTER_USE_BOTH);
+                //Pegando os nomes dos onis do filtro e jogando para a lista de nível de competencias
+                foreach($onis_com_nivel as $oni_com_nivel => $descricao){
+                    $this->competencias_no_sistema[$competencia][$i][] = $oni_com_nivel; 
+                }
             }
           
         endwhile;
-        echo "<pre>";
-        var_dump($this->competencias_no_sistema);
-        echo "</pre>";
     }
 
 }
