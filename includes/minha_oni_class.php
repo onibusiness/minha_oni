@@ -26,6 +26,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/ferias/ferias_class.php');
         require_once($this->diretorio_tema.'/includes/papeis/papeis_class.php');
         require_once($this->diretorio_tema.'/includes/advertencias/advertencias_class.php');
+        require_once($this->diretorio_tema.'/includes/historico/historico_class.php');
 
         //Pegando as customizações do acf 
         require_once($this->diretorio_tema.'/includes/acf/acf_class.php');

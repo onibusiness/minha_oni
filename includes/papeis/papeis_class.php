@@ -324,6 +324,8 @@ class papeis{
             'meta_query' => $meta_query
         );
         $papeis_filtrados = new WP_Query( $args ); 
+
+        
         return $papeis_filtrados;
     }
 
