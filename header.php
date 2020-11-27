@@ -39,7 +39,7 @@
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/webfonts/355CEC_14_0.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/webfonts/355CEC_20_0.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css" as="style">
-
+    
 		<link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/apps.css" as="style">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/fonts.css" as="style">
     <link rel="preload" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css" as="style">

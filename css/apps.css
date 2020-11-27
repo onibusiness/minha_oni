@@ -10,6 +10,7 @@
 	--yellow: #e3b910;
 	--blue: #2196F3;
 	--orange: #ff3800;
+	--green: #00c875;
 }
 
 
@@ -59,41 +60,6 @@ iframe{
 	text-align: right;
 }
 
-input[type=submit] {
-    height: 3rem;
-    min-height: 3rem;
-    width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    background-color: #ffffff00;
-    text-align: center;
-    color: var(--petro);
-    font-family: 'Typold-Bold';
-    border: solid 2px var(--petro);
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-input[type=submit]:hover{
-	background-color: var(--petro);
-	color: #ffffff;
-	border: solid 2px var(--petro);
-}
-
-input[type=submit].submit_pink {
-    background-color: var(--onipink);
-    color: #ffffff;
-    border: solid 2px var(--onipink);
-
-}
-input[type=submit].submit_pink:hover{
-	background-color: var(--onipink);
-	color: #ffffff;
-	border: solid 0px var(--onipink);
-}
-
-
-
 
 /**************RESIZE**************/
 .escala7{
@@ -118,6 +84,7 @@ input[type=submit].submit_pink:hover{
 }
 .escala2, h4{
 	font-size: 1.25rem;
+	font-weight: bold;
   /*line-height: 2;*/
 }
 .escala1{
@@ -285,6 +252,9 @@ article .escala0, article p, article a, article li{
 .orange{
 	color: var(--orange);
 }
+.green{
+	color: var(--green);
+}
 .gradiente_white_transparente_top{
 	background: #ffffff;
 background: -moz-linear-gradient(-14deg, #ffffff 0%, #ffffff 25vw, #f1f0f0 25.1vw, #f1f0f0 100%);
@@ -413,11 +383,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 .background_grey{
 	background-color: #cfcfcf ;
 }
+.background_green{
+	background-color: var(--green);
+}
 .under_pink{
 	border-bottom: solid 3px var(--onipink);
 }
 .under_petro{
 	border-bottom: solid 3px var(--petro);
+}
+.under_lightgrey{
+	border-bottom: solid 1px var(--light-grey);
 }
 .over_petro{
 	border-top: solid 3px var(--petro);
@@ -435,3 +411,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	border: none !important;
 	border-radius: 0 !important;
 }
+
+
+
+.btn-outline-dark:hover {
+    color: #fff;
+    background-color: var(--onipink) !important; 
+    border-color: var(--onipink) !important; 
+}
+
+pre {
+	background-color: #eee;
+}
+
+.image_profile{
+	border-radius:100px;
+	width: 70px;
+}
+
+.competency_sphere{
+	height: 15px;
+    width: 15px;
+    border-radius: 16px;
+}
+
+.atomic_card{
+	padding: 1em;
+}
+
+.material-icons.md-48 { font-size: 48px; }
