@@ -35,11 +35,33 @@ $evidencias = new processa_evidencias;
             <div class="col-3">
             <?php 
                 $competencias = new processa_competencias;
-                //Fazendo o loop nas competencias do sistema e apontando para a competencia do oni para pegar o nível
-                while ( $competencias->competencias->have_posts() ) : $competencias->competencias->the_post(); 
-                    echo get_the_title()." - nível : ".$competencias->competencias_por_oni[$oni_nicename][get_the_title()];
-
-                endwhile;
+                foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_sistema){
+                    ?>
+                    <!-- Escrevendo a esfera  -->
+                    <p><strong><?php echo $esfera; ?></strong></p>
+                    <?php
+     
+                    //Fazendo o loop nas competencias do sistema e apontando para a competencia do oni para pegar o nível
+                    if(!empty($competencias_no_sistema)){
+                        foreach($competencias_no_sistema as $competencia => $niveis){
+                            ?>
+                            <!-- Escrevendo a competencia  -->
+                            <p><?php echo $competencia; ?></p>
+                            <?php
+                            $nivel_do_oni = 0;
+                            foreach($niveis as $nivel => $onis_no_nivel){
+                                
+                                if(array_search($oni_nicename, $onis_no_nivel) !== false){
+                                    $nivel_do_oni = $nivel;
+                                }
+                            }  
+                            ?>
+                            <!-- Escrevendo o nível  -->
+                            <p><?php echo $nivel_do_oni; ?></p>
+                            <?php     
+                        }   
+                    }
+                }
                
             ?>
             </div>
