@@ -251,6 +251,9 @@ article .escala0, article p, article a, article li{
 .orange{
 	color: var(--orange);
 }
+.green{
+	color: var(--green);
+}
 .gradiente_white_transparente_top{
 	background: #ffffff;
 background: -moz-linear-gradient(-14deg, #ffffff 0%, #ffffff 25vw, #f1f0f0 25.1vw, #f1f0f0 100%);
@@ -388,6 +391,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 .under_petro{
 	border-bottom: solid 3px var(--petro);
 }
+.under_lightgrey{
+	border-bottom: solid 1px var(--light-grey);
+}
 .over_petro{
 	border-top: solid 3px var(--petro);
 }
@@ -403,6 +409,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	background-color: #ffffff;
 	border: none !important;
 	border-radius: 0 !important;
+}
+
+.btn-outline-dark {
+	background-color: white !important;
 }
 
 .btn-outline-dark:hover {
@@ -427,7 +437,7 @@ pre {
 }
 
 .atomic_card{
-	border: 1px solid black ;
 	padding: 1em;
 }
 
+.material-icons.md-48 { font-size: 48px; }
