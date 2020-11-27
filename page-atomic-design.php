@@ -7,29 +7,29 @@ get_header(); ?>
     <div class="escala4">Atomic Elements</div>
     <div class="row ">
         <div class="col-md-6 p-5"> 
-            <div class="escala4">
+            <p class="escala2 mb-0">
                     Título
-            </div>
+            </p>
             <div class="escala1">
                 <code data-lang="html"> 
-                    <pre>&lt;div class="escala4"&gt;Título&lt;/div&gt;</pre>
+                    <pre>&lt;p class="escala2"&gt;Título&lt;/p&gt;</pre>
                 </code>
             </div>
-            <div class="escala2">
+            <p class="escala1 font-weight-bold mb-0">
                 Subtítulo
-            </div>
+            </p>
             <div class="escala1 ">
                 <code data-lang="html"> 
-                    <pre>&lt;div class="escala2"&gt;Subtítulo&lt;/div&gt;</pre>
+                    <pre>&lt;p class="escala1 font-weight-bold"&gt;Subtítulo&lt;/div&gt;</pre>
                 </code>
             </div>
 
-            <div class="escala1">
+            <p class="escala1 mb-0">
                 Texto
-            </div>
+            </p>
             <div class="escala1">
                 <code data-lang="html"> 
-                    <pre>&lt;div class="escala1"&gt;Texto&lt;/div&gt;</pre>
+                    <pre>&lt;p class="escala1"&gt;Texto&lt;/p&gt;</pre>
                 </code>
             </div>
         </div>
@@ -58,7 +58,7 @@ get_header(); ?>
 
         <div class="col-md-6 px-5">
             <div class="d-flex">
-                <p class="escala3 mr-2 align-self-center mb-0"> Competência ativa: </p>
+                <p class="escala2 mr-2 align-self-center mb-0"> Competência ativa: </p>
                 <p class="competency_sphere background_green align-self-center mb-0" />
             </div>
             <div class="escala1 py-2">
@@ -67,7 +67,7 @@ get_header(); ?>
                 </code>
             </div>
             <div class="d-flex">
-                <p class="escala3 mr-2 align-self-center mb-0"> Competência inativa: </p>
+                <p class="escala2 mr-2 align-self-center mb-0"> Competência inativa: </p>
                 <p class="competency_sphere background_grey align-self-center mb-0" />
             </div>
             <div class="escala1 py-2">
@@ -77,7 +77,7 @@ get_header(); ?>
             </div>
 
             <div class="pt-4">
-                <p class="escala3 "> Font Colors</p>
+                <p class="escala2 "> Font Colors</p>
                 <div class="row px-3">
                     <div class="col-md-4 background_petro pt-3">
                         <code class="offwhite">
@@ -145,7 +145,7 @@ get_header(); ?>
         
         <div class="col-md-6 px-5">
             <div class="row">
-                <p class="col-md-12 pl-0 escala3 "> Backgorund Colors</p>
+                <p class="col-md-12 pl-0 escala2 "> Backgorund Colors</p>
                 <div class="col-md-6 background_petro py-2">
                     <code class="onipink">
                         &lt;div class="background_petro"/&gt;
@@ -176,6 +176,52 @@ get_header(); ?>
                         &lt;div class="background_green"/&gt;
                     </code>
                 </div>
+
+                <div class="mt-5 col-md-12 pl-0">
+                    <p class="escala2 "> Tabela</p>
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class ="col-md-9"scope="col">Título</th>
+                                <th class ="col-md-3"scope="col">status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Evidenciação Business Positioning Positioning Positioning</td>
+                                <td class="onipink">Negado</td>
+                            </tr>
+                            <tr>
+                                <td>Evidenciação Business Positioning</td>
+                                <td class="green">Aprovado</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 pl-0">
+                    <code>
+                        <pre class="p-3">
+&lt;table class="table mt-4"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th class ="col-md-9"scope="col"&gt;Título&lt;/th&gt;
+            &lt;th class ="col-md-3"scope="col"&gt;status&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Evidenciação Business Positioning Positioning Positioning&lt;/td&gt;
+            &lt;td class="onipink"&gt;Negado&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Evidenciação Business Positioning&lt;/td&gt;
+            &lt;td class="green"&gt;Aprovado&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+                        </pre>
+                    </code>
+                </div>
             </div>
         </div>
     </div>
@@ -196,7 +242,7 @@ get_header(); ?>
                     <img class="image_profile" src="https://files.monday.com/photos/15813062/thumb/15813062-Diego_Fernandes_photo_2020_08_31_20_26_10.png?1598905570">
                 </div>
                 <div class="col-9 col-md-9 p-0" >
-                    <div class="escala3">Fulano Ciclano</div>
+                    <div class="escala2">Fulano Ciclano</div>
                     <div class="d-flex flex-row justify-content-between flex-wrap">
                         <div class="escala1">Estagiário</div>
                         <div>
@@ -216,7 +262,7 @@ get_header(); ?>
             &lt;img class="image_profile" src="..."&gt;
         &lt;/div&gt;
         &lt;div class="col-9 col-md-9 p-0" &gt;
-            &lt;div class="escala3"&gt;Fulano Ciclano&lt;/div&gt;
+            &lt;div class="escala2"&gt;Fulano Ciclano&lt;/div&gt;
             &lt;div class="d-flex flex-row justify-content-between"&gt;
                 &lt;div class="escala1"&gt;Estagiário&lt;/div&gt;
                 &lt;div&gt;
@@ -244,7 +290,7 @@ get_header(); ?>
         &lt;div class="row"&gt;
             &lt;div class="col-1 col-md-2"&gt;&lt;/div&gt;
             &lt;div class="col-10 col-md-8"&gt;
-                &lt;p class="escala3 text-center"&gt; O que você quer saber? &lt;/p&gt;
+                &lt;p class="escala2  text-center onipink"&gt; O que você quer saber? &lt;/p&gt;
                 &lt;input class="form-control" placeholder="Procurar por ..." type="text"&gt;
             &lt;/div&gt;
             &lt;div class="col-1 col-md-2"&gt;&lt;/div&gt;
@@ -261,7 +307,7 @@ get_header(); ?>
                     <div></div>
                     <div class="col-1 col-md-2"></div>
                     <div class="col-10 col-md-8">
-                        <p class="escala3 text-center onipink"> O que você quer saber? </p>
+                        <p class="escala2  text-center onipink"> O que você quer saber? </p>
                         <input class="form-control" placeholder="Procurar por ..." type="text">
                     </div>
                     <div class="col-1 col-md-2"></div>
@@ -324,21 +370,13 @@ get_header(); ?>
         <div class="col-12 col-md-8 mt-5">
             <div>
                 <div class="d-flex justify-content-between">
-                    <div class='d-flex'>
-                        <a class="mr-2 align-self-center"><i class="material-icons">stars</i></a>    
-                        <a data-toggle="collapse" id="evidencia" href="#CadastrarEvidencia" role="button"
-                            aria-expanded="false" aria-controls="multiCollapseExample1">Cadastrar Evidência</a>
-                    </div>
-                    <div class='d-flex ' id="ferias">
-                        <a class="mr-2 align-self-center"><i class="material-icons">beach_access</i></a>    
-                        <a data-toggle="collapse"  href="#MarcarFerias" role="button" aria-expanded="true" 
-                            aria-controls="multiCollapseExample1">Marcar férias</a>
-                    </div>
-                    <div class='d-flex'>
-                        <a class="mr-2 align-self-center"><i class="material-icons">feedback</i></a>    
-                        <a data-toggle="collapse" id="feedback" href="#DarFeedback" role="button" 
+                    
+                    <a data-toggle="collapse"  class="escala2 " id="evidencia" href="#CadastrarEvidencia" role="button"
+                        aria-expanded="false" aria-controls="multiCollapseExample1">Cadastrar Evidência</a>
+                    <a data-toggle="collapse" class="escala2 " id="ferias"  href="#MarcarFerias" role="button" aria-expanded="true" 
+                        aria-controls="multiCollapseExample1">Marcar férias</a>
+                    <a data-toggle="collapse" class="escala2 " id="feedback" href="#DarFeedback" role="button" 
                             aria-expanded="true" aria-controls="multiCollapseExample1">Dar feedback</a>
-                    </div>
                 </div>
                 
                 <div class="collapse multi-collapse" id="CadastrarEvidencia">
@@ -378,19 +416,18 @@ get_header(); ?>
     <div class="row">
         <div class="col-md-4">
             <code>
-                <pre>
-
+                <pre class="p-3">
 &lt;div class="col-md-8"&gt;
     &lt;div class="atomic_card"&gt;
-        &lt;p class="escala3"&gt; Competências da Oni &lt;/p&gt;
+        &lt;p class="escala2 "&gt; Competências da Oni &lt;/p&gt;
         &lt;div class="d-flex flex-wrap"&gt;
             &lt;div class="col-md-6"&gt;
                 &lt;p class="escala2 onipink under_lightgrey mt-3"&gt;Esfera&lt;/p&gt;
                 &lt;div class="d-flex"&gt;
-                    &lt;div class="col-6 col-md-7 pl-0"&gt;
+                    &lt;div class="col-6 col-md-8 pl-0"&gt;
                         &lt;p class="escala1"&gt;Competência&lt;/p&gt;
                     &lt;/div&gt;
-                    &lt;div class="col-md-5 d-flex justify-content-between align-self-center"&gt;
+                    &lt;div class="col-md-4 d-flex justify-content-around align-self-center"&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
@@ -401,10 +438,10 @@ get_header(); ?>
 
                 &lt;p class="escala2 onipink under_lightgrey mt-3"&gt;Esfera&lt;/p&gt;
                 &lt;div class="d-flex"&gt;
-                    &lt;div class="col-6 col-md-7 pl-0"&gt;
+                    &lt;div class="col-6 col-md-8 pl-0"&gt;
                         &lt;p class="escala1"&gt;Competência&lt;/p&gt;
                     &lt;/div&gt;
-                    &lt;div class="col-md-5 d-flex justify-content-between align-self-center"&gt;
+                    &lt;div class="col-md-4 d-flex justify-content-around align-self-center"&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
@@ -416,10 +453,10 @@ get_header(); ?>
             &lt;div class="col-md-6"&gt;
                 &lt;p class="escala2 onipink under_lightgrey mt-3"&gt;Esfera&lt;/p&gt;
                 &lt;div class="d-flex"&gt;
-                    &lt;div class="col-6 col-md-7 pl-0"&gt;
+                    &lt;div class="col-6 col-md-8 pl-0"&gt;
                         &lt;p class="escala1"&gt;Competência&lt;/p&gt;
                     &lt;/div&gt;
-                    &lt;div class="col-md-5 d-flex justify-content-between align-self-center"&gt;
+                    &lt;div class="col-md-4 d-flex justify-content-around align-self-center"&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
@@ -428,10 +465,10 @@ get_header(); ?>
                     &lt;/div&gt;
                 &lt;/div&gt;
                 &lt;div class="d-flex"&gt;
-                    &lt;div class="col-6 col-md-7 pl-0"&gt;
+                    &lt;div class="col-6 col-md-8 pl-0"&gt;
                         &lt;p class="escala1"&gt;Marketing strategy/intelligence&lt;/p&gt;
                     &lt;/div&gt;
-                    &lt;div class="col-md-5 d-flex justify-content-between align-self-center"&gt;
+                    &lt;div class="col-md-4 d-flex justify-content-around align-self-center"&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
                         &lt;p class="competency_sphere background_green" /&gt;
@@ -447,15 +484,15 @@ get_header(); ?>
         </div>
         <div class="col-md-8 mt-5">
             <div class="atomic_card">
-                <p class="escala3"> Competências da Oni </p>
+                <p class="escala2 "> Competências da Oni </p>
                 <div class="d-flex flex-wrap">
                     <div class="col-md-6">
-                        <p class="escala2 onipink under_lightgrey mt-3 font-weight-bold">Esfera</p>
+                        <p class="escala2 onipink under_lightgrey mt-3 ">Esfera</p>
                         <div class="d-flex">
-                            <div class="col-6 col-md-7 pl-0">
+                            <div class="col-6 col-md-8 pl-0">
                                 <p class="escala1">Competência</p>
                             </div>
-                            <div class="col-md-5 d-flex justify-content-between align-self-center">
+                            <div class="col-md-4 d-flex justify-content-around align-self-center">
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
@@ -464,12 +501,12 @@ get_header(); ?>
                             </div>
                         </div>
 
-                        <p class="escala2 onipink under_lightgrey mt-3 font-weight-bold">Esfera</p>
+                        <p class="escala2 onipink under_lightgrey mt-3 ">Esfera</p>
                         <div class="d-flex">
-                            <div class="col-6 col-md-7 pl-0">
+                            <div class="col-6 col-md-8 pl-0">
                                 <p class="escala1">Competência</p>
                             </div>
-                            <div class="col-md-5 d-flex justify-content-between align-self-center">
+                            <div class="col-md-4 d-flex justify-content-around align-self-center">
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
@@ -479,12 +516,12 @@ get_header(); ?>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <p class="escala2 onipink under_lightgrey mt-3 font-weight-bold">Esfera</p>
+                        <p class="escala2 onipink under_lightgrey mt-3 ">Esfera</p>
                         <div class="d-flex">
-                            <div class="col-6 col-md-7 pl-0">
+                            <div class="col-6 col-md-8 pl-0">
                                 <p class="escala1">Competência</p>
                             </div>
-                            <div class="col-md-5 d-flex justify-content-between align-self-center">
+                            <div class="col-md-4 d-flex justify-content-around align-self-center">
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
@@ -493,10 +530,10 @@ get_header(); ?>
                             </div>
                         </div>
                         <div class="d-flex">
-                            <div class="col-6 col-md-7 pl-0">
+                            <div class="col-6 col-md-8 pl-0">
                                 <p class="escala1">Marketing strategy/intelligence</p>
                             </div>
-                            <div class="col-md-5 d-flex justify-content-between align-self-center">
+                            <div class="col-md-4 d-flex justify-content-around align-self-center">
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
                                 <p class="competency_sphere background_green" />
@@ -514,19 +551,33 @@ get_header(); ?>
 
         <div class="col-md-4">
             <div class="atomic-card background_petro py-4 px-5">
-                <p class="escala3 onipink"> Guardião de: </p>
+                <p class="escala2  onipink"> Guardião de </p>
                 <div class="row lightgrey px-3">
-                    <p class="col-md-6 escala1"> Luitá</p>
-                    <p class="col-md-6 escala1"> Mezo</p>
-                    <p class="col-md-6 escala1"> SRB</p>
-                    <p class="col-md-6 escala1"> Savie</p>
-                    <p class="col-md-6 escala1"> Doctor Up</p>
+                    <p class="pl-0 col-md-6 escala1"> Luitá</p>
+                    <p class="pl-0 col-md-6 escala1"> Mezo</p>
+                    <p class="pl-0 col-md-6 escala1"> SRB</p>
+                    <p class="pl-0 col-md-6 escala1"> Savie</p>
+                    <p class="pl-0 col-md-6 escala1"> Doctor Up</p>
                 </div>
             </div>
         </div>
         
         <div class="col-md-8">
-
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-4"&gt;
+    &lt;div class="atomic-card background_petro py-4 px-5"&gt;
+        &lt;p class="escala2  onipink"&gt; Guardião de &lt;/p&gt;
+        &lt;div class="row lightgrey px-3"&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Luitá&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Mezo&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; SRB&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Savie&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Doctor Up&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </code>
 
 
 
@@ -536,40 +587,69 @@ get_header(); ?>
     <div class="row mt-4">
         <div class="col-md-4">
             <div class="atomic-card background_petro py-4 px-5">
-                <p class="escala3 onipink"> Equipamentos: </p>
-                <div class="row lightgrey px-3 py-4">
-                    <p class="col-md-6 escala1"> Fone</p>
-                    <p class="col-md-6 escala1"> Notebook</p>
-                    <p class="col-md-6 escala1"> Cadeira</p>
-                </div>
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-outline-dark background_white">Solicitar Equipamento</button>
+                <p class="escala2  onipink"> Equipamentos</p>
+                <div class="row lightgrey px-3">
+                    <p class="pl-0 col-md-6 escala1"> Fone</p>
+                    <p class="pl-0 col-md-6 escala1"> Notebook</p>
+                    <p class="pl-0 col-md-6 escala1"> Cadeira</p>
                 </div>
             </div>
             
         </div>
 
-        <div class="col-md-6">
-
+        <div class="col-md-8">
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-4"&gt;
+    &lt;div class="atomic-card background_petro py-4 px-5"&gt;
+        &lt;p class="escala2  onipink"&gt; Equipamentos&lt;/p&gt;
+        &lt;div class="row lightgrey px-3"&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Fone&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Notebook&lt;/p&gt;
+            &lt;p class="pl-0 col-md-6 escala1"&gt; Cadeira&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </code>
         </div>
 
     </div>
 
     <div class="row mt-4">
         <div class="col-md-4">
-
-
-
-
-
-
-
-
-
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-8"&gt;
+    &lt;div class="atomic_card background_white "&gt; 
+        &lt;p class="col-md-12 escala2  onipink mb-0"&gt;Onis de férias&lt;/p&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-md-4 d-flex mt-3"&gt;
+                &lt;div class="col-3 col-md-4 align-self-center"&gt;
+                    &lt;img class="image_profile" src="https://files.monday.com/photos/15813062/thumb/15813062-Diego_Fernandes_photo_2020_08_31_20_26_10.png?1598905570"&gt;
+                &lt;/div&gt;
+                &lt;div class="col-9 col-md-8 pl-1 pt-2" &gt;
+                    &lt;p class="escala1 mb-0"&gt;Fulano Ciclano&lt;/p&gt;
+                    &lt;p class="escala0 mb-0"&gt;Retorna: 20/12/2020&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="col-md-4 d-flex mt-3"&gt;
+                &lt;div class="col-3 col-md-4 align-self-center"&gt;
+                    &lt;img class="image_profile" src="https://files.monday.com/photos/15813062/thumb/15813062-Diego_Fernandes_photo_2020_08_31_20_26_10.png?1598905570"&gt;
+                &lt;/div&gt;
+                &lt;div class="col-9 col-md-8 pl-1 pt-2" &gt;
+                    &lt;p class="escala1 mb-0"&gt;Fulano Ciclano&lt;/p&gt;
+                    &lt;p class="escala0 mb-0"&gt;Retorna: 20/12/2020&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </code>
         </div>
+
         <div class="col-md-8">
             <div class="atomic_card background_white "> 
-                <p class="col-md-12 escala3 onipink mb-0">Onis de férias</p>
+                <p class="col-md-12 escala2  onipink mb-0">Onis de férias</p>
                 <div class="row">
                     <div class="col-md-4 d-flex mt-3">
                         <div class="col-3 col-md-4 align-self-center">
@@ -615,25 +695,22 @@ get_header(); ?>
 
     <div class="row mt-4">
         <div class="col-md-4">
-
             <div class="atomic_card">
-                        <p class="escala2 font-weight-bold mb-0"> Onions acumulados do mês</p>
-                        <p class="escala1 mb-0"> 20</p>
-                </div>  
-
-
-            </div>
-
-
+                    <p class="escala2  mb-0"> Onions acumulados do mês</p>
+                    <p class="escala1 mb-0"> 20</p>
+            </div> 
         </div>
 
         <div class="col-md-8">
-
-
-
-
-
-
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-4"&gt;
+    &lt;div class="atomic_card"&gt;
+            &lt;p class="escala2  mb-0"&gt; Onions acumulados do mês&lt;/p&gt;
+            &lt;p class="escala1 mb-0"&gt; 20&lt;/p&gt;
+    &lt;/div&gt; 
+&lt;/div></pre>
+            </code>
         </div>
     </div>
 
@@ -642,7 +719,7 @@ get_header(); ?>
 
             <div class="atomic_card">
                 <div class="col-md-12 pl-0 d-flex justify-content-between">
-                    <p class="escala2 font-weight-bold"> Evidências</p>
+                    <p class="escala2 "> Evidências</p>
                     <div>
                         <button type="button" class="btn btn-outline-dark">Evidênciar</button>
                     </div>
@@ -676,11 +753,39 @@ get_header(); ?>
 
         <div class="col-md-8">
 
-
-
-
-
-
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-4"&gt;
+    &lt;div class="atomic_card"&gt;
+        &lt;div class="col-md-12 pl-0 d-flex justify-content-between"&gt;
+            &lt;p class="escala2 "&gt; Evidências&lt;/p&gt;
+            &lt;div&gt;
+                &lt;button type="button" class="btn btn-outline-dark"&gt;Evidênciar&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-12 pl-0"&gt;
+            &lt;table class="table mt-4"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th class ="col-md-9"scope="col"&gt;Título&lt;/th&gt;
+                        &lt;th class ="col-md-3"scope="col"&gt;status&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;Evidenciação Business Positioning Positioning Positioning&lt;/td&gt;
+                        &lt;td class="onipink"&gt;Negado&lt;/td&gt;
+                    &lt;/tr&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;Evidenciação Business Positioning&lt;/td&gt;
+                        &lt;td class="green"&gt;Aprovado&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </code>
         </div>
     </div>
 
@@ -690,7 +795,7 @@ get_header(); ?>
             <div class="atomic_card">
                 <div class="col-md-12 pl-0 d-flex justify-content-between">
                     <div>
-                        <p class="escala2 font-weight-bold mb-0"> Férias</p>
+                        <p class="escala2  mb-0"> Férias</p>
                         <p class="escala0">Você não possui férias marcadas</p>
                     </div>
                     <div class="align-self-center">
@@ -724,12 +829,41 @@ get_header(); ?>
         </div>
 
         <div class="col-md-8">
-
-
-
-
-
-
+            <code>
+                <pre class="p-3">
+&lt;div class="col-md-4"&gt;
+    &lt;div class="atomic_card"&gt;
+        &lt;div class="col-md-12 pl-0 d-flex justify-content-between"&gt;
+            &lt;div&gt;
+                &lt;p class="escala2  mb-0"&gt; Férias&lt;/p&gt;
+                &lt;p class="escala0"&gt;Você não possui férias marcadas&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="align-self-center"&gt;
+                &lt;button type="button" class="btn btn-outline-dark"&gt;Realizar pedido&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-12 pl-0"&gt;
+            &lt;p class="escala1 mb-0 mt-3 "&gt; Último Pedido de Férias&lt;/p&gt;
+            &lt;table class="table mt-2"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th class ="col-md-4"scope="col"&gt;Saída&lt;/th&gt;
+                        &lt;th class ="col-md-4"scope="col"&gt;Retorno&lt;/th&gt;
+                        &lt;th class ="col-md-4"scope="col"&gt;Status&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                    &lt;tr&gt;
+                        &lt;td&gt;20/12/2020&lt;/td&gt;
+                        &lt;td&gt;04/01/2021&lt;/td&gt;
+                        &lt;td class="onipink"&gt;Negado&lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </code>
         </div>
     </div>
     
