@@ -17,7 +17,8 @@ class minha_oni{
         //inserindo todos os custom post types      
         require_once($this->diretorio_tema.'/includes/comunicados/comunicados_class.php');  
         require_once($this->diretorio_tema.'/includes/tutoriais/tutoriais_class.php');
-        require_once($this->diretorio_tema. '/includes/competencias/competencias_class.php');
+        require_once($this->diretorio_tema.'/includes/competencias/competencias_class.php');
+        require_once($this->diretorio_tema.'/includes/competencias/lentes_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/evidencias/processa_evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/competencias/processa_competencias_class.php');
