@@ -53,14 +53,33 @@ class processa_competencias{
     * @return Query com os posts de competências
     */
     public function puxaCompetencias(){
-        
-        $args = array(  
-            'post_type' => 'competencias',
-            'post_status' => array('publish'),
-            'posts_per_page' => -1,
+        $esferas = get_terms(
+            array(
+                'taxonomy'   => 'esfera',
+                'hide_empty' => false,
+            )
         );
-        $competencias = new WP_Query( $args ); 
-        $this->competencias = $competencias;
+
+        if ( ! empty( $esferas ) && is_array( $esferas ) ) {
+            foreach ( $esferas as $esfera ) {
+                $this->competencias[$esfera->name] = array();
+                $args = array(  
+                    'post_type' => 'competencias',
+                    'post_status' => array('publish'),
+                    'posts_per_page' => -1,
+                    'tax_query' => array(
+                        array (
+                            'taxonomy' => 'esfera',
+                            'field' => 'slug',
+                            'terms' => $esfera->slug,
+                        )
+                    ),
+                );
+                $competencias = new WP_Query( $args ); 
+                $this->competencias[$esfera->name] = $competencias;
+            }
+        } 
+
     }
 
     /**
@@ -73,15 +92,18 @@ class processa_competencias{
     */
     public function competenciasPorOni(){
         foreach($this->users_wordpress as $user){
-            while ( $this->competencias->have_posts() ) : $this->competencias->the_post(); 
-                $this->competencias_por_oni[$user->user_nicename][get_the_title()] = 0;
-            endwhile;
-            while ( $this->evolucoes->have_posts() ) : $this->evolucoes->the_post(); 
-                $campos = get_fields();
-                if($campos['oni'] == $user){
-                    $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
-                }
-            endwhile;
+            foreach($this->competencias as $esfera){
+                while ( $esfera->have_posts() ) : $esfera->the_post(); 
+                    $this->competencias_por_oni[$user->user_nicename][get_the_title()] = 0;
+                endwhile;
+                while ( $this->evolucoes->have_posts() ) : $this->evolucoes->the_post(); 
+                    $campos = get_fields();
+                    if($campos['oni'] == $user){
+                        $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
+                    }
+                endwhile;
+            }
+           
         }
 
     }
@@ -100,20 +122,24 @@ class processa_competencias{
     *
     */
     public function competenciasNoSistema(){
-        while ( $this->competencias->have_posts() ) : $this->competencias->the_post(); 
-            $competencia = get_the_title();
-            for ($i=1; $i < 6 ; $i++) { 
-                //Filtrando o array de competencia por oni pelo nível da competencia
-                $onis_com_nivel =  array_filter( $this->competencias_por_oni, function($v, $k) use($i, $competencia){
-                    return  key($v) == $competencia && reset($v) == $i;
-                }, ARRAY_FILTER_USE_BOTH);
-                //Pegando os nomes dos onis do filtro e jogando para a lista de nível de competencias
-                foreach($onis_com_nivel as $oni_com_nivel => $descricao){
-                    $this->competencias_no_sistema[$competencia][$i][] = $oni_com_nivel; 
+        foreach($this->competencias as $esfera => $competencias){
+            $this->competencias_no_sistema[$esfera] = array();
+            while ( $competencias->have_posts() ) : $competencias->the_post(); 
+                $competencia = get_the_title();
+                for ($i=1; $i < 6 ; $i++) { 
+                    //Filtrando o array de competencia por oni pelo nível da competencia
+                    $onis_com_nivel =  array_filter( $this->competencias_por_oni, function($v, $k) use($i, $competencia){
+                        return  key($v) == $competencia && reset($v) == $i;
+                    }, ARRAY_FILTER_USE_BOTH);
+                    $this->competencias_no_sistema[$esfera][$competencia][$i] = array();
+                    //Pegando os nomes dos onis do filtro e jogando para a lista de nível de competencias
+                    foreach($onis_com_nivel as $oni_com_nivel => $descricao){
+                        $this->competencias_no_sistema[$esfera][$competencia][$i][] = $oni_com_nivel; 
+                    }
                 }
-            }
-          
-        endwhile;
+            
+            endwhile;
+        }
     }
 
 }

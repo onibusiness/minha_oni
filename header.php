@@ -50,9 +50,9 @@
     <script src="https://kit.fontawesome.com/4dad82588a.js" crossorigin="anonymous"></script>
 
    <?php
-   // Esse snnipet te mostra qual arquivo do template está sendo renderizado no front
+   /* Esse snnipet te mostra qual arquivo do template está sendo renderizado no front
     global $template;
-    echo basename($template);
+    echo basename($template);*/
 ?>
 
   </head>
