@@ -550,7 +550,7 @@ get_header(); ?>
     <div class="row">
 
         <div class="col-md-4">
-            <div class="atomic-card background_petro py-4 px-5">
+            <div class="atomic_card background_petro py-4 px-5">
                 <p class="escala2  onipink"> Guardião de </p>
                 <div class="row lightgrey px-3">
                     <p class="pl-0 col-md-6 escala1"> Luitá</p>
@@ -566,7 +566,7 @@ get_header(); ?>
             <code>
                 <pre class="p-3">
 &lt;div class="col-md-4"&gt;
-    &lt;div class="atomic-card background_petro py-4 px-5"&gt;
+    &lt;div class="atomic_card background_petro py-4 px-5"&gt;
         &lt;p class="escala2  onipink"&gt; Guardião de &lt;/p&gt;
         &lt;div class="row lightgrey px-3"&gt;
             &lt;p class="pl-0 col-md-6 escala1"&gt; Luitá&lt;/p&gt;
@@ -586,7 +586,7 @@ get_header(); ?>
     </div>
     <div class="row mt-4">
         <div class="col-md-4">
-            <div class="atomic-card background_petro py-4 px-5">
+            <div class="atomic_card background_petro py-4 px-5">
                 <p class="escala2  onipink"> Equipamentos</p>
                 <div class="row lightgrey px-3">
                     <p class="pl-0 col-md-6 escala1"> Fone</p>
@@ -601,7 +601,7 @@ get_header(); ?>
             <code>
                 <pre class="p-3">
 &lt;div class="col-md-4"&gt;
-    &lt;div class="atomic-card background_petro py-4 px-5"&gt;
+    &lt;div class="atomic_card background_petro py-4 px-5"&gt;
         &lt;p class="escala2  onipink"&gt; Equipamentos&lt;/p&gt;
         &lt;div class="row lightgrey px-3"&gt;
             &lt;p class="pl-0 col-md-6 escala1"&gt; Fone&lt;/p&gt;

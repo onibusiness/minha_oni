@@ -8,7 +8,7 @@
         include(get_stylesheet_directory() . '/template-parts/card-user-equipamentos.php');
         ?>
     </div>
-    <div class="col-8">
+    <div class="col-8 pl-0">
         <?php 
         include(get_stylesheet_directory() . '/template-parts/search.php');
         include(get_stylesheet_directory() . '/template-parts/comunicados.php');

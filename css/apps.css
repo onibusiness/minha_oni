@@ -426,7 +426,7 @@ pre {
 
 .image_profile{
 	border-radius:100px;
-	width: 70px;
+	width: 60px;
 }
 
 .competency_sphere{
@@ -436,7 +436,12 @@ pre {
 }
 
 .atomic_card{
-	padding: 1em;
+	padding: 2em;
+	margin-bottom: .6em;	
 }
 
 .material-icons.md-48 { font-size: 48px; }
+
+.is-search-input{
+	height: 40px !important;
+}

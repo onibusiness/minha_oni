@@ -24,26 +24,26 @@ $(document).ready(function(){
         $(this).addClass("font-weight-bold");
         $('#ferias').removeClass('font-weight-bold');
         $('#feedback').removeClass('font-weight-bold');
-        $('#MarcarFerias').removeClass("show");
-        $('#DarFeedback').removeClass("show");
+        $('.show').removeClass("show");
     });
     
     $('#ferias').click( function() {
         $(this).addClass("font-weight-bold");
         $('#feedback').removeClass('font-weight-bold');
         $('#evidencia').removeClass('font-weight-bold')
-        $('#CadastrarEvidencia').removeClass("show");
-        $('#DarFeedback').removeClass("show");
+        $('.show').removeClass("show");
     });
     
     $('#feedback').click( function() {
         $(this).addClass("font-weight-bold");
         $('#evidencia').removeClass('font-weight-bold')
         $('#ferias').removeClass('font-weight-bold');
-        $('#CadastrarEvidencia').removeClass("show");
-        $('#MarcarFerias').removeClass("show");
+        $('.show').removeClass("show");
     });
 
+    $('.target_js').click( function(){
+        $('.target_js').removeClass("show");
+    });
 
 });
     

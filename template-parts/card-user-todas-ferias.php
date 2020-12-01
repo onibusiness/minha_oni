@@ -1,6 +1,12 @@
-<div style='border: solid 1px black;'>
-    <p>Próximas ferias: </p>
-    <a href="<?php echo get_site_url()."/ferias/";?>">Pedir ferias</a>
+<div class="atomic_card background_white">
+  <div class="col-md-12 pl-0 d-flex justify-content-between">
+    <p class="escala2 align-self-center">Próximas ferias: </p>
+    <div >
+      <button type="button" class="btn btn-outline-dark">
+        <a href="<?php echo get_site_url()."/ferias/";?>">Pedir ferias</a>
+      </button>
+    </div>
+  </div>
     <?php 
     $ferias = ferias::filtraFerias($current_user);
     while ( $ferias->have_posts() ) : $ferias->the_post(); 
