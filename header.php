@@ -54,6 +54,12 @@
     global $template;
     echo basename($template);*/
 ?>
+  <?php
+      wp_nav_menu( array(
+      'theme_location' => 'menu-geral',
+      'container' => 'nav',
+      'container_class' => 'custom-menu' ) );
+    ?>
 
   </head>
   <body >

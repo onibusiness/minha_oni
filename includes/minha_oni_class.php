@@ -35,6 +35,9 @@ class minha_oni{
         //funcionalidades que o tema suporta
         add_action('after_setup_theme', array($this,'suporteTema')); 
 
+        //acrescentando o menu
+        add_action('init', array($this,'adicionaMenu')); 
+
         //Ajustando o carregamento dos scripts e estilos
         add_action('wp_enqueue_scripts', array($this,'ajustaRequisicoes')); 
 
@@ -55,6 +58,18 @@ class minha_oni{
         add_theme_support( 'sensei' );
 
     }
+
+
+    //Adicionando os menus
+    public function adicionaMenu(){
+        register_nav_menus(
+            array(
+              'menu-geral' => __( 'Geral' )
+            )
+          );
+
+    }
+
 
     //Mexendo na ordem de requisição dos estilos e scripts
     public function ajustaRequisicoes(){
