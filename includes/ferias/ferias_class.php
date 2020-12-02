@@ -140,6 +140,7 @@ class ferias{
                         ),
                         'acfe_permissions' => array(
                             0 => 'administrator',
+                            0 => 'um_socio',
                         ),
                         'choices' => array(
                             'Padrão' => 'Padrão',

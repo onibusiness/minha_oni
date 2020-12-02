@@ -46,13 +46,23 @@ class processa_evidencias{
         array(
         ); 
         if($_GET['oni']){
-        $meta_query[] =
-        array(
-            'key' => 'oni',
-            'value' => $_GET['oni'],
-            'compare' => '=='
-        );
+            $meta_query[] =
+                array(
+                    'key' => 'oni',
+                    'value' => $_GET['oni'],
+                    'compare' => '=='
+                );      
         };
+        global $template;
+        if(basename($template) == "page-user.php"){
+            $user_id =  um_profile_id();
+            $meta_query[] =
+            array(
+                'key' => 'oni',
+                'value' => $user_id,
+                'compare' => '=='
+            ); 
+        }
 
         $args = array(  
             'post_type' => 'evidencias' ,

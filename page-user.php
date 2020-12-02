@@ -7,6 +7,7 @@ Template Name: User
 <?php acf_form_head(); ?>
 <?php get_header();
 
+
 //Pega o ID do perfil quando está na página profile do Ultimate member
 $profile_id = um_profile_id();
 
