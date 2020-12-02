@@ -1,6 +1,6 @@
 <div class="atomic_card background_white">
   <div class="col-md-12 pl-0 d-flex justify-content-between">
-    <p class="escala2">Evidências: </p>
+    <p class="escala1 bold">Evidências: </p>
     <div>
       <button type="button" class="btn btn-outline-dark">
         <a href="<?php echo get_site_url()."/evidencias/";?>">Cadastrar evidências</a>
@@ -11,7 +11,7 @@
   <div class="col-md-12 pl-0">
     <table class="table mt-4">
       <thead>
-          <tr>
+          <tr class='escala-1'>
               <th scope="col">Data</th>
               <th scope="col">Título</th>
               <th scope="col">Parecer</th>
@@ -25,7 +25,7 @@
           $campos = get_fields();
           ?>
           
-          <tr>
+          <tr class='escala-1'>
             <td><?php echo $campos['data'];?></td>
             <td><?php echo $campos['competencia']->post_title;?></td>
             <td><?php echo $campos['parecer'];?></td>

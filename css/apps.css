@@ -91,7 +91,7 @@ iframe{
  font-size: 1.25rem;
  /*line-height: 2;*/
 }
-.escala0, p, a, li{
+.escala0{
  font-size: 1.07rem;
  /*line-height: 2;*/
 }
@@ -183,7 +183,7 @@ article .escala0, article p, article a, article li{
 	.escala1{
 	 font-size: 1.25rem;
 	}
-	.escala0, p, a, li{
+	.escala0{
 	 font-size: 1.07rem;
 	}
 }

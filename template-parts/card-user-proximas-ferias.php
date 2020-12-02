@@ -1,5 +1,5 @@
-<div class="atomic_card background_white py-4 px-5">
-    <p class="escala2  onipink">Próximas ferias </p>
+<div class="atomic_card background_white py-4">
+    <p class="escala1 bold  onipink">Próximas ferias </p>
     <?php 
     $ferias = ferias::filtraFerias($current_user);
     while ( $ferias->have_posts() ) : $ferias->the_post(); 
@@ -9,7 +9,7 @@
       $dias_de_ferias = minha_oni::contaDiasUteis(strtotime($data_de_inicio_ferias), strtotime($data_de_termino_ferias));
       if(strtotime($data_de_inicio_ferias) >= $hoje){
       ?>
-        <p><?php echo $dias_de_ferias." dias úteis | de ".$campos['primeiro_dia_fora']." a ".$campos['ultimo_dia_fora'];?></p>
+        <p class="escala0"><?php echo $dias_de_ferias." dias úteis | de ".$campos['primeiro_dia_fora']." a ".$campos['ultimo_dia_fora'];?></p>
       <?php
       } 
     endwhile;

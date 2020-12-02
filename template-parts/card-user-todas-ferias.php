@@ -1,6 +1,6 @@
 <div class="atomic_card background_white">
   <div class="col-md-12 pl-0 d-flex justify-content-between">
-    <p class="escala2 align-self-center">Próximas ferias: </p>
+    <p class="escala1 bold align-self-center">Próximas ferias: </p>
     <div >
       <button type="button" class="btn btn-outline-dark">
         <a href="<?php echo get_site_url()."/ferias/";?>">Pedir ferias</a>

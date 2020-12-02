@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col">
             <div class="collapse" id="<?php echo $user_atual->user_nicename;?>">
-                <div class="card card-body">
+            
                     <?php 
                     $options = array(
                         'field_groups' => ['group_5f3fe0d54faef'],
@@ -33,7 +33,7 @@
                     
                     acf_form($options);
                     ?>
-                </div>
+              
             </div>
         </div>
     </div>

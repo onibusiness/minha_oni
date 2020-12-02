@@ -1,7 +1,7 @@
 <div class="atomic_card background_white ">
-    <p class="escala2  onipink">Férias da equipe </p>
+    <p class="escala1 bold onipink">Férias da equipe </p>
     
-    <p class="escala1 font-weight-bold">Onis de férias</p>
+    <p class="escala0 font-weight-bold">Onis de férias</p>
     <div class="row">
 
         <?php 
@@ -14,8 +14,8 @@
                     <img class="image_profile" src="<?php echo get_avatar_url($oni_de_ferias["ID_oni"]);?>">
                 </div>
                 <div class="col-9 col-md-8 pl-1 pt-2" >
-                    <p class="escala1 mb-0"><?php echo $oni_de_ferias['nome_oni']." - ".$oni_de_ferias['dias_de_ferias']." dias úteis";?></p>
-                    <p class="escala0 mb-0"><?php echo "De ".$oni_de_ferias['data_de_inicio_ferias']." a ".$oni_de_ferias['data_de_termino_ferias'];?></p>
+                    <p class="escala0 mb-0"><?php echo $oni_de_ferias['nome_oni']." - ".$oni_de_ferias['dias_de_ferias']." dias úteis";?></p>
+                    <p class="escala-1 mb-0"><?php echo "De ".$oni_de_ferias['data_de_inicio_ferias']." a ".$oni_de_ferias['data_de_termino_ferias'];?></p>
                 </div>
             </div>   
             <?php
@@ -23,7 +23,7 @@
         }
     ?>
     </div> 
-    <p class="escala1 font-weight-bold" >Próximas férias</p>
+    <p class="escala0 font-weight-bold" >Próximas férias</p>
     <div class="row">
         <?php
         if(is_array($ferias_da_oni['proximas'])){
@@ -34,8 +34,8 @@
                     <img class="image_profile" src="<?php echo get_avatar_url($oni_de_ferias["ID_oni"]);?>">
                 </div>
                 <div class="col-9 col-md-8 pl-1 pt-2" >
-                    <p class="escala1 mb-0"><?php echo $oni_de_ferias['nome_oni']." - ".$oni_de_ferias['dias_de_ferias']." dias úteis";?></p>
-                    <p class="escala0 mb-0"><?php echo "De ".$oni_de_ferias['data_de_inicio_ferias']." a ".$oni_de_ferias['data_de_termino_ferias'];?></p>
+                    <p class="escala0 mb-0"><?php echo $oni_de_ferias['nome_oni']." - ".$oni_de_ferias['dias_de_ferias']." dias úteis";?></p>
+                    <p class="escala-1 mb-0"><?php echo "De ".$oni_de_ferias['data_de_inicio_ferias']." a ".$oni_de_ferias['data_de_termino_ferias'];?></p>
                 </div>
             </div>  
         <?php

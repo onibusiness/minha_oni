@@ -12,9 +12,9 @@ $data_limite = strtotime($dias, strtotime($data_publicada));//data limite do avi
 //só mostra se tiver na data
 if($data_limite >= $hoje){
 ?>
-<div style='border: solid 1px black;'>
-    <p><?php the_title();?></p>
-    <p><?php the_content();?></p>
+<div class="atomic_card background_pink py-4 px-5">
+    <p class="escala1 bold onipetro"><?php the_title();?></p>
+    <div class="escala-1"><?php the_content();?></div>
     </div>
 <?php
 } 
