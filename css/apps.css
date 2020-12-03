@@ -11,6 +11,7 @@
 	--blue: #2196F3;
 	--orange: #ff3800;
 	--green: #00c875;
+	--pink: #ff5ac4;
 }
 
 
@@ -405,6 +406,92 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	border-top: solid 3px #ffffff;
 }
 
+/***** ATÓMOS DE RESPOSTA PARA O USUÁRIO *****/
+.pending{
+	color: var(--grey);
+}
+.pending::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f141 ";
+	margin-right:0.5em;
+}
+
+.publish{
+	color: var(--green);
+}
+.publish::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f058 ";
+	margin-right:0.5em;
+}
+.sem_parecer{
+	color: var(--grey);
+	font-size: 0.8em;
+}
+.sem_parecer::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f141 ";
+	margin-right:0.5em;
+}
+.sem_parecer::after{
+	content: "Aguardando";
+}
+
+.sim{
+	color: white;
+	background-color: var(--green);
+	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.8em;
+}
+.sim::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f058 ";
+	margin-right:0.5em;
+}
+.sim::after{
+	content: "Sim";
+}
+
+.nao{
+	color: white;
+	background-color: var(--orange);
+	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.8em;
+}
+.nao::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f057 ";
+	margin-right:0.5em;
+}
+.nao::after{
+	content: "Não";
+}
+
+.onion_up{
+	color: white;
+	background-color: var(--pink);
+	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.8em;
+}
+.onion_up::before{
+
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f005 ";
+	margin-right:0.5em;
+}
+.onion_up::after{
+
+	content: "Onion up";
+}
 /***** COMPONENTES *****/
 .card{
 	background-color: #ffffff;

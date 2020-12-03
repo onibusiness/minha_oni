@@ -230,7 +230,7 @@ class ferias{
 
         $args = array(  
             'post_type' => 'ferias' ,
-            'post_status' => array('publish'),
+            'post_status' => array('publish','draft','pending'),
             'posts_per_page' => -1,
             'meta_query' => $meta_query
         );

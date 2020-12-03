@@ -19,6 +19,7 @@
         <div class="col-7 col-md-7 p-0 align-self-center pl-4">
             <p class="escala1 font-weight-bold mb-0"><?php echo $user_name;?></p>
             <p class="escala0 mb-0"><?php echo $user_email;?></p>
+            
         </div>
         <div class="ml-auto col-3 col-md-3 align-self-center ">
             <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#'.$user_name;?>" aria-expanded="false" aria-controls="<?php echo $user_name;?>">
@@ -27,7 +28,7 @@
         </div>
     </div>
     <div class="mt-4">
-        <p><?php echo get_field( 'celular', 'user_'.$user_id);?></p>
+    <p><?php echo get_field( 'celular', 'user_'.$user_id);?></p>
         <p>Aniversário : <?php echo get_field( 'data_de_nascimento', 'user_'.$user_id);?></p>
         <p>Oniversário : <?php echo get_field( 'oniversario', 'user_'.$user_id);?></p>
        
