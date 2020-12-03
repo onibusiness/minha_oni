@@ -54,12 +54,21 @@
     global $template;
     echo basename($template);*/
 ?>
+<div class="row align-items-end">
+  <div class="col-2 px-4 py-2 ">
+    <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+  </div>
+  <div class="col-10 px-4 py-2">
   <?php
       wp_nav_menu( array(
       'theme_location' => 'menu-geral',
-      'container' => 'nav',
-      'container_class' => 'custom-menu' ) );
+      'container' => 'ul',
+      'menu_id' => 'menugeral' ,
+      'menu_class' => 'escala1  text-right'
+      ) );
     ?>
+  </div>
+</div>
 
   </head>
   <body >

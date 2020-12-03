@@ -492,6 +492,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 
 	content: "Onion up";
 }
+
+/***** COMPONENTES *****/
+#menugeral{
+	list-style: none;
+	color: var(--petro);
+}
+#menugeral li{
+	display: inline;
+	margin-left: 2em;
+	vertical-align: bottom;
+}
+#menugeral .current-menu-item{
+	font-weight: 900;
+	border-bottom: solid 6px var(--onipink);
+}
+
 /***** COMPONENTES *****/
 .card{
 	background-color: #ffffff;
