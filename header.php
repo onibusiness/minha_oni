@@ -56,7 +56,9 @@
 ?>
 <div class="row align-items-end">
   <div class="col-2 px-4 py-2 ">
-    <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+    <a  href="<?php echo bloginfo('url'); ?>">
+      <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+    </a>
   </div>
   <div class="col-10 px-4 py-2">
   <?php

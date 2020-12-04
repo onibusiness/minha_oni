@@ -24,6 +24,8 @@ html{
 body{
 	overflow: hidden;
 	background-color: #ecedee !important;
+	background-image: url('../img/oni_offwhite_rosa.svg');
+	background-size: cover;
 	--webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
