@@ -49,29 +49,28 @@
     <link rel="stylesheet" href="<?php echo bloginfo('template_directory'); ?>/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/4dad82588a.js" crossorigin="anonymous"></script>
 
-   <?php
-   /* Esse snnipet te mostra qual arquivo do template está sendo renderizado no front
-    global $template;
-    echo basename($template);*/
-?>
-<div class="row align-items-end">
-  <div class="col-2 px-4 py-2 ">
-    <a  href="<?php echo bloginfo('url'); ?>">
-      <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
-    </a>
-  </div>
-  <div class="col-10 px-4 py-2">
-  <?php
-      wp_nav_menu( array(
-      'theme_location' => 'menu-geral',
-      'container' => 'ul',
-      'menu_id' => 'menugeral' ,
-      'menu_class' => 'escala1  text-right'
-      ) );
+    <?php
+      /* Esse snnipet te mostra qual arquivo do template está sendo renderizado no front
+      global $template;
+      echo basename($template);*/
     ?>
-  </div>
-</div>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light " role="navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-menu" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a  href="<?php echo bloginfo('url'); ?>">
+          <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+        </a>
+        <div id= "collapse-menu" class = "navbar-collapse collapse">
+          <?php
+          wp_nav_menu( array(
+            'theme_location' => 'menu-geral', 
+            'container' => 'ul', 
+            'menu_class' => 'navbar-nav w-100 escala1 d-flex justify-content-end',
+          ));
+          ?>
+        </div>
+      </nav>
   </head>
   <body >
   <div class="row">

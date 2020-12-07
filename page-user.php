@@ -20,7 +20,7 @@ um_fetch_user( um_profile_id() );
 ?>
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-12 col-md-4">
         <?php 
         include(get_stylesheet_directory() . '/template-parts/card-user-full-info.php');
         include(get_stylesheet_directory() . '/template-parts/card-user-guardas.php');
@@ -31,14 +31,14 @@ um_fetch_user( um_profile_id() );
     //Se for admin ou o próprio usuário
     if(current_user_can('administrator') || get_current_user_id() == $profile_id ){
     ?>
-        <div class="col-8 pl-0">
+        <div class="col-12 col-md-8 pl-0">
             <div class="row">
-                <div class="col-7">
+                <div class="col-12 col-md-7">
                 <?php 
                 include(get_stylesheet_directory() . '/template-parts/card-user-evidencias.php');
                 ?>
                 </div>
-                <div class="col-5 pl-0">
+                <div class="col-12 col-md-5 pl-0">
                 <?php 
                 include(get_stylesheet_directory() . '/template-parts/card-user-todas-ferias.php');
                 ?>
@@ -62,7 +62,7 @@ um_fetch_user( um_profile_id() );
                 foreach($historico->seis_meses as $mes){
                     ?>
                     <!-- Uma row para cada mês de histórico -->
-                    <div class="col-md-12 row collapse target_js pt-4" id="<?php echo $mes['classe'];?>">
+                    <div class="col-12 col-md-12 row collapse target_js pt-4" id="<?php echo $mes['classe'];?>">
                         <?php
                         if($historico_pagamentos[$mes['classe']]){
                             ?>

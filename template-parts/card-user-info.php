@@ -7,7 +7,7 @@
         <p class="escala1 font-weight-bold mb-0"><?php echo $user_atual->user_nicename;?></p>
         <p class="escala0 mb-0"><?php echo $user_atual->user_email;?></p>
     </div>
-    <div class="col-5 col-md-5 ml-5 align-self-center ">
+    <div class="col-5 col-md-5 mx-4 align-self-center ">
         <button type="button" class="ml-auto btn btn-outline-dark">
             <a class="onipink" href="<?php echo get_site_url()."/user/".$user_atual->user_nicename;?>">Editar perfil</a>
         </button>

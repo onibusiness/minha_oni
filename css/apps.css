@@ -550,3 +550,7 @@ pre {
 .is-search-input{
 	height: 40px !important;
 }
+
+.menu-item {
+	margin-right: 50px	;
+}
