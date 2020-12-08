@@ -24,6 +24,11 @@
                                 foreach($niveis as $nivel => $onis_no_nivel){
                                     
                                     if(array_search($oni_nicename, $onis_no_nivel) !== false){
+                                        $nivel_do_oni = $nivel;
+                                    }
+                                }
+                                for ($i=0; $i < 5; $i++) { 
+                                    if($nivel_do_oni > $i){
                                         ?>
                                         <p class="competency_sphere background_green"></p>
                                         <?php

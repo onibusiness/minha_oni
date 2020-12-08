@@ -23,9 +23,11 @@
                 <blockquote class=' col-12 escala-1 petro'>
                     <?php echo nl2br($campos['evidencia']);?>
                 </blockquote>
-                <a class=' col-12 escala-1 bold pink text-right' href='<?php echo $campos['link_da_evidencia'];?>' target="_blank">
-                Evidência >>
-                </a>
+                <p class=' col-12 text-right'>
+                    <a class='  escala-1 bold pink text-right' href='<?php echo $campos['link_da_evidencia'];?>' target="_blank">
+                    Evidência >>
+                    </a>
+                </p>
                 <hr class='col-12  ml-0'/>
                 <?php
                 $form_fields = array();
