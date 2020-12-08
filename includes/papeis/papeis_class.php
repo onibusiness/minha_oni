@@ -141,7 +141,7 @@ class papeis{
                         'key' => 'field_5fa2b4ad170ee',
                         'label' => 'Projeto',
                         'name' => 'projeto',
-                        'type' => 'text',
+                        'type' => 'post_object',
                         'instructions' => '',
                         'required' => 0,
                         'conditional_logic' => 0,
@@ -151,11 +151,19 @@ class papeis{
                             'id' => '',
                         ),
                         'acfe_permissions' => '',
-                        'default_value' => '',
-                        'placeholder' => '',
-                        'prepend' => '',
-                        'append' => '',
-                        'maxlength' => '',
+                        'post_type' => array(
+                            0 => 'projetos',
+                        ),
+                        'taxonomy' => '',
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'return_format' => 'object',
+                        'save_custom' => 0,
+                        'save_post_status' => 'publish',
+                        'acfe_bidirectional' => array(
+                            'acfe_bidirectional_enabled' => '0',
+                        ),
+                        'ui' => 1,
                     ),
                     array(
                         'key' => 'field_5fa2b9bd6bcd7',
@@ -329,6 +337,35 @@ class papeis{
         return $papeis_filtrados;
     }
 
+     /**
+    * Busca os posts de acordo com o projeto
+    *
+    * @return Query com os posts  
+    */
+    public function pegaPapeisProjeto($projeto){       
+        $meta_query[] = 
+        array(
+        ); 
+ 
+        $meta_query[] =
+        array(
+            'key' => 'projeto',
+            'value' => $projeto->ID,
+            'compare' => '=='
+        );
+     
+
+        $args = array(  
+            'post_type' => 'papeis' ,
+            'post_status' => array('publish'),
+            'posts_per_page' => -1,
+            'meta_query' => $meta_query
+        );
+        $papeis_filtrados = new WP_Query( $args ); 
+
+        
+        return $papeis_filtrados;
+    }
 }
 
 //Criando o objeto

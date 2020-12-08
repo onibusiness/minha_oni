@@ -1,16 +1,16 @@
 <?php
 /*
-* Competencias
-* Cria um post type chamado competencias e todas as suas configurações no ACF
-* Configura a taxonomia Esferas para organizar tudo
+* Projetos
+* Cria um post type chamado projetos e todas as suas configurações no ACF
+* 
 */
 
-class competencias{
+class projetos{
 
     //variaveis
-    private $nome_singular = 'Competência';
-    private $nome_plural = 'Competências';
-    private $post_slug = 'competencias';
+    private $nome_singular = 'Projeto';
+    private $nome_plural = 'Projetos';
+    private $post_slug = 'projetos';
 
 
     //disparando a classe
@@ -18,7 +18,6 @@ class competencias{
 
         add_action('init', array($this,'adicionar_custom_post_type')); 
         add_action('init', array($this,'adicionar_campos_ACF')); 
-        add_action('init', array($this,'criar_esferas')); 
         add_action('init', array($this,'check_flush_rewrite_rules')); 
 
     }
@@ -54,10 +53,8 @@ class competencias{
             'has_archive'       => true,
             'menu_position'     => 20,
             'show_in_admin_bar' => true,
-            'menu_icon'         => 'dashicons-format-status',
-            'taxonomies'          => array( 'esfera' ),
+            'menu_icon'         => 'dashicons-format-status'
         );
-        
         
         register_post_type($this->post_slug, $args);
         
@@ -68,13 +65,13 @@ class competencias{
         if( function_exists('acf_add_local_field_group') ):
 
             acf_add_local_field_group(array(
-                'key' => 'group_5f400ef211b48',
-                'title' => 'Competências do sistema',
+                'key' => 'group_5fce29e65e227',
+                'title' => 'Projetos',
                 'fields' => array(
                     array(
-                        'key' => 'field_5f400f4bd2fd3',
-                        'label' => 'Explicação',
-                        'name' => 'explicacao',
+                        'key' => 'field_5fce29ee6916e',
+                        'label' => 'Projeto',
+                        'name' => 'projeto',
                         'type' => 'text',
                         'instructions' => '',
                         'required' => 0,
@@ -84,13 +81,66 @@ class competencias{
                             'class' => '',
                             'id' => '',
                         ),
+                        'acfe_permissions' => '',
                         'default_value' => '',
                         'placeholder' => '',
                         'prepend' => '',
                         'append' => '',
                         'maxlength' => '',
                     ),
-                   
+                    array(
+                        'key' => 'field_5fce2a0d6916f',
+                        'label' => 'Status',
+                        'name' => 'status',
+                        'type' => 'select',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'acfe_permissions' => '',
+                        'choices' => array(
+                            'ativo' => 'Ativo',
+                            'pausado' => 'Pausado',
+                            'encerrado' => 'Encerrado',
+                        ),
+                        'default_value' => false,
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'ui' => 0,
+                        'return_format' => 'value',
+                        'ajax' => 0,
+                        'placeholder' => '',
+                    ),
+                    array(
+                        'key' => 'field_5fce2a4869170',
+                        'label' => 'Score',
+                        'name' => 'score',
+                        'type' => 'radio',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'acfe_permissions' => '',
+                        'choices' => array(
+                            1 => '1',
+                            2 => '2',
+                            3 => '3',
+                        ),
+                        'allow_null' => 0,
+                        'other_choice' => 0,
+                        'default_value' => '',
+                        'layout' => 'vertical',
+                        'return_format' => 'value',
+                        'save_other_choice' => 0,
+                    ),
                 ),
                 'location' => array(
                     array(
@@ -104,43 +154,36 @@ class competencias{
                 'menu_order' => 0,
                 'position' => 'normal',
                 'style' => 'default',
-                'label_placement' => 'top',
+                'label_placement' => 'left',
                 'instruction_placement' => 'label',
-                'hide_on_screen' => '',
+                'hide_on_screen' => array(
+                    0 => 'permalink',
+                    1 => 'block_editor',
+                    2 => 'the_content',
+                    3 => 'excerpt',
+                    4 => 'discussion',
+                    5 => 'comments',
+                    6 => 'revisions',
+                    7 => 'slug',
+                    8 => 'author',
+                    9 => 'format',
+                    10 => 'page_attributes',
+                    11 => 'featured_image',
+                    12 => 'categories',
+                    13 => 'tags',
+                    14 => 'send-trackbacks',
+                ),
                 'active' => true,
                 'description' => '',
+                'acfe_display_title' => '',
+                'acfe_autosync' => '',
+                'acfe_permissions' => '',
+                'acfe_form' => 0,
+                'acfe_meta' => '',
+                'acfe_note' => '',
             ));
             
-        endif;
-    }
-
-    //Função para criar a taxonomia Esferas
-    public function criar_esferas(){
- 
-        $labels = array(
-            'name' => _x( 'Esferas', 'taxonomy general name' ),
-            'singular_name' => _x( 'Esfera', 'taxonomy singular name' ),
-            'search_items' =>  __( 'Search Esferas' ),
-            'all_items' => __( 'All Esferas' ),
-            'parent_item' => __( 'Parent Esfera' ),
-            'parent_item_colon' => __( 'Parent Esfera:' ),
-            'edit_item' => __( 'Edit Esfera' ), 
-            'update_item' => __( 'Update Esfera' ),
-            'add_new_item' => __( 'Add New Esfera' ),
-            'new_item_name' => __( 'New Esfera Name' ),
-            'menu_name' => __( 'Esferas' ),
-        );    
-        
-        
-        register_taxonomy('esfera',array($this->post_slug), array(
-            'hierarchical' => true,
-            'labels' => $labels,
-            'show_ui' => true,
-            'show_admin_column' => true,
-            'query_var' => true,
-            'rewrite' => array( 'slug' => 'esfera' ),
-        ));
-        
+            endif;
     }
 
     //Função pronta que dá um refresh nos permalinks
@@ -153,8 +196,10 @@ class competencias{
         }
     }
 
+  
+
 }
 
 //Criando o objeto
-$competencias = new competencias;
+$projetos = new projetos;
 ?>

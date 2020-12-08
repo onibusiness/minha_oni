@@ -16,6 +16,7 @@ class customizaacf{
         add_filter('acf/update_value/name=oni',  array($this,'update_oni_field'));
         add_action('acf/save_post',  array($this,'acf_review_before_save_post'),20);
 
+
     }
 
     // Desativando o módulo de autor do ACFext
@@ -132,8 +133,49 @@ class customizaacf{
         
     }
 
+
+    /**
+    * Puxa o gestor de evidencia dentro de um loop de evidencias
+    *
+    * @return Int ID do gestor
+    */
+    public function puxaGestorEvidencia(){
+
+        $projeto = get_field( 'projeto');
+
+        //pegando os gestores do projeto
+        $gestores = papeis::pegaPapeisProjeto($projeto);
+
+        while ( $gestores->have_posts() ) : $gestores->the_post(); 
+            $fields = get_fields();
+            //Checando se o nome do campo "feedback_guardiao_x" contem o papel do gestor "guardiao_x"
+            if(strpos($field['_name'], $fields['papel'])){
+                //Se quiser filtar por data é o $fields['data_de_inicio'] e $fields['data_de_terminio']
+                $id_gestor = $fields['oni']['ID'];
+
+            }
+        
+        endwhile;
+
+        return $id_gestor;
+    }
+
+
+    /**
+    * Só mostra os campos de feedback para os gestores NÃO UTILIZADO
+    *
+    * @return acf_form filtrado
+    */
+    public function filtraGestorEvidencia($field){
+
+        $id_gestor = $this->puxaGestorEvidencia();
+        if (is_admin() || current_user_can('administrator') || get_current_user_id() == $id_gestor ) {
     
-   
+        }else{
+            $field['wrapper']['class'] .= ' d-none';
+        }
+        return $field;
+    }
 
 
 }

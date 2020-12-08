@@ -495,6 +495,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "Onion up";
 }
 
+.notifica{
+	color: white;
+	background-color: var(--onipink);
+	padding: 0.2em 0.7em ;
+	border-radius: 1em;
+	font-size: 0.7em;
+	margin-left: 0.5em;
+}
+
 /***** COMPONENTES *****/
 #menugeral{
 	list-style: none;
@@ -533,6 +542,10 @@ pre {
 	border-radius:100px;
 	width: 60px;
 }
+.image_profile_small{
+	border-radius:100px;
+	width: 30px;
+}
 
 .competency_sphere{
 	height: 15px;
@@ -553,4 +566,11 @@ pre {
 
 .menu-item {
 	margin-right: 50px	;
+}
+
+.ativo{
+	color: var(--petro);
+	font-weight: 900;
+	text-decoration: underline;
+	text-decoration-color: var(--onipink);
 }

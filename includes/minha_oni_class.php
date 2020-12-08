@@ -28,6 +28,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/papeis/papeis_class.php');
         require_once($this->diretorio_tema.'/includes/advertencias/advertencias_class.php');
         require_once($this->diretorio_tema.'/includes/historico/historico_class.php');
+        require_once($this->diretorio_tema.'/includes/projetos/projetos_class.php');
 
 
         //Pegando as customizações do acf 
@@ -47,7 +48,7 @@ class minha_oni{
         remove_action('wp_print_styles', 'print_emoji_styles');
 
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
-        $this->puxaPagamentosAntigosBI();
+        //$this->puxaPagamentosAntigosBI();
 
     }
 
@@ -55,11 +56,9 @@ class minha_oni{
         $pagamentos = file_get_contents($this->diretorio_tema.'/includes/pagamentos.json');
         $pagamentos = json_decode($pagamentos);
         foreach($pagamentos as $title => $pagamento){
-            /*
-            echo "<pre>";
-            var_dump($pagamento);
-            echo "</pre>";
-            */
+            
+
+            
             $args = array (
                 'post_type'              => array( 'pagamentos' ),
                 'post_status'            => array( 'publish' ),
@@ -72,7 +71,7 @@ class minha_oni{
                     #passar via Ajax
     
             } else {
-                /*
+                
                 $my_post = array(
                     'post_title' => $title,
                     'post_status' => 'publish',
@@ -80,30 +79,27 @@ class minha_oni{
                 );
                 
                 $post_id = wp_insert_post($my_post);
-                update_field('data', $ano_mes, $post_id);
-                update_field('oni', $oni['ID'], $post_id);
-                update_field('cargo', $oni['funcao'], $post_id);
-                update_field('competencias', $oni['competencias'], $post_id);
-                update_field('lentes', $oni['lentes'], $post_id);
-                update_field('guardas', $oni['guardas'], $post_id);
-                update_field('ferias_desconto_padrao', $oni['ferias_desconto_padrao'], $post_id);
-                update_field('ferias_desconto_total', $oni['ferias_desconto_total'], $post_id);
-                update_field('ferias_tres_meses', $oni['ferias_tres_meses'], $post_id);
-                update_field('advertencias', $oni['advertencias'], $post_id);
-                if(is_array($oni['explicacoes_advertencias'])){
-                    update_field('explicacoes_advertencias', implode('</br>',$oni['explicacoes_advertencias']), $post_id);
-                }                        
-                update_field('onions_competencia', $oni['onions_competencia'], $post_id);
-                update_field('onions_lentes', $oni['onions_lentes'], $post_id);
-                update_field('onions_papeis', $oni['onions_papeis'], $post_id);
-                update_field('onions_ferias', $oni['onions_ferias'], $post_id);
-                update_field('onions', $oni['onions'], $post_id);
-                update_field('reembolsos', $oni['reembolsos'], $post_id);
-                if(is_array($oni['descricao_reembolsos'])){
-                    update_field('descricao_reembolsos', implode('</br>',$oni['descricao_reembolsos']), $post_id);
-                }
-                update_field('remuneracao', $oni['remuneracao'], $post_id);
-                */
+                update_field('data', $pagamento->data, $post_id);
+                update_field('oni', $pagamento->oni, $post_id);
+                //update_field('cargo', $oni['funcao'], $post_id);
+                update_field('competencias', $pagamento->competencias, $post_id);
+                //update_field('lentes', $oni['lentes'], $post_id);
+                //update_field('guardas', $oni['guardas'], $post_id);
+                update_field('ferias_desconto_padrao', $pagamento->dias_de_ausencia, $post_id);
+                //update_field('ferias_desconto_total', $oni['ferias_desconto_total'], $post_id);
+                update_field('ferias_tres_meses', $pagamento->dias_de_ausencias_nos_3_meses_anteriores, $post_id);
+                //update_field('advertencias', $oni['advertencias'], $post_id);                       
+                update_field('onions_competencia', $pagamento->onions_de_competencias, $post_id);
+                //update_field('onions_lentes', $oni['onions_lentes'], $post_id);
+                update_field('onions_papeis', $pagamento->onions_de_envolvimento, $post_id);
+                update_field('onions_ferias', $pagamento->onions_descontados, $post_id);
+                update_field('onions', $pagamento->total_de_onions, $post_id);
+                update_field('reembolsos', $pagamento->valor_reembolsos, $post_id);
+      
+                update_field('descricao_reembolsos', implode('</br>',$pagamento->reembolsos), $post_id);
+     
+                update_field('remuneracao', $pagamento->remuneracao, $post_id);
+                
             }
         }
      
