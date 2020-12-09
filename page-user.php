@@ -133,11 +133,16 @@ um_fetch_user( um_profile_id() );
              $historico = new historico;
              $historico_pagamentos = $historico->pegaHistoricoPagamento($current_user);
              $ultimo_do_historico = end($historico_pagamentos);
-             echo "<pre>";
-             var_dump($ultimo_do_historico['competencias']);
-             echo "</pre>";
-
             ?>
+            <div class="atomic_card background_white" >
+                <div class="row">
+                    <div class="col-12" style="column-count: 2; column-gap: 4em;">
+                            <?php
+                        include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
     <?php
     }
