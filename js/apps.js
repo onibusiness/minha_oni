@@ -41,9 +41,7 @@ $(document).ready(function(){
         $('.show').removeClass("show");
     });
 
-    $('.target_js').click( function(){
-        $('.target_js').removeClass("show");
-    });
+
 
 });
     

@@ -374,6 +374,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 .background_petro{
 	background-color:var(--petro);
 }
+.background_onionup{
+	background-color:var(--pink);
+}
 .background_pink{
 	background-color:var(--onipink);
 }

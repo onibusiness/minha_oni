@@ -74,6 +74,7 @@ ul{
 }
 .bold, strong{
 	font-family: 'Typold-Bold' !important;
+	font-weight: bolder;
 }
 .light{
 	font-family: 'Typold-Regular' !important;
