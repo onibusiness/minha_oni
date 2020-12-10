@@ -9,7 +9,9 @@ class processa_competencias{
     public $users_wordpress;//usuários do wordpress
     public $evolucoes;//Todas as evoluções cadastradas
     public $competencias;//Todas as competencias da oni
+    public $lentes;//Todas as lentes da oni
     public $competencias_por_oni;//Tree de competências do Oni (atualizada com a data )
+    public $lentes_por_oni;//Lentes por oni
     public $competencias_no_sistema;//Competências disponíveis no sistema
     
 
@@ -18,7 +20,9 @@ class processa_competencias{
         $this->puxaUsuarios();
         $this->puxaEvolucoes();
         $this->puxaCompetencias();
+        $this->puxaLentes();
         $this->competenciasPorOni();
+        $this->lentesPorOni();
         $this->competenciasNoSistema();
     }
 
@@ -48,7 +52,7 @@ class processa_competencias{
     }
 
     /**
-    * Busca todas as comepetências
+    * Busca todas as competências
     *
     * @return Query com os posts de competências
     */
@@ -83,6 +87,43 @@ class processa_competencias{
     }
 
     /**
+    * Busca todas as lentes
+    *
+    * @return Query com os posts de lentes
+    */
+    public function puxaLentes(){
+        $prismas = get_terms(
+            array(
+                'taxonomy'   => 'prisma',
+                'hide_empty' => false,
+            )
+        );
+
+        if ( ! empty( $prismas ) && is_array( $prismas ) ) {
+            foreach ( $prismas as $prisma ) {
+                $this->lentes[$prisma->name] = array();
+                $args = array(  
+                    'post_type' => 'lente',
+                    'post_status' => array('publish'),
+                    'posts_per_page' => -1,
+                    'tax_query' => array(
+                        array (
+                            'taxonomy' => 'prisma',
+                            'field' => 'slug',
+                            'terms' => $prisma->slug,
+                        )
+                    ),
+                );
+                $lentes = new WP_Query( $args ); 
+                $this->lentes[$prisma->name] = $lentes;
+            }
+        }
+
+    }
+
+
+
+    /**
     * Processa todas as competências por oni
     *
     * @return Array $competencias_por_oni 
@@ -100,6 +141,34 @@ class processa_competencias{
                     $campos = get_fields();
                     if($campos['oni'] == $user){
                         $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
+                    }
+                endwhile;
+            }
+           
+        }
+
+    }
+
+
+    /**
+    * Processa todas as lentes por oni
+    *
+    * @return Array $lentes_por_oni 
+    *   ['user_nicename]
+    *       ['nome_da_lente'] =>  (int) 
+    *
+    */
+    public function lentesPorOni(){
+        foreach($this->users_wordpress as $user){
+            foreach($this->lentes as $lente){
+                while ( $lente->have_posts() ) : $lente->the_post(); 
+                    $this->lentes_por_oni[$user->user_nicename][get_the_title()] = false;
+                endwhile;
+                while ( $this->evolucoes->have_posts() ) : $this->evolucoes->the_post(); 
+                    $campos = get_fields();
+                    
+                    if($campos['oni'] == $user && $campos['lente']){
+                        $this->lentes_por_oni[$user->user_nicename][$campos['lente']->post_title] = true;
                     }
                 endwhile;
             }

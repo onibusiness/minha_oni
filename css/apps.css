@@ -536,6 +536,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
     background-color: var(--onipink) !important; 
     border-color: var(--onipink) !important; 
 }
+.btn-outline-danger[aria-expanded="true"] {
+    color: #fff;
+    background-color: var(--onipink) !important; 
+    border-color: var(--onipink) !important; 
+}
 
 pre {
 	background-color: #eee;
@@ -544,10 +549,12 @@ pre {
 .image_profile{
 	border-radius:100px;
 	width: 60px;
+	height: 60px;
 }
 .image_profile_small{
 	border-radius:100px;
 	width: 30px;
+	height: 30px;
 }
 
 .competency_sphere{
@@ -576,4 +583,23 @@ pre {
 	font-weight: 900;
 	text-decoration: underline;
 	text-decoration-color: var(--onipink);
+}
+
+.half-opacity{
+	opacity: 0.25;
+}
+
+.border-visao{
+	border: solid 4px var(--warning) !important;
+}
+
+.border-time{
+	border: solid 4px var(--info) !important;
+}
+
+.border-metodo{
+	border: solid 4px var(--success) !important;
+}
+.badge-active::after{
+	content: " x ";
 }

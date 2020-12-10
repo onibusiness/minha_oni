@@ -48,7 +48,7 @@ class minha_oni{
         remove_action('wp_print_styles', 'print_emoji_styles');
 
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
-        //$this->puxaPagamentosAntigosBI();
+        $this->puxaPagamentosAntigosBI();
 
     }
 
@@ -56,8 +56,17 @@ class minha_oni{
         $pagamentos = file_get_contents($this->diretorio_tema.'/includes/pagamentos.json');
         $pagamentos = json_decode($pagamentos);
         foreach($pagamentos as $title => $pagamento){
-            
-
+            $data_do_pagamento = strtotime( $pagamento->data."-01");
+ 
+            $arg= array(
+                'search' => $pagamento->oni, // or login or nicename in this example
+                'search_fields' => array('display_name')
+              );
+              $oni = '';
+              $users = new WP_User_Query($arg);
+              foreach($users->results as $user){
+                  $oni = $user;
+              }
             
             $args = array (
                 'post_type'              => array( 'pagamentos' ),
@@ -66,6 +75,7 @@ class minha_oni{
                 's' => $title
             );
             $pagamentosSalvos = new WP_Query( $args );
+   
             //Se tiver posts salvos ele passa batido
             if ( $pagamentosSalvos->have_posts() ) {
                     #passar via Ajax
@@ -79,8 +89,8 @@ class minha_oni{
                 );
                 
                 $post_id = wp_insert_post($my_post);
-                update_field('data', $pagamento->data, $post_id);
-                update_field('oni', $pagamento->oni, $post_id);
+                update_field('data', $data_do_pagamento , $post_id);
+                update_field('oni', $oni, $post_id);
                 //update_field('cargo', $oni['funcao'], $post_id);
                 update_field('competencias', $pagamento->competencias, $post_id);
                 //update_field('lentes', $oni['lentes'], $post_id);

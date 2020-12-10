@@ -283,7 +283,23 @@ class papeis{
                 'style' => 'default',
                 'label_placement' => 'left',
                 'instruction_placement' => 'label',
-                'hide_on_screen' => '',
+                'hide_on_screen' => array(
+                    0 => 'permalink',
+                    1 => 'block_editor',
+                    2 => 'the_content',
+                    3 => 'excerpt',
+                    4 => 'discussion',
+                    5 => 'comments',
+                    6 => 'revisions',
+                    7 => 'slug',
+                    8 => 'author',
+                    9 => 'format',
+                    10 => 'page_attributes',
+                    11 => 'featured_image',
+                    12 => 'categories',
+                    13 => 'tags',
+                    14 => 'send-trackbacks',
+                ),
                 'active' => true,
                 'description' => '',
                 'acfe_display_title' => '',
@@ -320,7 +336,7 @@ class papeis{
         $meta_query[] =
         array(
             'key' => 'oni',
-            'value' => $current_user->ID,
+            'value' => $current_user,
             'compare' => '=='
         );
      

@@ -270,7 +270,7 @@ class ferias{
             if(strtotime($data_de_inicio_ferias) <= $hoje && strtotime($data_de_termino_ferias) >= $hoje  ){
                 $ferias_da_oni['atuais'][] = array(
                     'ID_oni' => $campos['oni']->ID,
-                    'nome_oni' => $campos['oni']->user_nicename,
+                    'nome_oni' => $campos['oni']->user_displayname,
                     'data_de_inicio_ferias' => $data_de_inicio_ferias,
                     'data_de_termino_ferias' => $data_de_termino_ferias,
                     'dias_de_ferias' => $dias_de_ferias

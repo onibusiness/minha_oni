@@ -9,7 +9,7 @@
     </div>
     <div class="col-5 col-md-5 mx-4 align-self-center ">
         <button type="button" class="ml-auto btn btn-outline-dark">
-            <a class="onipink" href="<?php echo get_site_url()."/user/".$user_atual->user_nicename;?>">Editar perfil</a>
+            <a class="onipink" href="<?php echo get_site_url()."/user/".$user_atual->user_nicename;?>">Ver perfil</a>
         </button>
     </div>
 </div>

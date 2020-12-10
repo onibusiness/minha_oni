@@ -19,9 +19,9 @@ foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_si
 
                         foreach($competencias_do_oni as $competencia_do_oni){
                         
-                            if ($competencia_do_oni['competencia'] == $competencia) {
+                            if ($competencia_do_oni->competencia == $competencia) {
                                 
-                                $nivel_do_oni = $competencia_do_oni['pontos'];
+                                $nivel_do_oni = $competencia_do_oni->pontos;
                                 $onion_up = true;
                                 break;
                             }else{

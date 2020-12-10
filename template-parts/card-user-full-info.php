@@ -3,11 +3,13 @@
     $user_id = $user_atual->ID;
     $user_name = $user_atual->user_nicename;
     $user_email = $user_atual->user_email;
+    
     if(basename($template) == "page-user.php"){
      
         $user_id =  um_profile_id();
         $user_name = um_user('display_name');
         $user_email = um_user('user_email');
+        $informacoes = get_field( 'informacoes_gerais', 'user_'.$user_id);
         
     }
 ?>
@@ -28,9 +30,9 @@
         </div>
     </div>
     <div class="mt-4">
-    <p><?php echo get_field( 'celular', 'user_'.$user_id);?></p>
-        <p>Aniversário : <?php echo get_field( 'data_de_nascimento', 'user_'.$user_id);?></p>
-        <p>Oniversário : <?php echo get_field( 'oniversario', 'user_'.$user_id);?></p>
+        <p><?php echo $informacoes['celular'];?></p>
+        <p>Aniversário : <?php echo $informacoes['data_de_nascimento'];?></p>
+        <p>Oniversário : <?php echo $informacoes['oniversario'];?></p>
        
     
     </div>

@@ -51,7 +51,7 @@ class historico{
         $meta_query[] =
         array(
             'key' => 'oni',
-            'value' => $current_user->ID,
+            'value' => $current_user,
             'compare' => '=='
         );
      
@@ -63,17 +63,25 @@ class historico{
             'meta_query' => $meta_query
         );
         $pagamentos_filtrados = new WP_Query( $args ); 
+       
         $historico_pagamentos = array();
         while ( $pagamentos_filtrados->have_posts() ) : $pagamentos_filtrados->the_post(); 
             $campos = get_fields();
+
             $data = str_replace('/', '-', $campos['data']);
             foreach($this->seis_meses as $mes){
                 if(date_i18n('MY',strtotime($data))===$mes["classe"]){
                     $historico_pagamentos[$mes["classe"]] = $campos;
+                    $grupo_campos = acf_get_fields('group_5dd567c6adaf9');
+ 
+                    foreach ($grupo_campos as $campo) {
+                        $historico_pagamentos[$mes["classe"]][$campo['name']] = get_field($campo['name']);
+                    }
                 }
             }
       
         endwhile;
+
         return $historico_pagamentos;
 
     }

@@ -381,7 +381,7 @@ class pagamentos{
                             'id' => '',
                         ),
                         'display_format' => 'm/Y',
-                        'return_format' => 'm/Y',
+                        'return_format' => 'd/m/Y',
                         'first_day' => 1,
                     ),
                     array(

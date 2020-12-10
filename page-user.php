@@ -29,7 +29,7 @@ um_fetch_user( um_profile_id() );
     </div>
     <?php
     //Se for admin ou o próprio usuário
-    if(current_user_can('administrator') || get_current_user_id() == $profile_id ){
+    if(current_user_can('edit_users') || get_current_user_id() == $profile_id ){
     ?>
         <div class="col-12 col-md-8 pl-0">
             <div class="row">
@@ -44,16 +44,22 @@ um_fetch_user( um_profile_id() );
                 ?>
                 </div>
             </div>
-            <?php $historico = new historico;?> 
+            <?php $historico = new historico;
+            $ultimo_mes = end($historico->seis_meses);
+            ?> 
             <!-- Barra de botões de meses controlando as linhas debaixo via collapse -->
             <div class="atomic_card background_white" id="acordiao">
                 <div class="row">
                     <p class="escala1 bold">Seu histórico: </p>
                     <div class="col-12 d-flex justify-content-between">
                         <?php foreach($historico->seis_meses as $mes){
+                             $expandido = 'false';
+                             if($mes == $ultimo_mes){
+                                 $expandido = "true";
+                             }
                             ?>
                             <p>
-                                <button class="btn btn-outline-danger target_js" type="button" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="false" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></button>
+                                <button class="btn btn-outline-danger target_js" type="button" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="<?php echo $expandido;?>" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></button>
                             </p>
                         <?php
                         }
@@ -62,11 +68,15 @@ um_fetch_user( um_profile_id() );
                 </div>
                 <div class="row">
                     <?php 
-                    $historico_pagamentos = $historico->pegaHistoricoPagamento($current_user);
+                    $historico_pagamentos = $historico->pegaHistoricoPagamento($profile_id);
                     foreach($historico->seis_meses as $mes){
+                        $mostrar = '';
+                        if($mes == $ultimo_mes){
+                            $mostrar = "show";
+                        }
                         ?>
                         <!-- Uma row para cada mês de histórico -->
-                        <div class="col-12 col-md-12 row collapse target_js pt-4" id="<?php echo $mes['classe'];?>" data-parent="#acordiao">
+                        <div class="col-12 col-md-12 row collapse target_js pt-4 <?php echo $mostrar;?>" id="<?php echo $mes['classe'];?>" data-parent="#acordiao">
                             <?php
                             if($historico_pagamentos[$mes['classe']]){
                                 ?>
@@ -89,10 +99,12 @@ um_fetch_user( um_profile_id() );
                                         <div class="col-12">
                                             <p class="escala0 bold onipink">Guardião de:</p>
                                             <?php
-                                            foreach($historico_pagamentos[$mes['classe']]['guardas'] as $guarda){
-                                                ?>
-                                            <p class="escala-1"><?php echo $titulo_guardas['choices'][$guarda['papel']]." de ".$guarda['projeto']?> </p>
-                                            <?php
+                                            if($historico_pagamentos[$mes['classe']]['guardas']){
+                                                foreach($historico_pagamentos[$mes['classe']]['guardas'] as $guarda){
+                                                    ?>
+                                                <p class="escala-1"><?php echo $titulo_guardas['choices'][$guarda['papel']]." de ".$guarda['projeto']?> </p>
+                                                <?php
+                                                }
                                             }
                                             ?>
                                         </div>
@@ -101,13 +113,17 @@ um_fetch_user( um_profile_id() );
                                 <!-- Coluna da direita  -->
                                 <div class="col-8">
                                     <!-- Card de competências  -->
-                                    <div class="row">
-                                        <div class="col-12" style="column-count: 2; column-gap: 4em;">
-                                             <?php
-                                            include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
-                                            ?>
-                                        </div>
+                                    <div class="col-12 px-0">
+                                        <?php
+                                        include(get_stylesheet_directory() . '/template-parts/user-lentes-historico.php');
+                                        ?>
                                     </div>
+                                    <div class="col-12 px-0" style="column-count: 2; column-gap: 2em;">
+                                            <?php
+                                        include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
+                                        ?>
+                                    </div>
+                                   
                                 </div>
                                 
                                 <?php
@@ -121,6 +137,7 @@ um_fetch_user( um_profile_id() );
                         <?php
                     }
                     ?>
+             
             </div>
         </div>
     </div>
@@ -136,7 +153,7 @@ um_fetch_user( um_profile_id() );
             ?>
             <div class="atomic_card background_white" >
                 <div class="row">
-                    <div class="col-12" style="column-count: 2; column-gap: 4em;">
+                    <div class="col-12" style="column-count: 2; column-gap: 2em;">
                             <?php
                         include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
                         ?>
