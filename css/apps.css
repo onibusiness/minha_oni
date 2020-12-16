@@ -410,6 +410,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 .over_white{
 	border-top: solid 3px #ffffff;
 }
+/***** CLASSES DE INFLUENCIA NO GRID *****/
+@media (min-width: 768px) {
+.duas-colunas{
+	column-count: 2; column-gap: 4em;
+}
+}
+
 
 /***** ATÓMOS DE RESPOSTA PARA O USUÁRIO *****/
 .pending{
@@ -600,6 +607,32 @@ pre {
 .border-metodo{
 	border: solid 4px var(--success) !important;
 }
-.badge-active::after{
-	content: " x ";
+
+.gestores{
+	position: relative;
+	top: -1.5em;
+}
+.categoria-guia{
+	cursor: pointer;
+}
+.categoria-guia::after {
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900;
+	color: var(--onipink);
+	font-size: 80%;
+	padding-left: 0.5rem;
+    content: "\f078";
+}
+.categoria-guia[aria-expanded="true"]::after {
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900;
+	color: var(--onipink);
+	font-size: 80%;
+	padding-left: 0.5rem;
+    content: "\f077";
+}
+
+.current_page_item {
+	font-weight: bolder;
+	text-decoration: underline;
 }

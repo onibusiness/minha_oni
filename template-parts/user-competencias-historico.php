@@ -5,7 +5,7 @@ $competencias = new processa_competencias;
 foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_sistema){
     ?>
     <!-- Escrevendo a esfera  -->
-    <div class="col-12" style="break-inside: avoid;" >
+    <div class="col-12 px-0 px-md-3" style="break-inside: avoid;" >
         <p class="escala0 bold onipink under_lightgrey mt-3"><?php echo $esfera; ?></p>
    
         <div class="d-flex ">

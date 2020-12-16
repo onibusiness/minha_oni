@@ -47,8 +47,11 @@ class minha_oni{
         remove_action('wp_head', 'print_emoji_detection_script', 7);
         remove_action('wp_print_styles', 'print_emoji_styles');
 
+        //Sobrescrevendo o redirect do login
+        add_action( 'login_form' ,  array($this,'redirecionaLogin'));
+
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
-        $this->puxaPagamentosAntigosBI();
+        //$this->puxaPagamentosAntigosBI();
 
     }
 
@@ -113,6 +116,13 @@ class minha_oni{
             }
         }
      
+    }
+
+    public function redirecionaLogin(){
+
+        global $redirect_to;
+        $redirect_to = get_home_url();
+
     }
 
     //Setando o diretório do tema

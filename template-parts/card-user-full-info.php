@@ -24,7 +24,7 @@
             
         </div>
         <div class="ml-auto col-3 col-md-3 align-self-center ">
-            <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#'.$user_name;?>" aria-expanded="false" aria-controls="<?php echo $user_name;?>">
+            <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#perfil'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "perfil".$user_id;?>">
                 Editar
             </button>
         </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <div class="collapse" id="<?php echo $user_name;?>">
+            <div class="collapse" id="<?php echo "perfil".$user_id;?>">
             
                     <?php 
                     $options = array(

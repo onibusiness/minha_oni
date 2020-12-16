@@ -54,23 +54,28 @@
       global $template;
       echo basename($template);*/
     ?>
-    <nav class="navbar navbar-expand-lg navbar-light  " role="navigation">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-menu" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a  href="<?php echo bloginfo('url'); ?>">
-          <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
-        </a>
-        <div id= "collapse-menu" class = "navbar-collapse collapse">
-          <?php
-          wp_nav_menu( array(
-            'theme_location' => 'menu-geral', 
-            'container' => 'ul', 
-            'menu_class' => 'navbar-nav w-100 escala1 d-flex justify-content-end',
-          ));
-          ?>
-        </div>
-      </nav>
+    <div class="row">
+      <div class="col-12 px-4 py-2">
+        <nav class="navbar navbar-expand-lg navbar-light p-0  " role="navigation">
+
+          <a  href="<?php echo bloginfo('url'); ?>">
+            <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-menu" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div id= "collapse-menu" class = "navbar-collapse collapse">
+            <?php
+            wp_nav_menu( array(
+              'theme_location' => 'menu-geral', 
+              'container' => 'ul', 
+              'menu_class' => 'navbar-nav w-100 escala1 d-flex justify-content-end py-4',
+            ));
+            ?>
+          </div>
+        </nav>
+      </div>
+    </div>
   </head>
   <body >
   <div class="row">

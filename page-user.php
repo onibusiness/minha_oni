@@ -31,7 +31,7 @@ um_fetch_user( um_profile_id() );
     //Se for admin ou o próprio usuário
     if(current_user_can('edit_users') || get_current_user_id() == $profile_id ){
     ?>
-        <div class="col-12 col-md-8 pl-0">
+        <div class="col-12 col-md-8 pl-md-0">
             <div class="row">
                 <div class="col-12 col-md-7">
                 <?php 
@@ -51,7 +51,7 @@ um_fetch_user( um_profile_id() );
             <div class="atomic_card background_white" id="acordiao">
                 <div class="row">
                     <p class="escala1 bold">Seu histórico: </p>
-                    <div class="col-12 d-flex justify-content-between">
+                    <div class="col-12 d-flex flex-wrap ">
                         <?php foreach($historico->seis_meses as $mes){
                              $expandido = 'false';
                              if($mes == $ultimo_mes){
@@ -59,7 +59,7 @@ um_fetch_user( um_profile_id() );
                              }
                             ?>
                             <p>
-                                <button class="btn btn-outline-danger target_js" type="button" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="<?php echo $expandido;?>" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></button>
+                                <button class="btn btn-outline-danger target_js mr-md-4" type="button" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="<?php echo $expandido;?>" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></button>
                             </p>
                         <?php
                         }
@@ -81,7 +81,7 @@ um_fetch_user( um_profile_id() );
                             if($historico_pagamentos[$mes['classe']]){
                                 ?>
                                 <!-- Coluna da esquerda  -->
-                                <div class="col-4">
+                                <div class="col-12 col-lg-4">
                                     <!-- Card de remuneração  -->
                                     <div class="row">
                                         <div class="col-12">
@@ -111,14 +111,14 @@ um_fetch_user( um_profile_id() );
                                     </div>         
                                 </div>
                                 <!-- Coluna da direita  -->
-                                <div class="col-8">
+                                <div class="col-12 col-lg-8">
                                     <!-- Card de competências  -->
                                     <div class="col-12 px-0">
                                         <?php
                                         include(get_stylesheet_directory() . '/template-parts/user-lentes-historico.php');
                                         ?>
                                     </div>
-                                    <div class="col-12 px-0" style="column-count: 2; column-gap: 2em;">
+                                    <div class="col-12 px-0 duas-colunas" style="column-gap: 2em;">
                                             <?php
                                         include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
                                         ?>

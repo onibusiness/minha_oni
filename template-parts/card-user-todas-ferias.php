@@ -2,7 +2,7 @@
   <div class="col-md-12 pl-0 d-flex justify-content-between">
     <p class="escala1 bold align-self-center">Próximas ferias: </p>
     <div >
-    <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#ferias'.$user_name;?>" aria-expanded="false" aria-controls="<?php echo "ferias".$user_name;?>">
+    <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#ferias'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "ferias".$user_id;?>">
                 Pedir férias
             </button>
     </div>
@@ -24,7 +24,7 @@
     ?>
     <div class="row">
         <div class="col">
-            <div class="collapse" id="<?php echo "ferias".$user_name;?>">
+            <div class="collapse" id="<?php echo "ferias".$user_id;?>">
             
               <?php 
               acf_form(array(

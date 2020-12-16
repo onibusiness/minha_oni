@@ -1,6 +1,6 @@
 <div class="atomic_card background_white">
     <p class="escala1 bold onipink"> Competências da Oni </p>
-    <div style="column-count: 2; column-gap: 4em;">
+    <div class="duas-colunas">
     <?php 
     $competencias = new processa_competencias;
     foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_sistema){

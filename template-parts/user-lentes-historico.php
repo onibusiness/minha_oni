@@ -6,7 +6,7 @@
 
     foreach($competencias->lentes as $prisma => $lente){
         ?>
-        <div class="col-6"  >
+        <div class="col-12 col-md-6 px-0 px-md-3"  >
             <div class="col-12" >
                 <p class="escala0 bold petro under_lightgrey mt-3"><?php echo $prisma; ?></p>
             </div>

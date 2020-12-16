@@ -3,7 +3,7 @@ acf_form_head();
 acf_enqueue_uploader();
 ?>
 <div class="row pb-4">
-    <div class="col-10 offset-1">
+    <div class="col-12 col-lg-10 offset-lg-1">
         <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="#novaevidencia"  aria-controls="#novaevidencia">
         Cadastrar evidência
       </button>
@@ -26,13 +26,13 @@ acf_enqueue_uploader();
     </div>
 </div>
 <div class="row">
-    <div class="col-10 offset-1">
+    <div class="col-12 col-lg-10 offset-lg-1">
         <p class="escala1 bold">Todas as suas evidências: </p>
     </div>
 </div>
 <div class="row">
-    <div class="col-10 offset-1 background_white ">
-        <div class="atomic_card ">
+    <div class="col-12 col-lg-10 offset-lg-1 ">
+        <div class="atomic_card  background_white ">
             <?php 
             $evidencias = new processa_evidencias;
             $evidencias_do_oni = $evidencias->evidencias_filtradas;
@@ -45,22 +45,22 @@ acf_enqueue_uploader();
                 <div class=" row">
                     <div class="col-12">
                         <div class='row align-items-center'>
-                            <div class='col-1'>
+                            <div class='col-12 col-lg-1'>
                                 <p class="escala-1"><p class='<?php echo $campos['parecer'];?>'></p>
                             </div>
-                            <div class='col-1'>
+                            <div class='col-12 col-lg-1'>
                                 <p class="onipink bold escala-1 mb-0">Data</p>
                             <p class="escala-1"><?php echo $campos['data'];?></p>
                             </div>
-                            <div class='col-2'>
+                            <div class='col-12 col-lg-2'>
                                 <p class="onipink bold escala-1 mb-0">Competência</p>
                                 <p class="escala-1"><?php echo $campos['competencia']->post_title;?></p>
                             </div>
-                            <div class='col-2'>
+                            <div class='col-12 col-lg-2'>
                                 <p class="onipink bold escala-1 mb-0">Projeto</p>
                                 <p class="escala-1"><?php echo $campos['projeto']->post_title;?></p>
                             </div>
-                            <div class='col-6 text-right'>
+                            <div class='col-12 col-lg-6 text-right'>
                             
                                 <span class="ml-4" type="button" data-toggle="collapse" data-target="<?php echo '#descricao'.$post->ID;?>"  aria-controls="<?php echo $post_type_atual.$post->ID;?>"><i class="fas fa-eye"></i> Ver</span>
                         
