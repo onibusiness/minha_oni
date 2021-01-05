@@ -45,7 +45,7 @@ class processa_competencias{
         $args = array(  
             'post_type' => 'evolucoes',
             'post_status' => array('publish'),
-            'posts_per_page' => -1,
+            'no_found_rows' => true,
         );
         $evolucoes = new WP_Query( $args ); 
         $this->evolucoes = $evolucoes;
@@ -70,7 +70,7 @@ class processa_competencias{
                 $args = array(  
                     'post_type' => 'competencias',
                     'post_status' => array('publish'),
-                    'posts_per_page' => -1,
+                    'no_found_rows' => true,
                     'tax_query' => array(
                         array (
                             'taxonomy' => 'esfera',
@@ -105,7 +105,7 @@ class processa_competencias{
                 $args = array(  
                     'post_type' => 'lente',
                     'post_status' => array('publish'),
-                    'posts_per_page' => -1,
+                    'no_found_rows' => true,
                     'tax_query' => array(
                         array (
                             'taxonomy' => 'prisma',
@@ -132,14 +132,37 @@ class processa_competencias{
     *
     */
     public function competenciasPorOni(){
+        $evolucoes = $this->evolucoes->posts;
+        foreach($this->users_wordpress as $user){
+            foreach($this->competencias as $esfera){
+                $esfera = $esfera->posts;
+                foreach($esfera as $esf){
+                    $this->competencias_por_oni[$user->user_nicename][get_the_title($esf->ID)] = 0;
+                }
+                  
+            
+                foreach($evolucoes as $evo) {
+                    $campos = get_fields($evo->ID);
+                    if($campos['oni'] == $user && $campos['competencia']->post_title){
+                        $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
+                    }
+                }
+                    
+             
+            }
+           
+        }
+
+    }
+    public function competenciasPorOniAntiga(){
         foreach($this->users_wordpress as $user){
             foreach($this->competencias as $esfera){
                 while ( $esfera->have_posts() ) : $esfera->the_post(); 
-                    $this->competencias_por_oni[$user->user_nicename][get_the_title()] = 0;
+                   $this->competencias_por_oni[$user->user_nicename][get_the_title()] = 0;
                 endwhile;
                 while ( $this->evolucoes->have_posts() ) : $this->evolucoes->the_post(); 
                     $campos = get_fields();
-                    if($campos['oni'] == $user){
+                    if($campos['oni'] == $user && $campos['competencia']->post_title){
                         $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
                     }
                 endwhile;

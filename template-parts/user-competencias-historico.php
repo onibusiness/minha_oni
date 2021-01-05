@@ -1,7 +1,7 @@
 
 <?php 
 $competencias_do_oni = $historico_pagamentos[$mes['classe']]['competencias'];
-$competencias = new processa_competencias;
+
 foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_sistema){
     ?>
     <!-- Escrevendo a esfera  -->

@@ -8,6 +8,7 @@
   <?php get_template_part( 'template-parts/search' );?>
   <div class="row py-5 px-3">
     <?php
+    $id_atual = get_the_id();
     while ( have_posts() ) : the_post();
       $categorias = get_the_category();
 
@@ -19,8 +20,8 @@
       );
 
     ?>
-      <div class="col-3 order-2 order-md-1 p-4">
-        <?php include(get_stylesheet_directory() . '/template-parts/card-categoria.php');?>
+      <div class="col-3 order-2 order-md-1  pt-2 px-4">
+        <?php include(get_stylesheet_directory() . '/template-parts/card-categoria-expandido.php');?>
       </div>
       <article class="card col-12 col-md-6 order-1 order-md-2 p-4 p-md-5">
       

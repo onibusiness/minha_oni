@@ -112,14 +112,19 @@ um_fetch_user( um_profile_id() );
                                 </div>
                                 <!-- Coluna da direita  -->
                                 <div class="col-12 col-lg-8">
+                                    <?php 
+                                      $competencias = new processa_competencias;
+                                    ?> 
                                     <!-- Card de competências  -->
                                     <div class="col-12 px-0">
                                         <?php
+                                        
                                         include(get_stylesheet_directory() . '/template-parts/user-lentes-historico.php');
                                         ?>
                                     </div>
                                     <div class="col-12 px-0 duas-colunas" style="column-gap: 2em;">
                                             <?php
+                                            
                                         include(get_stylesheet_directory() . '/template-parts/user-competencias-historico.php');
                                         ?>
                                     </div>

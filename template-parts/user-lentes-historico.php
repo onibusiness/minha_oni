@@ -2,7 +2,7 @@
 <div class="row">
     <?php
     $lentes_do_oni = $historico_pagamentos[$mes['classe']]['lentes'];
-    $competencias = new processa_competencias;
+  
 
     foreach($competencias->lentes as $prisma => $lente){
         ?>
