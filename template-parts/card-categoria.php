@@ -6,6 +6,11 @@
         <h3><a class='escala0 onipink bold' href="<?php echo get_home_url()."/gestao"; ?>">Mapa de gestão </a></h3>
     <?php
     }
+    if($categoria->name == "Carreira"){
+    ?>
+        <h3><a class='escala0 onipink bold' href="<?php echo get_home_url()."/mapa-competencias"; ?>">Mapa de competências </a></h3>
+    <?php
+    }
     foreach($categorias_filhas as $categoria_filha):
         $class= " ";
     $args = array(

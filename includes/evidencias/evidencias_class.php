@@ -91,7 +91,10 @@ class evidencias{
                         'label' => 'Evidência',
                         'name' => 'evidencia',
                         'type' => 'textarea',
-                        'instructions' => '',
+                        'instructions' => 'Preencha a evidência respondendo:</br>
+                            <span class="escala-1">- O que eu fiz no processo?</span></br>
+                            <span class="escala-1">- Por quê foi bom tecnicamente?</span></br>
+                            <span class="escala-1">- Qual o impacto/influência da minha atuação na entrega?</span>',  
                         'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(

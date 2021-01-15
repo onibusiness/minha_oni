@@ -20,7 +20,7 @@
                 <div class="col-10 p-0 align-self-center pl-4">
                     <p class="escala0 mb-0 <?php echo $classe;?>"><?php echo $user->user_nicename;?>
                         <?php 
-                        if(current_user_can('administrator') && $evidencias->onis_status_evidencias[$user->user_nicename]['sem_parecer'] ){
+                        if(current_user_can('edit_users') && $evidencias->onis_status_evidencias[$user->user_nicename]['sem_parecer'] ){
                         ?>
                             <span  class='notifica'><?php echo $evidencias->onis_status_evidencias[$user->user_nicename]['sem_parecer']?></span>
                         <?php

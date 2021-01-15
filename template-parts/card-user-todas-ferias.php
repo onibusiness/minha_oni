@@ -1,6 +1,7 @@
 <div class="atomic_card background_white">
   <div class="col-md-12 pl-0 d-flex justify-content-between">
     <p class="escala1 bold align-self-center">Próximas ferias: </p>
+    
     <div >
     <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#ferias'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "ferias".$user_id;?>">
                 Pedir férias
@@ -40,4 +41,10 @@
             </div>
         </div>
     </div>
+    <p class="col-12 pl-0 helper mb-0">
+      <i class="fas fa-question-circle"></i>
+
+      <a href="https://minha.oni.com.br/pessoas-cultura/beneficios/ferias-e-ausencias/">Como funcionam as férias?</a>
+    </p>
+    
 </div>

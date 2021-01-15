@@ -1,6 +1,7 @@
 <?php
     while ( $evidencias->evidencias_filtradas->have_posts() ) : $evidencias->evidencias_filtradas->the_post(); 
     $campos = get_fields();
+
         if($campos['parecer'] == 'sem_parecer'){
         ?>
         <div class="atomic_card background_white row">     
@@ -40,7 +41,7 @@
                     }
                 }
 
-                if ( current_user_can('administrator') || $papel_do_gestor == 'guardiao_metodo') { 
+                if ( current_user_can('edit_users') || $papel_do_gestor == 'guardiao_metodo') { 
                     if($papel_do_gestor){
                         array_push($form_fields, 'field_5fb56429e862e');
                     }
@@ -59,7 +60,7 @@
                     }
                 
                 }
-                if (current_user_can('administrator') || $papel_do_gestor == 'guardiao_visao') {
+                if (current_user_can('edit_users') || $papel_do_gestor == 'guardiao_visao') {
                     if($papel_do_gestor){
                         array_push($form_fields, 'field_5fce285c8903f');
                     }
@@ -78,7 +79,7 @@
                     }
                 
                 }
-                if (current_user_can('administrator') || $papel_do_gestor == 'guardiao_time') {
+                if (current_user_can('edit_users') || $papel_do_gestor == 'guardiao_time') {
                     if($papel_do_gestor){
                         array_push($form_fields, 'field_5fce286689040');
                     }
@@ -98,14 +99,14 @@
                     }
             
                 }
-                if ( current_user_can('administrator') ) {
+                if ( current_user_can('edit_users') ) {
                     array_push($form_fields, 'field_5fb56437e862f');
                     array_push($form_fields, 'field_5f8ef21e5fed6');
                     if($campos['feedback_dos_socios']){
-
-        
                         ?>
                         <div class='col-12 escala-1'>
+
+
                             <p class='onipink'>
                             Feedback dos sócios
                             </p>
@@ -119,7 +120,7 @@
                 
                 }
         
-                if(current_user_can('administrator')  || $papel_do_gestor){
+                if(current_user_can('edit_users')  || $papel_do_gestor){
                 ?>
 
 
@@ -129,6 +130,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="collapse" id="<?php echo "evidencia".$id_evidencia;?>">
+
                                 <div class="card card-body">
                                 <?php acf_form(array(
                                     'id' =>$id_evidencia,
@@ -148,7 +150,7 @@
                 
         
                 <?php 
-                if (current_user_can('administrator') ) {
+                if (current_user_can('edit_users') ) {
                     $outras_evidencias = processa_evidencias::maisEvidenciasCompetencia($campos['oni'], $campos['competencia'], $evidencias);
                     $data_da_evidencia_atual = str_replace('/', '-', $campos['data']);
                     $printou = false;

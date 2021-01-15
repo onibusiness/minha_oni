@@ -14,6 +14,9 @@ class minha_oni{
 
         $this->setaDiretorioTema();
 
+        //criando as opções para o menu administrativo    
+        require_once($this->diretorio_tema.'/includes/adminpannel/adminpannel_class.php');  
+
         //inserindo todos os custom post types      
         require_once($this->diretorio_tema.'/includes/comunicados/comunicados_class.php');  
         require_once($this->diretorio_tema.'/includes/tutoriais/tutoriais_class.php');
@@ -29,6 +32,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/advertencias/advertencias_class.php');
         require_once($this->diretorio_tema.'/includes/historico/historico_class.php');
         require_once($this->diretorio_tema.'/includes/projetos/projetos_class.php');
+        require_once($this->diretorio_tema.'/includes/user_oni/user_oni_class.php');
 
 
         //Pegando as customizações do acf 

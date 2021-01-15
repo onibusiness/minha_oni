@@ -27,9 +27,10 @@
             
             <?php
             foreach($competencias_no_sistema as $competencia => $niveis){
+
             ?>
                 <!-- Escrevendo a competencia  -->
-                <div class="d-flex">
+                <div class="d-flex py-1" style="border-bottom: 1px solid #eeeeee;">
                     <div class="col-6 pl-0">
                         <p class="escala-1 "><?php echo $competencia; ?></p>
                     </div>
@@ -37,7 +38,7 @@
                         <?php
                         for ($i=1; $i < 6 ; $i++) { 
                         ?>
-                            <div class='col text-center'>
+                            <div class='col px-0 text-center'>
                            
                             <?php
                             if(is_array($niveis[$i])){

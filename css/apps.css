@@ -537,6 +537,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 }
 
 
+.helper a {
+
+	color: var(--grey) !important;
+	text-decoration-line: underline!important;
+	padding-left: 0.25rem;
+	font-size: 80%;
+ 
+}
+.helper i {
+
+	color: var(--grey) !important;
+ 
+}
 
 .btn-outline-dark:hover {
     color: #fff;

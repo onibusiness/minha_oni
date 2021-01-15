@@ -45,7 +45,7 @@ class processa_competencias{
         $args = array(  
             'post_type' => 'evolucoes',
             'post_status' => array('publish'),
-            'no_found_rows' => true,
+            'posts_per_page' => -1,
         );
         $evolucoes = new WP_Query( $args ); 
         $this->evolucoes = $evolucoes;
@@ -139,19 +139,18 @@ class processa_competencias{
                 foreach($esfera as $esf){
                     $this->competencias_por_oni[$user->user_nicename][get_the_title($esf->ID)] = 0;
                 }
-                  
-            
-                foreach($evolucoes as $evo) {
-                    $campos = get_fields($evo->ID);
-                    if($campos['oni'] == $user && $campos['competencia']->post_title){
-                        $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title]++;
-                    }
-                }
+            }
+            foreach($evolucoes as $evo) {
+                $campos = get_fields($evo->ID);
+ 
+                if($campos['oni'] == $user){
                     
-             
+                    $this->competencias_por_oni[$user->user_nicename][$campos['competencia']->post_title] += $campos['nivel'];
+                }
             }
            
         }
+
 
     }
     public function competenciasPorOniAntiga(){
@@ -214,16 +213,20 @@ class processa_competencias{
     *
     */
     public function competenciasNoSistema(){
+ 
         foreach($this->competencias as $esfera => $competencias){
             $this->competencias_no_sistema[$esfera] = array();
             while ( $competencias->have_posts() ) : $competencias->the_post(); 
                 $competencia = get_the_title();
+                
                 for ($i=1; $i < 6 ; $i++) { 
                     //Filtrando o array de competencia por oni pelo nível da competencia
                     $onis_com_nivel =  array_filter( $this->competencias_por_oni, function($v, $k) use($i, $competencia){
-                        return  key($v) == $competencia && reset($v) == $i;
+   
+                        return  $v[$competencia] == $i;
                     }, ARRAY_FILTER_USE_BOTH);
                     $this->competencias_no_sistema[$esfera][$competencia][$i] = array();
+
                     //Pegando os nomes dos onis do filtro e jogando para a lista de nível de competencias
                     foreach($onis_com_nivel as $oni_com_nivel => $descricao){
                         $this->competencias_no_sistema[$esfera][$competencia][$i][] = $oni_com_nivel; 
@@ -232,6 +235,7 @@ class processa_competencias{
             
             endwhile;
         }
+
     }
 
 }

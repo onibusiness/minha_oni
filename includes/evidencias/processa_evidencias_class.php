@@ -65,7 +65,15 @@ class processa_evidencias{
                 'compare' => '=='
             ); 
         }
-
+        if(basename($template) == "archive-evidencias.php"){
+            $user_id =  get_current_user_id();
+            $meta_query[] =
+            array(
+                'key' => 'oni',
+                'value' => $user_id,
+                'compare' => '=='
+            ); 
+        }
         $args = array(  
             'post_type' => 'evidencias' ,
             'post_status' => array('pending','publish'),

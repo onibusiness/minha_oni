@@ -209,6 +209,20 @@ class ferias{
             update_option($this->post_slug . '_flush_rewrite_rules', true);
         }
     }
+    /**
+    * Pega férias a aprovar
+    *
+    * @return Query com os posts  
+    */
+    public function feriasPendentes(){       
+        $args = array(  
+            'post_type' => 'ferias' ,
+            'post_status' => array('draft','pending'),
+            'posts_per_page' => -1,
+        );
+        $ferias_pendentes = new WP_Query( $args ); 
+        return $ferias_pendentes;
+    }
 
     /**
     * Busca os posts de acordo com o usuário

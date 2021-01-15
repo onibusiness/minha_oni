@@ -17,8 +17,9 @@ acf_enqueue_uploader();
             'post_id'       => 'new_post',
             'new_post'      => array(
                 'post_type'     => 'evidencias' ,
-                'post_status'   => 'pending'
+                'post_status'   => 'publish'
             ),
+            'fields' => array('field_5f68c03c23222','field_5f68c025cefa0','field_5fa2b4ad170ee','field_5f40103e2126b', 'field_5f68c04f23223', 'field_5faa986c42eca'),
             'submit_value'  => 'Criar'
         ));
         ?>
@@ -101,10 +102,28 @@ acf_enqueue_uploader();
                     </div>
                     <div class="col-12">
                         <div class="collapse row" id="<?php echo "evidencia".$post->ID;?>">
+                        
                             <p class="col-12">
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="<?php echo '#evidencia'.$post->ID;?>"  aria-controls="<?php echo $post_type_atual.$post->ID;?>">Fechar</button>
                             </p>
-                            <?php acf_form();?>
+                        
+                            
+                            <?php acf_form(array(
+                                'form_attributes' => array(
+                                    'class' => 'col-12'
+                                ),
+                                'html_before_fields' => '<div class="col-12">',
+                                'html_after_fields' => '</div>',
+                                'field_el' => 'tr',
+                                'fields' => array('field_5f68c03c23222','field_5f68c025cefa0','field_5fa2b4ad170ee','field_5f40103e2126b', 'field_5f68c04f23223', 'field_5faa986c42eca'),
+                            ));?>
+                           
+                            <style>
+                            label[for="acf-_validate_email"], #acf-_validate_email{
+                                display: none;
+                            }
+                            </style>
+                             
                         </div>
                     </div>
                 
