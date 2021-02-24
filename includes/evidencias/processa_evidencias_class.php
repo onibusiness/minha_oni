@@ -98,19 +98,14 @@ class processa_evidencias{
     public function geraStatusPorOni(){
         $users_wordpress = get_users();
         foreach($users_wordpress as $user){
+            $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar'] = 0;
             while ( $this->evidencias->have_posts() ) : $this->evidencias->the_post(); 
                 $campos = get_fields();
-               
+                
                 if($campos['oni'] == $user){
                     if($campos['parecer']== 'sem_parecer'){
                         $this->onis_status_evidencias[$user->user_nicename]['sem_parecer']++;
-                        if($campos['feedback_guardiao_time'] == ''){
-                            $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar']++;
-                        }
-                        if($campos['feedback_guardiao_metodo'] == ''){
-                            $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar']++;
-                        }
-                        if($campos['feedback_guardiao_visao'] == ''){
+                        if($campos['feedback_guardiao_time'] == '' && $campos['feedback_guardiao_metodo'] == '' && $campos['feedback_guardiao_visao'] == ''){
                             $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar']++;
                         }
                         if($campos['feedback_dos_socios'] == ''){

@@ -1,4 +1,4 @@
-<div class="atomic_card background_white py-4">
+<div class="atomic_card  py-4">
     <p class="escala1 bold  onipink">Próximas ferias </p>
     <?php 
     $ferias = ferias::filtraFerias($current_user);

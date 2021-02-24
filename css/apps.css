@@ -438,6 +438,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "\f058 ";
 	margin-right:0.5em;
 }
+.treinamento{
+	color: white;
+	background-color: var(--grey);
+	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.6em;
+}
+
+
 .sem_parecer{
 	color: var(--grey);
 	font-size: 0.8em;
@@ -503,6 +512,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 .onion_up::after{
 
 	content: "Onion up";
+}
+.alerta{
+	color: white;
+	background-color: var(--petro);
+	padding: 0.2em 0.7em ;
+	border-radius: 1em;
+	font-size: 0.7em;
+	margin-left: 0.5em;
 }
 
 .notifica{

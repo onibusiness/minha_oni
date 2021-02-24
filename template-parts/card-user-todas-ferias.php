@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col">
             <div class="collapse" id="<?php echo "ferias".$user_id;?>">
-            
+              <p class='onipink escala-1'>ATENÇÃO - Ausência de até 5 dias deve ser agendada 15 dias de antecedência. Ausência de mais de 5 dias deve ser agendada 30 dias de antecedência.</p>
               <?php 
               acf_form(array(
                 'post_id'       => 'new_post',

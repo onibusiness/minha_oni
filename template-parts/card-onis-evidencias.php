@@ -22,11 +22,12 @@
                         <?php 
                         if(current_user_can('edit_users') && $evidencias->onis_status_evidencias[$user->user_nicename]['sem_parecer'] ){
                         ?>
+                            <span  class='alerta'><?php echo $evidencias->onis_status_evidencias[$user->user_nicename]['gestor_avaliar']?></span>
                             <span  class='notifica'><?php echo $evidencias->onis_status_evidencias[$user->user_nicename]['sem_parecer']?></span>
                         <?php
                         }elseif($evidencias_avaliar[$user->ID]){
                         ?>
-                            <span class='notifica'><?php echo $evidencias_avaliar[$user->ID]?></span>
+                            <span class='alerta'><?php echo $evidencias_avaliar[$user->ID]?></span>
                         <?php
                         }
                         ?>

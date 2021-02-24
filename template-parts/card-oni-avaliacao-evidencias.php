@@ -1,7 +1,6 @@
 <?php
     while ( $evidencias->evidencias_filtradas->have_posts() ) : $evidencias->evidencias_filtradas->the_post(); 
     $campos = get_fields();
-
         if($campos['parecer'] == 'sem_parecer'){
         ?>
         <div class="atomic_card background_white row">     

@@ -4,7 +4,7 @@
 * Faz o processamento da folha
 *
 */
-class processa_folha{
+class simula_folha{
     public $p_dia;//primeiro dia da requisição
     public $u_dia;//ultimo dia da requisicao
     public $reembolsos_onis = [];// reembolsos por oni
@@ -30,8 +30,8 @@ class processa_folha{
     
     
     
-    public $alerts = array(); //guardando todos os alerts da requisição
- 
+    public $alerts; //guardando todos os alerts da requisição
+    public $warnings; //guardando todos os warnings da requisição
 
     //disparando a classe
     public function __construct(){
@@ -57,11 +57,8 @@ class processa_folha{
         // fecha a folha
         $this->fechaFolha();
 
-        //revisando os projetos e papeis
-        $this->revisaProjetos($granatum->p_dia,$granatum->u_dia);
-        
-        // consolida a folha
-        $this->consolidaFolha( $granatum->u_dia);
+
+
     }
 
     /**
@@ -216,6 +213,14 @@ class processa_folha{
             endforeach;
         
         endforeach;
+        //
+        // SIMULANDO RECEITAS E CUSTOS DE PROJETO
+        //
+        if (($_POST['form_action']['Filtrar'])){
+            $this->receitas = $_POST['receitas'];
+            $this->custos_de_projeto = $_POST['custos_de_projeto'];
+        }
+
         $this->budget_folha = round(($this->receitas+$this->custos_de_projeto)*0.55 , 2);
 
     
@@ -531,8 +536,16 @@ class processa_folha{
             if($oni['funcao'] !== 'um_stag'){
                 $this->onions_no_sistema += $this->onis[$key]['onions'];// Onions do sistema
             }
+  
             
-        }      
+            
+        }  
+        //
+        // SIMULANDO ONIONS ADICIONAIS
+        //
+        if (($_POST['form_action']['Filtrar'])){
+            $this->onions_no_sistema +=  $_POST['onions_adicionais'];
+        }    
        
     }
 
@@ -558,10 +571,8 @@ class processa_folha{
 
             if($id_do_granatum){
                 $ir = array_search($id_do_granatum, array_column($this->reembolsos_onis, 'id'));
-                if($ir !== false){
-                    $this->onis[$key]['reembolsos'] = -$this->reembolsos_onis[$ir]['valor'];
-                    $this->onis[$key]['descricao_reembolsos'] = $this->reembolsos_onis[$ir]['gastos'];
-                }
+                $this->onis[$key]['reembolsos'] = -$this->reembolsos_onis[$ir]['valor'];
+                $this->onis[$key]['descricao_reembolsos'] = $this->reembolsos_onis[$ir]['gastos'];
             }else{
                 //cadastra o alerta caso não tenha ID cadastrado
                 $this->alerts[] = $key." não tem ID do granatum cadastrada no sistema";
@@ -582,67 +593,15 @@ class processa_folha{
         }
     }
 
- /**
-    * Revisa os projetos cadastrados e seus papéis
-    *
-    * @return Mixed warnings de projeto sem papéis
-    *     
-    */
-    public function revisaProjetos($p_dia, $u_dia){
-
-
-        // GUARDAS - lendo as guardas
-        $args = array(
-            'posts_per_page' => -1,
-            'no_found_rows' => true,
-            'post_type'		=> 'papeis',
-            'post_status'   => 'publish',
-        );
-        $the_query = new WP_Query( $args );
-        if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-            $fields = get_fields();
-            //Pegando as datas da guarda
-            $data_de_inicio_projeto = str_replace('/', '-', $fields['data_de_inicio']);
-            $data_de_termino_projeto = str_replace('/', '-', $fields['data_de_terminio']);
-            $projeto = get_field('projeto', $fields['projeto']->ID );
-            //Verificando se existe overlap entre a data do filtro e a data da guarda
-            if(strtotime($data_de_inicio_projeto) <= strtotime($u_dia) && strtotime($data_de_termino_projeto) >= strtotime($p_dia)) {           
-                $this->projetos[$projeto][$fields['papel']][] = $fields['oni'];
-            }
-        endwhile;endif;
-        wp_reset_query();
-        ksort($this->projetos);
-    
-    }
+ 
 
 
 
-    /**
-    * Consolida toda a folha
-    *
-    * @return Mixed Criando os posts de fechamento da Oni e de pagamento por oni
-    *     
-    */
-    public function consolidaFolha($u_dia){
-        if(count($this->alerts)< 0){
-            # passar um alerta via Ajax de que existem problemas na folha
-            echo "EXISTEM ALERTAS IMPEDINDO O FECHAMENTO";
-            return;
-        }else{
-    
-                delete_transient('onis');
-                delete_transient('u_dia');
-                set_transient('onis',json_encode($this->onis));
-                set_transient('u_dia',$u_dia);
-
-        
-        }
-    }
 
     
 }
 
 //Criando o objeto
-$processa_folha = new processa_folha;
+$simula_folha = new simula_folha;
 
 ?>

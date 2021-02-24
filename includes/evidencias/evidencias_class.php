@@ -410,6 +410,7 @@ class evidencias{
             update_field('competencia', $competencia, $nova_evolucao);
             update_field('oni', $oni, $nova_evolucao);
             update_field('evidencia', $post_id, $nova_evolucao);
+            update_field('nivel', 1, $nova_evolucao);
         }
     
     

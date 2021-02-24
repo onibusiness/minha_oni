@@ -13,14 +13,14 @@
         
     }
 ?>
-<div class="atomic_card background_white pt-4 pb-3">
+<div class="atomic_card pt-4 pb-3">
     <div class="d-flex">
         <div class="col-2 col-md-2 align-self-center p-0">
             <img class="image_profile" src="<?php echo get_avatar_url($user_id);?>">
         </div>
         <div class="col-7 col-md-7 p-0 align-self-center pl-4">
             <p class="escala1 font-weight-bold mb-0"><?php echo $user_name;?></p>
-            <p class="escala0 mb-0"><?php echo $user_email;?></p>
+            <p class="escala-1 mb-0"><?php echo $user_email;?></p>
             
         </div>
         <div class="ml-auto col-3 col-md-3 align-self-center ">
@@ -30,9 +30,9 @@
         </div>
     </div>
     <div class="mt-4">
-        <p><?php echo $informacoes['celular'];?></p>
-        <p>Aniversário : <?php echo $informacoes['data_de_nascimento'];?></p>
-        <p>Oniversário : <?php echo $informacoes['oniversario'];?></p>
+        <p class="escala-1 mb-1"><?php echo $informacoes['celular'];?></p>
+        <p class="escala-1 mb-1">Aniversário : <?php echo $informacoes['data_de_nascimento'];?></p>
+        <p class="escala-1 mb-1">Oniversário : <?php echo $informacoes['oniversario'];?></p>
        
     
     </div>

@@ -87,7 +87,7 @@ class customizaacf{
     
     public function only_show_oni_in_admin($field) {
     /* Deixando o admin editar o rolê no front e no back */
-    if (is_admin() || current_user_can('administrator') ) {
+    if (is_admin() || current_user_can('edit_users') ) {
     
     }else{
         $field['wrapper']['class'] .= ' d-none';
@@ -99,7 +99,7 @@ class customizaacf{
     
     public function update_oni_field($value) {
     /* Deixando o admin editar o rolê no front e no back */
-    if (is_admin() || current_user_can('administrator') ) {
+    if (is_admin() || current_user_can('edit_users') ) {
         return $value;
     }else{
         $value = get_current_user_id();
@@ -109,10 +109,10 @@ class customizaacf{
 
     /************************ MONTANDO O TÍTULO DOS POSTS CRIADOS NO FRONT *************************************/
     public function acf_review_before_save_post($post_id) {
-        if(!is_admin()){
+        if(!is_admin() && !current_user_can('edit_users')){
             $user_atual = wp_get_current_user();
             $post_type_atual =  is_archive() ? get_queried_object()->name : false;
-            $new_title = $post_type_atual." do ".$user_atual->display_name;
+            $new_title = $post_type_atual." | ".$user_atual->display_name;
             
             $new_post = array(
                 'ID'           => $post_id,

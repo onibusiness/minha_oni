@@ -11,20 +11,26 @@ Template Name: User
 //Pega o ID do perfil quando está na página profile do Ultimate member
 $profile_id = um_profile_id();
 
+//Pega o objeto do pergil
+$profile_obj = get_user_by('ID',$profile_id);
+
 //Pega e ajusta a permissão do perfil
 $profile_atual = get_user_meta($profile_id);
 
 $permissoes = unserialize($profile_atual['wp_capabilities'][0]);
 um_fetch_user( um_profile_id() );
 
+
+$competencias = new processa_competencias;
+
 ?>
 
 <div class="row">
-    <div class="col-12 col-md-4">
+    <div class="col-12 col-md-3">
         <?php 
         include(get_stylesheet_directory() . '/template-parts/card-user-full-info.php');
         include(get_stylesheet_directory() . '/template-parts/card-user-guardas.php');
-        include(get_stylesheet_directory() . '/template-parts/card-user-equipamentos.php');
+        include(get_stylesheet_directory() . '/template-parts/card-user-metodo.php');
         ?>
     </div>
     <?php
@@ -101,8 +107,9 @@ um_fetch_user( um_profile_id() );
                                             <?php
                                             if($historico_pagamentos[$mes['classe']]['guardas']){
                                                 foreach($historico_pagamentos[$mes['classe']]['guardas'] as $guarda){
+                                                
                                                     ?>
-                                                <p class="escala-1"><?php echo $titulo_guardas['choices'][$guarda['papel']]." de ".$guarda['projeto']?> </p>
+                                                <p class="escala-1"><?php echo $titulo_guardas['choices'][$guarda['papel']]." de ".$guarda['projeto']['post_title']?> </p>
                                                 <?php
                                                 }
                                             }
@@ -112,9 +119,7 @@ um_fetch_user( um_profile_id() );
                                 </div>
                                 <!-- Coluna da direita  -->
                                 <div class="col-12 col-lg-8">
-                                    <?php 
-                                      $competencias = new processa_competencias;
-                                    ?> 
+                           
                                     <!-- Card de competências  -->
                                     <div class="col-12 px-0">
                                         <?php
@@ -153,7 +158,7 @@ um_fetch_user( um_profile_id() );
         <div class="col-8">
             <?php
              $historico = new historico;
-             $historico_pagamentos = $historico->pegaHistoricoPagamento($current_user);
+             $historico_pagamentos = $historico->pegaHistoricoPagamento($profile_obj);
              $ultimo_do_historico = end($historico_pagamentos);
             ?>
             <div class="atomic_card background_white" >

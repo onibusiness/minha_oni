@@ -1,4 +1,4 @@
-<div class="d-flex flex-row atomic_card background_white" > 
+<div class="d-flex flex-row atomic_card " > 
    
     <div class="col-2 col-md-2 align-self-center p-0">
         <img class="image_profile" src="<?php echo get_avatar_url($user_atual->ID);?>">

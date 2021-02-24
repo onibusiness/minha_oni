@@ -46,6 +46,7 @@ class processa_competencias{
             'post_type' => 'evolucoes',
             'post_status' => array('publish'),
             'posts_per_page' => -1,
+            'no_found_rows' => true,
         );
         $evolucoes = new WP_Query( $args ); 
         $this->evolucoes = $evolucoes;

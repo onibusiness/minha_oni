@@ -65,7 +65,7 @@ class granatum{
         $this->p_dia = date('Y-m-d', $primeiro_dia_mes_passado);
         $this->u_dia = date('Y-m-d', $ultimo_dia_mes_passado);
 
-        if (!empty($_POST['form_action'])){
+        if (($_POST['form_action']['Filtrar'])){
             $this->p_dia = $_POST['data_inicial'];
             $this->u_dia = $_POST['data_final'];
             $this->h_dia = $_POST['data_final'];

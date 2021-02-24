@@ -52,6 +52,7 @@ class ferias{
             'has_archive'       => true,
             'menu_position'     => 20,
             'show_in_admin_bar' => true,
+            'show_in_rest' => true,
             'menu_icon'         => 'dashicons-format-status'
         );
         
@@ -281,10 +282,11 @@ class ferias{
             $data_de_inicio_ferias = str_replace('/', '-', $campos['primeiro_dia_fora']);
             $data_de_termino_ferias = str_replace('/', '-', $campos['ultimo_dia_fora']);
             $dias_de_ferias = minha_oni::contaDiasUteis(strtotime($data_de_inicio_ferias), strtotime($data_de_termino_ferias));
+
             if(strtotime($data_de_inicio_ferias) <= $hoje && strtotime($data_de_termino_ferias) >= $hoje  ){
                 $ferias_da_oni['atuais'][] = array(
                     'ID_oni' => $campos['oni']->ID,
-                    'nome_oni' => $campos['oni']->user_displayname,
+                    'nome_oni' => $campos['oni']->data->display_name,
                     'data_de_inicio_ferias' => $data_de_inicio_ferias,
                     'data_de_termino_ferias' => $data_de_termino_ferias,
                     'dias_de_ferias' => $dias_de_ferias
@@ -294,7 +296,7 @@ class ferias{
             if(strtotime($data_de_inicio_ferias) > $hoje ){
                 $ferias_da_oni['proximas'][] = array(
                     'ID_oni' => $campos['oni']->ID,
-                    'nome_oni' => $campos['oni']->user_nicename,
+                    'nome_oni' => $campos['oni']->data->display_name,
                     'data_de_inicio_ferias' => $data_de_inicio_ferias,
                     'data_de_termino_ferias' => $data_de_termino_ferias,
                     'dias_de_ferias' => $dias_de_ferias
