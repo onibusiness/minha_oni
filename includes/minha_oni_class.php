@@ -33,13 +33,16 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/historico/historico_class.php');
         require_once($this->diretorio_tema.'/includes/projetos/projetos_class.php');
         require_once($this->diretorio_tema.'/includes/user_oni/user_oni_class.php');
-
+        require_once($this->diretorio_tema.'/includes/projetos/feedbacks_class.php');
+        require_once($this->diretorio_tema.'/includes/integracoes/integracoes_class.php');
+        require_once($this->diretorio_tema.'/includes/pipefy/pipefy_class.php');
+        require_once($this->diretorio_tema.'/includes/avaliacoes/avaliacoes_class.php');
+        require_once($this->diretorio_tema.'/includes/avaliacoes/processa_avaliacoes_class.php');
 
         //Pegando as customizações do acf 
         require_once($this->diretorio_tema.'/includes/acf/acf_class.php');
 
-        //funcionalidades que o tema suporta
-        add_action('after_setup_theme', array($this,'suporteTema')); 
+     
 
         //acrescentando o menu
         add_action('init', array($this,'adicionaMenu')); 
@@ -53,6 +56,9 @@ class minha_oni{
 
         //Sobrescrevendo o redirect do login
         add_action( 'login_form' ,  array($this,'redirecionaLogin'));
+
+        //Criando o endpoint
+        add_action( 'rest_api_init', array($this,'criarWebhook'));
 
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
         //$this->puxaPagamentosAntigosBI();
@@ -134,11 +140,6 @@ class minha_oni{
         $this->diretorio_tema = get_stylesheet_directory();
     }
 
-    //O que o tema suporta
-    public function suporteTema(){
-        add_theme_support( 'sensei' );
-
-    }
 
 
     //Adicionando os menus
@@ -214,9 +215,48 @@ class minha_oni{
         }
         return round( $workdays, 2);
     }
+    
+    /**
+     * Registra os seguintes endpoints na API REST
+     *
+     * https://minha.oni.com.br/wp-json/apioni/v1/alteraprojeto/
+     * 
+     */
+    public function criarWebhook(){
+     
+        register_rest_route( 'apioni/v1', '/alteraprojeto', array(
+            'methods'  => [ 'POST', 'GET' ], 
+            'callback' =>  array($this, 'escutaAlteraProjeto'),
+        ) );
+    
 
+    }
+    public function escutaAlteraProjeto( $request ) {
+        $tables_alteradas = pipefy::escutaAlteraProjeto($request);
+        $table_records_frentes = pipefy::puxaDaTabela($tables_alteradas['frentes_alteradas']);
+        set_transient('tables', $table_records_frentes);
 
+        $card_projeto = pipefy::puxaCard($tables_alteradas['projeto_alterado'][0]);
+        set_transient('projetos', $card_projeto);
 
+        if(is_array($card_projeto['data']['card']['fields'])){
+            $fields =  array_column($card_projeto['data']['card']['fields'], 'name');
+            $id_projeto_alterado = array_search('Cadastro do projeto', $fields);
+            $id_table_projeto = $card_projeto['data']['card']['fields'][$id_projeto_alterado]['array_value'];
+            set_transient('id_table_projeto', $id_table_projeto);
+          }
+
+        $table_record_projeto = pipefy::puxaDaTabela($id_table_projeto);
+        set_transient('table_record_projeto', $table_record_projeto);
+        //Pegando o nome do projeto
+        $id_projeto = array_search( array( 'id'=> "nome_do_projeto","label" =>"Nome do projeto") , array_column( $table_record_projeto[0]['data']['table_record']['record_fields'], 'field' ));
+        $nome_projeto = $table_record_projeto[0]['data']['table_record']['record_fields'][$id_projeto]['value'];
+        integracoes::cadastraIdPipefy($id_table_projeto[0],$nome_projeto);
+
+        //Cadastrando o guardião de método
+        papeis::cadastraPapelMetodo($table_records_frentes);
+ 
+    }
 
 }
 

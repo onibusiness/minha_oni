@@ -1,6 +1,10 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
-<?php    if ( !is_user_logged_in() ) {
+<?php    
+
+global $template;
+if ( !is_user_logged_in() && basename($template) !== "page-feedback.php"  && basename($template) !== "page-obrigado.php"  ) {
+ 
       auth_redirect();
       
   } 
@@ -53,6 +57,8 @@
       /* Esse snnipet te mostra qual arquivo do template está sendo renderizado no front
       global $template;
       echo basename($template);*/
+      if (basename($template) !== "page-feedback.php" && basename($template) !== "page-obrigado.php" ) {
+      
     ?>
     <div class="row">
       <div class="col-12 px-4 py-2">
@@ -76,6 +82,19 @@
         </nav>
       </div>
     </div>
+    <?php }else{?>
+      <div class="row">
+      <div class="col-12 px-4 py-2">
+        <nav class="navbar navbar-expand-lg navbar-light p-0  " role="navigation">
+
+       
+            <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+  
+         
+        </nav>
+      </div>
+    </div>
+    <?php } ?>
   </head>
   <body >
   <div class="row">

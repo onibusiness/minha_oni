@@ -92,9 +92,9 @@ class evidencias{
                         'name' => 'evidencia',
                         'type' => 'textarea',
                         'instructions' => 'Preencha a evidência respondendo:</br>
-                            <span class="escala-1">- O que eu fiz no processo?</span></br>
-                            <span class="escala-1">- Por quê foi bom tecnicamente?</span></br>
-                            <span class="escala-1">- Qual o impacto/influência da minha atuação na entrega?</span>',  
+                                                                    <span class="escala-1">- O que eu fiz no processo?</span></br>
+                                                                    <span class="escala-1">- Por quê foi bom tecnicamente?</span></br>
+                                                                    <span class="escala-1">- Qual o impacto/influência da minha atuação na entrega?</span>',
                         'required' => 1,
                         'conditional_logic' => 0,
                         'wrapper' => array(
@@ -107,6 +107,32 @@ class evidencias{
                         'maxlength' => '',
                         'rows' => '',
                         'new_lines' => '',
+                    ),
+                    array(
+                        'key' => 'field_603eb54ee2a71',
+                        'label' => 'Você quer cadastrar',
+                        'name' => 'lente_ou_competencia',
+                        'type' => 'select',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'acfe_permissions' => '',
+                        'choices' => array(
+                            'Competência' => 'Competência',
+                            'Lente' => 'Lente',
+                        ),
+                        'default_value' => 'Competência',
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'ui' => 0,
+                        'return_format' => 'value',
+                        'ajax' => 0,
+                        'placeholder' => '',
                     ),
                     array(
                         'key' => 'field_5fa2b4ad170ee',
@@ -143,7 +169,15 @@ class evidencias{
                         'type' => 'post_object',
                         'instructions' => '',
                         'required' => 0,
-                        'conditional_logic' => 0,
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'field_603eb54ee2a71',
+                                    'operator' => '==',
+                                    'value' => 'Competência',
+                                ),
+                            ),
+                        ),
                         'wrapper' => array(
                             'width' => '',
                             'class' => '',
@@ -152,6 +186,42 @@ class evidencias{
                         'acfe_permissions' => '',
                         'post_type' => array(
                             0 => 'competencias',
+                        ),
+                        'taxonomy' => '',
+                        'allow_null' => 0,
+                        'multiple' => 0,
+                        'return_format' => 'object',
+                        'save_custom' => 0,
+                        'save_post_status' => 'publish',
+                        'acfe_bidirectional' => array(
+                            'acfe_bidirectional_enabled' => '0',
+                        ),
+                        'ui' => 1,
+                    ),
+                    array(
+                        'key' => 'field_603eb47fc5c0a',
+                        'label' => 'Lente',
+                        'name' => 'Lente',
+                        'type' => 'post_object',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'field_603eb54ee2a71',
+                                    'operator' => '==',
+                                    'value' => 'Lente',
+                                ),
+                            ),
+                        ),
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'acfe_permissions' => '',
+                        'post_type' => array(
+                            0 => 'lente',
                         ),
                         'taxonomy' => '',
                         'allow_null' => 0,

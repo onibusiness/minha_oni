@@ -28,11 +28,12 @@ class processa_evidencias{
 
         $args = array(  
             'post_type' => 'evidencias' ,
-            'post_status' => array('pending','publish'),
+            'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
             'posts_per_page' => -1,
         );
         $evidencias_cadastradas = new WP_Query( $args ); 
         $this->evidencias = $evidencias_cadastradas;
+
     }
 
     /**
@@ -76,8 +77,11 @@ class processa_evidencias{
         }
         $args = array(  
             'post_type' => 'evidencias' ,
-            'post_status' => array('pending','publish'),
+            'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
             'posts_per_page' => -1,
+            'meta_key'			=> 'data',
+            'orderby'			=> 'meta_value',
+            'order'				=> 'ASC',
             'meta_query' => $meta_query
         );
         $evidencias_filtradas = new WP_Query( $args ); 
@@ -101,10 +105,12 @@ class processa_evidencias{
             $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar'] = 0;
             while ( $this->evidencias->have_posts() ) : $this->evidencias->the_post(); 
                 $campos = get_fields();
-                
+               
                 if($campos['oni'] == $user){
-                    if($campos['parecer']== 'sem_parecer'){
-                        $this->onis_status_evidencias[$user->user_nicename]['sem_parecer']++;
+                    
+                    if(preg_match('(sim|nao|onion_up)', $campos['parecer']) === 0) {
+                        
+                        $this->onis_status_evidencias[$user->user_nicename]['sem_parecer'] += 1;
                         if($campos['feedback_guardiao_time'] == '' && $campos['feedback_guardiao_metodo'] == '' && $campos['feedback_guardiao_visao'] == ''){
                             $this->onis_status_evidencias[$user->user_nicename]['gestor_avaliar']++;
                         }
@@ -115,6 +121,7 @@ class processa_evidencias{
                     
                 }
             endwhile;
+       
         }
 
     }
@@ -156,17 +163,19 @@ class processa_evidencias{
     *       ]
     */
     public function montaEvidenciasPorGestor(){
+    
         while ( $this->evidencias->have_posts() ) : $this->evidencias->the_post(); 
+      
             $id = get_the_id();
             $projeto = get_field( 'projeto');
             $oni = get_field('oni');
-
+     
             //pegando os gestores do projeto
             $gestores = papeis::pegaPapeisProjeto($projeto);
-    
+           
             while ( $gestores->have_posts() ) : $gestores->the_post(); 
                 $fields = get_fields();
-      
+        
                 $this->evidencias_por_gestor[$fields['oni']['ID']][] = array(
                     'evidencia' => $id,
                     'oni' => $oni->ID,
@@ -175,8 +184,9 @@ class processa_evidencias{
           
             
             endwhile;
+          
         endwhile;
-
+    
     }
 
 

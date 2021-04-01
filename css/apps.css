@@ -531,6 +531,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	margin-left: 0.5em;
 }
 
+
+.vermais.collapsed::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f055 ";
+	margin-right:0.5em;
+}
+.vermais.collapsed::after{
+	content: "Ver mais";
+}
+
+.vermais::before{
+	font-family: "Font Awesome 5 Free"; 
+	font-weight: 900; 
+	content: "\f056 ";
+	margin-right:0.5em;
+}
+.vermais::after{
+	content: "Fechar";
+}
+
 /***** COMPONENTES *****/
 #menugeral{
 	list-style: none;
@@ -666,4 +687,25 @@ pre {
 	font-weight: bolder;
 	text-decoration: underline;
 	text-decoration-color: var(--onipink);
+}
+
+.acf-hl{
+	list-style: none;
+}
+.acf-hl li{
+	margin-right: 2rem;
+	font-size: 0.85em;
+	text-align: center;
+	font-weight: 600;
+}
+.acf-hl li label input{
+	display: block;
+	
+}
+
+kbd{
+	font-family: inherit !important;
+	background-color: #ffc107 !important;
+	color:inherit !important;
+	font-size: 100% !important;
 }

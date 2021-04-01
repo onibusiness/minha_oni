@@ -18,12 +18,19 @@
             </div>
             <hr>
             <?php
+              $meta_query[] =
+              array(
+                  'key' => 'status',
+                  'value' => 'Ativo',
+                  'compare' => '=='
+              ); 
             $args = array(  
                 'post_type' => 'projetos',
                 'post_status' => array('publish'),
                 'posts_per_page' => -1,
                 'orderby' => 'title',
                 'order'   => 'ASC',
+                'meta_query' => $meta_query
             );
             $projetos = new WP_Query( $args ); 
 
@@ -52,10 +59,11 @@
                         $campos_guardas = get_fields();
                         $data_de_inicio_guarda = str_replace('/', '-', $campos_guardas['data_de_inicio']);
                         $data_de_termino_guarda = str_replace('/', '-', $campos_guardas['data_de_terminio']);
-
+             
                         if(strtotime($data_de_inicio_guarda) <= $hoje && strtotime($data_de_termino_guarda) >= $hoje){
-            
+                
                             if($campos_guardas['projeto']->ID == $projeto_id) {
+                 
                                 if($campos_guardas['papel'] == "guardiao_visao"){ 
                                     $visao = $campos_guardas['oni'];
                 
@@ -113,6 +121,9 @@
             endwhile;endif;
             ?>
         </div>
+        <?php 
+        include(get_stylesheet_directory() . '/template-parts/card-gerador-feedback.php');
+        ?>
     </div>
     <div class="col-12 col-lg-3 ">
         <div class="atomic_card   background_white ">
@@ -163,5 +174,6 @@
             ?>
         </div>
     </div>
+   
 </div>
 <?php get_footer();?>

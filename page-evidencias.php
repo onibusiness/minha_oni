@@ -22,7 +22,14 @@ $evidencias = new processa_evidencias;
             <?php
             include(get_stylesheet_directory() . '/template-parts/card-oni-avaliacao-evidencias.php');
             ?>
-           
+           <div class="row">
+                <div class="col-12">
+                    <p class="escala1 bold">Evidências já avaliadas: </p>
+                </div>
+            </div>
+            <?php
+            include(get_stylesheet_directory() . '/template-parts/card-oni-evidencias-avaliadas.php');
+            ?>
          
         </div>
         <?php if($_GET['oni']){

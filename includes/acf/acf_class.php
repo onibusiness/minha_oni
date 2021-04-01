@@ -15,6 +15,11 @@ class customizaacf{
         add_filter('acf/prepare_field/name=oni',  array($this,'only_show_oni_in_admin'));
         add_filter('acf/update_value/name=oni',  array($this,'update_oni_field'));
         add_action('acf/save_post',  array($this,'acf_review_before_save_post'),20);
+        add_filter('acf/prepare_field/key=field_603e7bbc27729',  array($this,'preencher_projeto'));
+        add_filter('acf/prepare_field/key=field_603e7bd5c94ca',  array($this,'preencher_frente'));
+        add_filter('acf/prepare_field/key=field_603e7bbc27729',  array($this,'only_show_oni_in_admin'));
+        add_filter('acf/prepare_field/key=field_603e7bd5c94ca',  array($this,'only_show_oni_in_admin'));
+
 
 
     }
@@ -58,9 +63,14 @@ class customizaacf{
 
         // Add .form-group & .col-12 fallback on fields wrappers
         $field['wrapper']['class'] .= ' form-group col-12';
-        
         // Add .form-control on fields
-        $field['class'] .= ' form-control';
+        if ($field['type'] !== 'radio') {
+            $field['class'] .= ' form-control';
+        }else{
+            $field['class'] .= ' form-check-inline';
+        }
+       
+        
         
         return $field;
         
@@ -88,7 +98,7 @@ class customizaacf{
     public function only_show_oni_in_admin($field) {
     /* Deixando o admin editar o rolê no front e no back */
     if (is_admin() || current_user_can('edit_users') ) {
-    
+        return $field;
     }else{
         $field['wrapper']['class'] .= ' d-none';
     }
@@ -106,6 +116,27 @@ class customizaacf{
         return $value;
     }
     }
+
+    function preencher_projeto($field) {
+        // only on front end
+        if (is_admin()) {
+          return $field;
+        }
+        if (isset($_GET['projeto'])) {
+          $field['value'] = $_GET['projeto'];
+        }
+        return $field;
+      }
+      function preencher_frente($field) {
+        // only on front end
+        if (is_admin()) {
+          return $field;
+        }
+        if (isset($_GET['frente'])) {
+          $field['value'] = $_GET['frente'];
+        }
+        return $field;
+      }
 
     /************************ MONTANDO O TÍTULO DOS POSTS CRIADOS NO FRONT *************************************/
     public function acf_review_before_save_post($post_id) {

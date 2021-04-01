@@ -19,7 +19,7 @@ acf_enqueue_uploader();
                 'post_type'     => 'evidencias' ,
                 'post_status'   => 'publish'
             ),
-            'fields' => array('field_5f68c03c23222','field_5f68c025cefa0','field_5fa2b4ad170ee','field_5f40103e2126b', 'field_5f68c04f23223', 'field_5faa986c42eca'),
+            'fields' => array('field_5f68c03c23222','field_603eb54ee2a71','field_5f68c025cefa0','field_603eb47fc5c0a','field_5fa2b4ad170ee','field_5f40103e2126b', 'field_5f68c04f23223', 'field_5faa986c42eca'),
             'submit_value'  => 'Criar'
         ));
         ?>

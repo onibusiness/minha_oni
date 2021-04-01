@@ -1,3 +1,50 @@
+<?php get_header();?>
+<?php 
+    $competencias = new processa_competencias;
+?> 
+<div class="row">
+    <?php
+    $lentes_do_oni = $historico_pagamentos[$mes['classe']]['lentes'];
+  
+
+    foreach($competencias->lentes as $prisma => $lente){
+        ?>
+        <div class="col-12 col-md-6 px-0 px-md-3"  >
+            <div class="col-12" >
+                <p class="escala0 bold petro under_lightgrey mt-3"><?php echo $prisma; ?></p>
+            </div>
+            <?php
+            
+            while ( $lente->have_posts() ) : $lente->the_post(); 
+                if(is_array($lentes_do_oni)){
+
+                    if(in_array( get_the_title(), array_column($lentes_do_oni, 'lente'))){
+                    ?>
+                        <p class=" col-12 escala-1 petro publish"><?php echo get_the_title(); ?></p>
+                    <?php
+                    }
+                }else{
+                    ?>
+                        <p class=" col-12 escala-1 grey"><?php echo get_the_title(); ?></p>
+                    <?php
+                   
+                }
+            endwhile;
+            ?>
+        </div>
+    <?php
+        
+    }
+    if($competencias->lentes_por_oni[$user_name]){
+        foreach($competencias->lentes_por_oni[$user_name] as $lentes_do_oni => $bol){
+            ?>
+            <p class="escala-1"><?php echo $lentes_do_oni; ?></p>
+            <?php
+        }
+    }
+    ?>
+</div>
+
 
 <?php 
 $competencias_do_oni = $historico_pagamentos[$mes['classe']]['competencias'];
@@ -16,15 +63,12 @@ foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_si
                 foreach($competencias_no_sistema as $competencia => $niveis){
                     $onion_up = false;
                     if($competencias_do_oni){
-                      
-                        foreach($competencias_do_oni as $comp_do_oni){
-                            echo "<pre>";
-                            var_dump($comp_do_oni["onion_up"]);
-                            echo "</pre>";
+
+                        foreach($competencias_do_oni as $competencia_do_oni){
                         
-                            if ($comp_do_oni == $competencia) {
+                            if ($competencia_do_oni->competencia == $competencia) {
                                 
-                                $nivel_do_oni = $comp_do_oni;
+                                $nivel_do_oni = $competencia_do_oni->pontos;
                                 $onion_up = true;
                                 break;
                             }else{
@@ -78,3 +122,7 @@ foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_si
 }
 
 ?>
+
+
+
+<?php get_footer();?>

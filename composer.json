@@ -1,0 +1,13 @@
+{
+    "name": "thiag/minha_oni",
+    "description": "Tema de wordpress com as operações da Oni",
+    "authors": [
+        {
+            "name": "Thiago",
+            "email": "thiago@oni.com.br"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.3"
+    }
+}

@@ -50,13 +50,21 @@ body{
 
 }
 
-a, select{
-	font-family: 'Typold-Regular' !important;
+a:not(.ab-item), select{
+	font-family: 'Typold-Regular' ;
 	text-decoration: none;
-	color: #071e22 !important;
+	color: #071e22 ;
 }
 
+article p a{
+	color: #ed1843 !important;
+	text-decoration: underline !important;
+}
 
+figcaption{
+	text-align: center;
+	font-size: 0.7rem;
+}
 
 ul{
 	-webkit-margin-before: 0;
