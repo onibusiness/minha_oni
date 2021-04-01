@@ -8,6 +8,11 @@
 
 $historico = new historico;
 $historico_pagamentos = $historico->pegaHistoricoPagamento(15);
+$ultimo_mes_com_pagamento = array_key_first($historico_pagamentos);
+$historico_pagamentos = $historico_pagamentos[$ultimo_mes_com_pagamento];
+echo "<pre>";
+var_dump($historico_pagamentos);
+echo "</pre>";
 foreach($historico->seis_meses as $mes){
     $mostrar = '';
     if($mes == $ultimo_mes){

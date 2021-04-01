@@ -91,8 +91,14 @@ $competencias = new processa_competencias;
                                     <!-- Card de remuneração  -->
                                     <div class="row">
                                         <div class="col-12">
+                                            <p class="escala3 bold grey mb-0"> <span class="onipink">Ø</span> <?php echo $historico_pagamentos[$mes['classe']]['onions_competencia'];?></p>
+                                            <p class="escala0 bold mb-1 pb-1">Onions de competencia</p>
+
+                                            <p class="escala3 bold grey mb-0"> <span class="onipink">Ø</span> <?php echo +$historico_pagamentos[$mes['classe']]['onions_papeis'];?></p>
+                                            <p class="escala0 bold mb-4 pb-4">Onions de papéis</p>
+
                                             <p class="escala3 bold mb-0"> <span class="onipink">Ø</span> <?php echo $historico_pagamentos[$mes['classe']]['onions_competencia']+$historico_pagamentos[$mes['classe']]['onions_papeis'];?></p>
-                                            <p class="escala0 bold mb-4 pb-4">Total de onions</p>
+                                            <p class="escala0 bold mb-1 pb-1">Total de onions</p>
 
                                             <p class="escala3 bold mb-0"> <span class="onipink">R$</span> <?php echo $historico_pagamentos[$mes['classe']]['remuneracao'];?></p>
                                             <p class="escala0 bold mb-4 pb-4">Valor da NF-e</p>
@@ -154,12 +160,14 @@ $competencias = new processa_competencias;
     <?php
     //Se for outro usuário vendo o perfil dele
 }else{
-    ?>
-        <div class="col-8">
-            <?php
-             $historico = new historico;
-             $historico_pagamentos = $historico->pegaHistoricoPagamento($profile_obj);
-             $ultimo_do_historico = end($historico_pagamentos);
+?>
+    <div class="col-8">
+        <?php
+            $historico = new historico;
+            $ultimo_mes = end($historico->seis_meses);
+            $historico_pagamentos = $historico->pegaHistoricoPagamento($profile_id);
+            $mes['classe'] = array_key_first($historico_pagamentos);
+      
             ?>
             <div class="atomic_card background_white" >
                 <div class="row">
@@ -170,10 +178,12 @@ $competencias = new processa_competencias;
                     </div>
                 </div>
             </div>
-        </div>
-    <?php
-    }
-    ?>
+        
+   
+    </div>
+<?php
+}
+?>
 </div>
 
 <?php get_footer();?>

@@ -18,15 +18,17 @@ foreach($competencias->competencias_no_sistema as $esfera => $competencias_no_si
                     if($competencias_do_oni){
                       
                         foreach($competencias_do_oni as $comp_do_oni){
-                            echo "<pre>";
-                            var_dump($comp_do_oni["onion_up"]);
-                            echo "</pre>";
-                        
-                            if ($comp_do_oni == $competencia) {
+                            if(is_array($comp_do_oni)){
                                 
-                                $nivel_do_oni = $comp_do_oni;
-                                $onion_up = true;
-                                break;
+                                if ($comp_do_oni['competencia'] == $competencia) {
+                                    
+                                    $nivel_do_oni = $comp_do_oni['pontos'];
+                                    $onion_up = $comp_do_oni['onion_up'];
+                                    break;
+                                }else{
+                                    $nivel_do_oni = 0;
+                                }
+
                             }else{
                                 $nivel_do_oni = 0;
                             }
