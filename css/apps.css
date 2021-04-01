@@ -703,6 +703,11 @@ pre {
 	
 }
 
+.acf-hl.form-control{
+	border: none !important;
+	display: inline-flex !important;
+}
+
 kbd{
 	font-family: inherit !important;
 	background-color: #ffc107 !important;

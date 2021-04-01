@@ -16,10 +16,16 @@ class customizaacf{
         add_filter('acf/update_value/name=oni',  array($this,'update_oni_field'));
         add_action('acf/save_post',  array($this,'acf_review_before_save_post'),20);
         add_filter('acf/prepare_field/key=field_603e7bbc27729',  array($this,'preencher_projeto'));
-        add_filter('acf/prepare_field/key=field_603e7bd5c94ca',  array($this,'preencher_frente'));
         add_filter('acf/prepare_field/key=field_603e7bbc27729',  array($this,'only_show_oni_in_admin'));
+
+        add_filter('acf/prepare_field/key=field_603e7bd5c94ca',  array($this,'preencher_frente'));
         add_filter('acf/prepare_field/key=field_603e7bd5c94ca',  array($this,'only_show_oni_in_admin'));
 
+        add_filter('acf/prepare_field/key=field_60636ca0e8e97',  array($this,'preencher_oni_avaliado'));
+        add_filter('acf/prepare_field/key=field_60636ca0e8e97',  array($this,'only_show_oni_in_admin'));
+
+        add_filter('acf/prepare_field/key=field_60636ca7e8e98', array($this,'preencher_oni_avaliador'));
+        add_filter('acf/prepare_field/key=field_60636ca7e8e98',  array($this,'only_show_oni_in_admin'));
 
 
     }
@@ -126,8 +132,8 @@ class customizaacf{
           $field['value'] = $_GET['projeto'];
         }
         return $field;
-      }
-      function preencher_frente($field) {
+    }
+    function preencher_frente($field) {
         // only on front end
         if (is_admin()) {
           return $field;
@@ -136,7 +142,29 @@ class customizaacf{
           $field['value'] = $_GET['frente'];
         }
         return $field;
-      }
+    }
+
+    function preencher_oni_avaliador($field) {
+        // only on front end
+        if (is_admin()) {
+          return $field;
+        }
+       
+        $field['value'] = get_current_user_id();
+       
+        return $field;
+    }
+
+    function preencher_oni_avaliado($field) {
+        // only on front end
+        if (is_admin()) {
+          return $field;
+        }
+        if (isset($_GET['oni_avaliado'])) {
+          $field['value'] = $_GET['oni_avaliado'];
+        }
+        return $field;
+    }
 
     /************************ MONTANDO O TÍTULO DOS POSTS CRIADOS NO FRONT *************************************/
     public function acf_review_before_save_post($post_id) {

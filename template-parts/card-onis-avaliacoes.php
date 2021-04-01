@@ -19,7 +19,7 @@
         if(!in_array($user->user_nicename, $avaliados)){
         ?>
              <div class="col-12 align-self-center my-2"  >         
-                <a  class="d-flex flex-row " href="?oni=<?php echo $user->ID; ?>"> 
+                <a  class="d-flex flex-row " href="?oni_avaliado=<?php echo $user->ID; ?>"> 
                     <div class="col-2  align-self-center p-0">
                         <img class="image_profile_small" src="<?php echo get_avatar_url($user->ID);?>">
                     </div>

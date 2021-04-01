@@ -22,11 +22,6 @@ $avaliacoes = new processa_avaliacoes;
             <?php
             include(get_stylesheet_directory() . '/template-parts/card-oni-avaliacao-preenchimentos.php');
             ?>
-           <div class="row">
-                <div class="col-12">
-                    <p class="escala1 bold">Evidências já avaliadas: </p>
-                </div>
-            </div>
          
         </div>
 
