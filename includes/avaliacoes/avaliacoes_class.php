@@ -120,7 +120,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -147,7 +147,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -174,7 +174,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -201,7 +201,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -228,7 +228,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -255,7 +255,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -282,7 +282,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -309,7 +309,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -336,7 +336,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -363,7 +363,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxiradio',
                             'id' => '',
                         ),
                         'choices' => array(
@@ -390,7 +390,7 @@ class avaliacoes{
                         'conditional_logic' => 0,
                         'wrapper' => array(
                             'width' => '',
-                            'class' => '',
+                            'class' => 'maxicheck',
                             'id' => '',
                         ),
                         'choices' => array(

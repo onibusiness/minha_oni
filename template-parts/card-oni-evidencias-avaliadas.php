@@ -14,7 +14,7 @@
                 <span class="<?php echo $campos['parecer'];?>">
                 </p>
                     <p class=' col-4 escala0 bold onipink'>
-                    <?php echo $campos['competencia']->post_title;?>
+                    <?php echo $campos['competencia']->post_title.$campos['Lente']->post_title;?>
                 </p>
                 <p class=' col-3 escala0 bold onipink'>
                     <?php echo $campos['projeto']->post_title;?>

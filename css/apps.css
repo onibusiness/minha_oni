@@ -689,6 +689,9 @@ pre {
 	text-decoration-color: var(--onipink);
 }
 
+.description{
+	font-size: 0.85em;
+}
 .acf-hl{
 	list-style: none;
 }
@@ -708,6 +711,20 @@ pre {
 	display: inline-flex !important;
 }
 
+.maxiradio input[type=radio]{
+	height: 20px;
+	width: 20px;
+
+}
+
+.maxicheck .form-control{
+	padding-left: 0;
+}
+.maxicheck input[type=checkbox]{ 
+	height: 20px;
+	width: 20px;
+
+}
 kbd{
 	font-family: inherit !important;
 	background-color: #ffc107 !important;

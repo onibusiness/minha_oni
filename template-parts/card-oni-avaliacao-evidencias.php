@@ -12,7 +12,7 @@
                 
                 ?>
                     <p class=' col-4 escala0 bold onipink'> 
-                    <?php echo $campos['competencia']->post_title;?>
+                    <?php echo $campos['competencia']->post_title.$campos['Lente']->post_title;?>
                     <i class="fas fa-question-circle" title="<?php echo get_field('explicacao',$campos['competencia']->ID); ?>"></i>
                 </p>
                 <p class=' col-4 escala0 bold onipink'>

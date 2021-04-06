@@ -11,7 +11,7 @@ $avaliacoes = new processa_avaliacoes;
 ?>
 <div class="container-fluid">
     <div class="row py-5">
-        <div class="col-2">
+        <div class="col-3">
             <?php 
             include(get_stylesheet_directory() . '/template-parts/card-onis-avaliacoes.php');
             ?>
