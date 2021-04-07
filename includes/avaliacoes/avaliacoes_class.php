@@ -193,8 +193,8 @@ class avaliacoes{
                     ),
                     array(
                         'key' => 'field_6064c89c4f2ff',
-                        'label' => 'Quão cortez o Oni é no relacionamento com você?',
-                        'name' => 'quao_cortez_o_oni_e_no_relacionamento_com_voce',
+                        'label' => 'Quão cortês o Oni é no relacionamento com você?',
+                        'name' => 'quao_cortes_o_oni_e_no_relacionamento_com_voce',
                         'type' => 'radio',
                         'instructions' => '',
                         'required' => 0,

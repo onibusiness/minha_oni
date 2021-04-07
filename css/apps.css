@@ -725,9 +725,34 @@ pre {
 	width: 20px;
 
 }
+
+.column-bar {
+    background-color:var(--onipink);
+    height: 60px;
+    width: 88px;
+    border: 1px solid #ffffff;
+	border-bottom: 2px solid #ffffff;
+    box-shadow: 0 2px 0 0 #999999;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.column-bar-atributo {
+    background-color:var(--onipink);
+    height: 60px;
+    width: 110px;
+    border: 1px solid #ffffff;
+	border-bottom: 2px solid #ffffff;
+    box-shadow: 0 2px 0 0 #999999;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+
 kbd{
 	font-family: inherit !important;
 	background-color: #ffc107 !important;
 	color:inherit !important;
 	font-size: 100% !important;
 }
+

@@ -50,10 +50,13 @@ $competencias = new processa_competencias;
                 ?>
                 </div>
             </div>
-
+            <?php 
+            include(get_stylesheet_directory() . '/template-parts/card-user-avaliacao.php');
+            ?>
             <?php 
             include(get_stylesheet_directory() . '/template-parts/card-user-historico.php');
             ?>
+        
 
             
         </div>

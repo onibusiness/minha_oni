@@ -63,7 +63,34 @@ class processa_avaliacoes{
 
     }
 
+    /**
+    * Puxa as avaliacoes do usuário atual
+    *
+    * @return Query com os posts  
+    */
+    public function filtraAvaliacoes($current_user){
+        $meta_query[] =
+            array(
+                'key' => 'oni_avaliado',
+                'value' =>  $current_user->ID,
+                'compare' => '=='
+            );      
+    
+        $args = array(  
+            'post_type' => 'avaliacoes' ,
+            'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
+            'posts_per_page' => -1,
+            'date_query' => array(
+                array(
+                    'after' => '2 months ago'
+                )
+            ),
+            'meta_query' => $meta_query
+        );
+        $avaliacoes_do_oni = new WP_Query( $args ); 
+        return $avaliacoes_do_oni;
 
+    }
 
 }
 ?>
