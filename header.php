@@ -62,10 +62,10 @@ if ( !is_user_logged_in() && basename($template) !== "page-feedback.php"  && bas
     ?>
     <div class="row">
       <div class="col-12 px-4 py-2">
-        <nav class="navbar navbar-expand-lg navbar-light p-0  " role="navigation">
+        <nav style='height:80px;'  class="navbar navbar-expand-lg navbar-light p-0  " role="navigation">
 
           <a  href="<?php echo bloginfo('url'); ?>">
-            <img style='height:80px;' src="<?php echo bloginfo('template_directory'); ?>/img/Oni-Asssinatura-02.svg"/>
+            <img style='height:150px; margin-left:-20px;'  src="<?php echo bloginfo('template_directory'); ?>/img/oni.svg"/>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-menu" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -75,7 +75,7 @@ if ( !is_user_logged_in() && basename($template) !== "page-feedback.php"  && bas
             wp_nav_menu( array(
               'theme_location' => 'menu-geral', 
               'container' => 'ul', 
-              'menu_class' => 'navbar-nav w-100 escala1 d-flex justify-content-end py-4',
+              'menu_class' => 'navbar-nav w-100 escala0 d-flex justify-content-end py-4',
             ));
             ?>
           </div>

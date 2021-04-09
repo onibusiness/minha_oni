@@ -52,7 +52,7 @@ class customizaacf{
         
         // Submit button
         if($args['html_submit_button'] == '<input type="submit" class="acf-button button button-primary button-large" value="%s" />')
-            $args['html_submit_button'] = '<input type="submit" class="acf-button button button-primary button-large btn btn-primary" value="%s" />';
+            $args['html_submit_button'] = '<input type="submit" class="acf-button  buttoni pequeno" value="%s" />';
         
         return $args;
         

@@ -4,7 +4,7 @@
             <!-- Barra de botões de meses controlando as linhas debaixo via collapse -->
             <div class="atomic_card background_white" id="acordiao">
                 <div class="row">
-                    <p class="escala1 bold">Seu histórico: </p>
+                    <p class=" col-12 escala1 bold">Seu histórico de onions e competências: </p>
                     <div class="col-12 d-flex flex-wrap ">
                         <?php foreach($historico->seis_meses as $mes){
                              $expandido = 'false';
@@ -13,7 +13,7 @@
                              }
                             ?>
                             <p>
-                                <button class="btn btn-outline-danger target_js mr-md-4" type="button" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="<?php echo $expandido;?>" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></button>
+                                <div class="taboni  target_js" data-toggle="collapse" data-target="<?php echo '#'.$mes['classe'];?>" aria-expanded="<?php echo $expandido;?>" aria-controls="<?php echo $mes['classe'];?>"><?php echo $mes['data'];?></div>
                             </p>
                         <?php
                         }
@@ -30,7 +30,7 @@
                         }
                         ?>
                         <!-- Uma row para cada mês de histórico -->
-                        <div class="col-12 col-md-12 row collapse target_js pt-4 <?php echo $mostrar;?>" id="<?php echo $mes['classe'];?>" data-parent="#acordiao">
+                        <div class="col-12 col-md-12 row collapse target_js pl-4 pt-4 <?php echo $mostrar;?>" id="<?php echo $mes['classe'];?>" data-parent="#acordiao">
                             <?php
                             if($historico_pagamentos[$mes['classe']]){
                                 ?>

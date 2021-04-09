@@ -2,9 +2,9 @@
   <div class="col-md-12 pl-0 d-flex justify-content-between">
     <p class="escala1 bold">Últimas evidências: </p>
     <div>
-      <button type="button" class="btn btn-outline-dark">
+      <div class="buttoni pequeno">
         <a href="<?php echo get_site_url()."/evidencias/";?>">Cadastrar evidências</a>
-      </button>
+      </div>
     </div>
   </div>
   

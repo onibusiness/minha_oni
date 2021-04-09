@@ -1,5 +1,8 @@
 <div class="atomic_card background_white">
-    <p class="escala1 bold">Avaliando oni </p>
+
+    <p class="escala1 bold">Avaliando  <?php 
+    echo get_userdata($_GET['oni_avaliado'])->data->user_nicename;
+    ?> </p>
     <div class="col-10">
         <?php
         //CRIAR UM NOVO 

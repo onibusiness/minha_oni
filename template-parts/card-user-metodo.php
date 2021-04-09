@@ -1,5 +1,5 @@
 <div class="atomic_card  py-2">
-    <p class="escala1 bold onipink mb-2">Guardas de método </p>
+    <p class="escala0 bold onipink mb-2">Guardas de método </p>
     
         <?php 
         
@@ -31,13 +31,13 @@
                             <?php
                             if($e_guardiao[0]['com_rodinha'] == true){
                                 ?>
-                                <p class="escala0 mb-1 bold grey ">Treinando para <?php echo $fields['metodo']; ?></p>
+                                <p class="escala-1 mb-1 bold grey ">Treinando para <?php echo $fields['metodo']; ?></p>
                                 <p class="escala-1 mb-1 grey "><?php echo $fields['descricao']; ?></p>
                                 <?php
 
                             }else{
                                 ?>
-                                <p class="escala0 mb-1 bold onipetro "><?php echo $fields['metodo']; ?></p>
+                                <p class="escala-1 mb-1 bold onipetro "><?php echo $fields['metodo']; ?></p>
                                 <p class="escala-1 mb-1 grey "><?php echo $fields['descricao']; ?></p>
                                 <?php
                             }

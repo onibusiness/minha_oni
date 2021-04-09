@@ -3,9 +3,9 @@
     <p class="escala1 bold align-self-center">Próximas ferias: </p>
     
     <div >
-    <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#ferias'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "ferias".$user_id;?>">
+    <div class="buttoni pequeno " data-toggle="collapse" data-target="<?php echo '#ferias'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "ferias".$user_id;?>">
                 Pedir férias
-            </button>
+</div>
     </div>
   </div>
     <?php 

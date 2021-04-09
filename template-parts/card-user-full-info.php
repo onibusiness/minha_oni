@@ -24,9 +24,11 @@
             
         </div>
         <div class="ml-auto col-3 col-md-3 align-self-center ">
-            <button type="button" class="btn btn-outline-dark " data-toggle="collapse" data-target="<?php echo '#perfil'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "perfil".$user_id;?>">
-                Editar
-            </button>
+        </div>
+    </div>
+    <div class="col-8 offset-2 pl-4">
+        <div type="button" class="buttoni pequeno " data-toggle="collapse" data-target="<?php echo '#perfil'.$user_id;?>" aria-expanded="false" aria-controls="<?php echo "perfil".$user_id;?>">
+            Editar
         </div>
     </div>
     <div class="mt-4">

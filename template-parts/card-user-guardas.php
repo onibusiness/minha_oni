@@ -1,5 +1,5 @@
 <div class="atomic_card  py-2">
-    <p class="escala1 bold onipink mb-2">Guardião de </p>
+    <p class="escala0 bold onipink mb-2">Guardião de </p>
     <?php 
         $papeis = papeis::filtraPapeis($profile_id);
   
@@ -24,7 +24,7 @@
           endwhile;
       ?>
 
-    <p class="escala1 bold onipink mb-2">Próximas guardas de método </p>
+    <p class="escala0 bold onipink mb-2">Próximas guardas de método </p>
     <?php      
         while ( $papeis->have_posts() ) : $papeis->the_post(); 
 

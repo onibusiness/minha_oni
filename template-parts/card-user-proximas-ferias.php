@@ -1,5 +1,5 @@
 <div class="atomic_card  py-4">
-    <p class="escala1 bold  onipink">Próximas ferias </p>
+    <p class="escala0 bold  onipink">Próximas ferias </p>
     <?php 
     $ferias = ferias::filtraFerias($current_user);
     while ( $ferias->have_posts() ) : $ferias->the_post(); 

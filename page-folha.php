@@ -180,6 +180,7 @@ Template Name: Folha
                     
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['advertencias'];?></span> Advertências</p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_competencia'];?></span> Onions de competencias </p>
+                            <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_lente'];?></span> Onions de lentes </p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_papeis'];?></span> Onions de papeis </p>
                             <?php
                             foreach($folha['guardas'] as $papel){
@@ -193,7 +194,15 @@ Template Name: Folha
                             <p class="escala0 bold mb-2">Onions</p>
                         </div>
                         <div class="col-12 col-md-6">
-                            <p class="escala1 bold mb-0"><span class="onipink">R$ </span><?php echo number_format($folha['onions_competencia']*$processa_folha->valor_do_onion,2,",",".");?></p>
+                            <p class="escala1 bold mb-0"><span class="onipink">R$ </span><?php echo number_format(($folha['onions_competencia']+$folha['gap_trainee'])*$processa_folha->valor_do_onion,2,",",".");?></p>
+                            <?php
+                            if($folha['gap_trainee'] > 0){
+                                    ?>
+                                    <p class="escala-2 mb-0 onipink">Considerando 20 onions </p>
+                                <?php
+                                
+                            }
+                            ?>
                             <p class="escala0 bold mb-2">Competências  </p>
                             <p class="escala1 bold mb-0"><span class="onipink">R$ </span><?php echo number_format($folha['onions_papeis']*$processa_folha->valor_do_onion,2,",",".");?></p>
                             <p class="escala0 bold mb-2">Papéis  </p>

@@ -3,10 +3,10 @@ acf_form_head();
 acf_enqueue_uploader();
 ?>
 <div class="row pb-4">
-    <div class="col-12 col-lg-10 offset-lg-1">
-        <button type="button" class="btn btn-dark" data-toggle="collapse" data-target="#novaevidencia"  aria-controls="#novaevidencia">
+    <div class="col-12 col-lg-3 offset-lg-1">
+        <div class="buttoni" data-toggle="collapse" data-target="#novaevidencia"  aria-controls="#novaevidencia">
         Cadastrar evidência
-      </button>
+</div>
     </div>
 </div>
 <div class="row collapse" id="novaevidencia">

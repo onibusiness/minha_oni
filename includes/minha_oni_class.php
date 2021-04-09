@@ -146,7 +146,8 @@ class minha_oni{
     public function adicionaMenu(){
         register_nav_menus(
             array(
-              'menu-geral' => __( 'Geral' )
+              'menu-geral' => __( 'Geral' ),
+              'menu-onis' => __( 'Onis' )
             )
           );
 
