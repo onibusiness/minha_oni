@@ -10,7 +10,7 @@
     $users_wordpress = get_users();
     foreach($users_wordpress as $user){
         $classe = "";
-        if($user->ID == $_GET['oni']){
+        if($user->ID == $_GET['oni_avaliado']){
             $classe = "ativo";
         }
         ?>  

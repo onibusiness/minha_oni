@@ -129,6 +129,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -156,6 +157,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -183,6 +185,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -210,6 +213,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -237,6 +241,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -264,6 +269,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -291,6 +297,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -318,6 +325,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -345,6 +353,7 @@ class avaliacoes{
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -367,11 +376,14 @@ class avaliacoes{
                             'id' => '',
                         ),
                         'choices' => array(
+                            
                             1 => '1',
                             2 => '2',
                             3 => '3',
                             4 => '4',
                             5 => '5',
+                            0 => 'Não tive contato'
+                          
                         ),
                         'allow_null' => 0,
                         'other_choice' => 0,
@@ -382,10 +394,10 @@ class avaliacoes{
                     ),
                     array(
                         'key' => 'field_6064c90e9cb66',
-                        'label' => 'Quais desses atributos esse oni representa:',
+                        'label' => 'Selecione todos os atributos que esse oni representa:',
                         'name' => 'quais_desses_atributos_esse_oni_representa:',
                         'type' => 'checkbox',
-                        'instructions' => 'Selecione quantas opções quanto forem necesárias.',
+                        'instructions' => '',
                         'required' => 0,
                         'conditional_logic' => 0,
                         'wrapper' => array(

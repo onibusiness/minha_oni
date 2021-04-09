@@ -41,7 +41,7 @@
                 <div class=" text-center">
                     <div class='column-bar'>
                         <div style='height: <?php echo $percentual_restante."%";?>; background-color: #f1f1f1; position:relative;'>
-                            <p class='escala-2 grey mb-0' style='position:absolute; bottom:0; margin: 0 auto; width:100%;' ><?php echo $percentual."%";?></p>
+                            <p class='escala-2 grey mb-0' style='position:absolute; bottom:0; margin: 0 auto; width:100%;' ><?php echo round($percentual ,2)."%";?></p>
                         </div>
                     </div>
                     <p class='escala0 bold grey mt-2'><?php echo  $i;?></p>
@@ -49,7 +49,23 @@
                 <?php
             
             }
+            
+                    $percentual = 0;
+            if(is_int($respostas[0])){
+                $percentual = $respostas[0]/$n_avaliacoes*100;
+                $percentual_restante = 100-($respostas[0]/$n_avaliacoes*100);
+            }else{
+                $percentual_restante = 100;
+            }
             ?>
+            <div class=" text-center">
+                <div class='column-bar'>
+                    <div style='height: <?php echo $percentual_restante."%";?>; background-color: #f1f1f1; position:relative;'>
+                        <p class='escala-2 grey mb-0' style='position:absolute; bottom:0; margin: 0 auto; width:100%;' ><?php echo round($percentual ,2)."%";?></p>
+                    </div>
+                </div>
+                <p class='escala0 bold grey mt-2'>Não teve contato</p>
+            </div>
             </div>
             <?php
         } 
@@ -72,7 +88,7 @@
                 <div class=" text-center">
                     <div class='column-bar-atributo'>
                         <div style='height: <?php echo $percentual_restante."%";?>; background-color: #f1f1f1; position:relative;'>
-                            <p class='escala-2 grey mb-0' style='position:absolute; bottom:0; margin: 0 auto; width:100%;' ><?php echo $percentual."%";?></p>
+                            <p class='escala-2 grey mb-0' style='position:absolute; bottom:0; margin: 0 auto; width:100%;' ><?php echo round($percentual,2)."%";?></p>
                         </div>
                     </div>
                     <p class='escala0 bold grey mt-2'><?php echo  $atributo;?></p>
