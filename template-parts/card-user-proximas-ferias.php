@@ -1,7 +1,7 @@
 <div class="atomic_card  py-4">
     <p class="escala0 bold  onipink">Próximas ferias </p>
     <?php 
-    $ferias = ferias::filtraFerias($current_user);
+    $ferias = processa_ferias::filtraFerias($current_user);
     while ( $ferias->have_posts() ) : $ferias->the_post(); 
       $campos = get_fields();
       $data_de_inicio_ferias = str_replace('/', '-', $campos['primeiro_dia_fora']);

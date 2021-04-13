@@ -298,29 +298,32 @@ class processa_folha{
                 'meta_value'	=> $user->ID
             );
             $the_query = new WP_Query( $args );
+            
             if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                $lente = null;
                 $fields = get_fields();
                 $competencia = get_field('competencia');
                 $competencia = get_the_title($competencia);
         
 
                 $lente = get_field('lente');
-                
-                //preenchendo as competências com as evidências
-                if($competencia !== NULL){
-                    $this->onis[$user->display_name]['competencias'][$competencia]['pontos'] += $fields['nivel'];
-                    
-                } 
-                //preenchendo as lentes
-                if($lente !== NULL && $lente !== false){
+        
+                //preenchendo as lentes e competencia
+                if($lente){
                     $lente = get_the_title($lente);
                     $this->onis[$user->display_name]['lentes'][] = array('lente' => $lente);
                     
-                }   
+                }else{
+                    $this->onis[$user->display_name]['competencias'][$competencia]['pontos'] += $fields['nivel'];
+                }
                 //Checkando se a evolução foi nesse mês
                 $data_evolucao = str_replace('/', '-', $fields['data']);
                 if((strtotime($data_evolucao) >= strtotime($p_dia)) && (strtotime($data_evolucao) <= strtotime($u_dia))){
-                    $this->onis[$user->display_name]['competencias'][$competencia]['onion_up'] = 'true';
+                    if($lente ){
+                        
+                    }else{
+                        $this->onis[$user->display_name]['competencias'][$competencia]['onion_up'] = 'true';
+                    }
                 }
             endwhile;endif;
             wp_reset_query();
@@ -470,7 +473,8 @@ class processa_folha{
                 }
                 //somando onions de lente do oni e do sistema
                 foreach($oni['lentes'] as $lente){
-                    $this->onis[$key]['onions_lente'] +=  $equivalencia_lente;
+
+                    $this->onis[$key]['onions_lentes'] +=  $equivalencia_lente;
                     if($oni['funcao'] == 'um_oni' || $oni['funcao'] == 'um_trainee' ){
                         $this->onions_lentes +=  $equivalencia_lente;
                     }
@@ -478,7 +482,7 @@ class processa_folha{
                 }
                 //Verifica quantos Onions falta para o trainee alcancar o piso e joga no sistema
                 if($oni['funcao'] == 'um_trainee'){
-                    $this->onis[$key]['gap_trainee'] = $onions_trainee - $this->onis[$key]['onions_competencia'] - $this->onis[$key]['onions_lente'];
+                    $this->onis[$key]['gap_trainee'] = $onions_trainee - $this->onis[$key]['onions_competencia'] - $this->onis[$key]['onions_lentes'];
                     //Se o gap ainda existir
                     if($this->onis[$key]['gap_trainee'] > 0){
                         $this->onions_subsidiados +=   $this->onis[$key]['gap_trainee'] ;
@@ -497,7 +501,7 @@ class processa_folha{
                     }
                 }
                 $this->onis[$key]['onions_competencia_dia'] = round((($this->onis[$key]['onions_competencia']+ $this->onis[$key]['gap_trainee'])/$dias_uteis_periodo) , 2);//onions de competência por dia
-                $this->onis[$key]['onions_lente_dia'] = round((($this->onis[$key]['onions_lente']+ $this->onis[$key]['gap_trainee'])/$dias_uteis_periodo) , 2);//onions de competência por dia
+                $this->onis[$key]['onions_lente_dia'] = round((($this->onis[$key]['onions_lentes']+ $this->onis[$key]['gap_trainee'])/$dias_uteis_periodo) , 2);//onions de competência por dia
                 $this->onis[$key]['onions_papeis_dia'] = round(($this->onis[$key]['onions_papeis']/$dias_uteis_periodo ), 2);//onions de papel por dia
                 $this->onions_advertencias += $oni['advertencias']; //Somando onions de advertência do sistema
                 //Lidando com as férias, de forma que só compute férias a partir do dia setado
@@ -517,7 +521,7 @@ class processa_folha{
                 }
 
                 if($oni['funcao'] == 'um_oni'){
-                    $this->onis[$key]['onions'] = $this->onis[$key]['onions_competencia']+$this->onis[$key]['onions_papeis']+$this->onis[$key]['onions_lente']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do oni
+                    $this->onis[$key]['onions'] = $this->onis[$key]['onions_competencia']+$this->onis[$key]['onions_papeis']+$this->onis[$key]['onions_lentes']-$this->onis[$key]['onions_de_ferias']-$this->onis[$key]['advertencias'];// Onions do oni
                 }
 
                 if($oni['funcao'] == 'um_trainee'){

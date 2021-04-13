@@ -55,7 +55,7 @@
         function getInputValue(){
             // Selecting the input element and get its value 
             var projeto = document.getElementById("projeto").value;
-            var frente = document.getElementById("frente").value;
+            var frente = document.getElementById("frente").value.replace(/ /g, '%20');
             var inputVal = "https://minha.oni.com.br/feedback/?projeto="+projeto+"&frente="+frente;
             var block = document.getElementById("boxlink");
             

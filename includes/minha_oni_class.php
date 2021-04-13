@@ -14,34 +14,54 @@ class minha_oni{
 
         $this->setaDiretorioTema();
 
-        //criando as opções para o menu administrativo    
-        require_once($this->diretorio_tema.'/includes/adminpannel/adminpannel_class.php');  
+        //criando as opções para o painel administrativo    
+        require_once($this->diretorio_tema.'/includes/adminpannel/adminpannel_class.php'); 
 
-        //inserindo todos os custom post types      
-        require_once($this->diretorio_tema.'/includes/comunicados/comunicados_class.php');  
-        require_once($this->diretorio_tema.'/includes/tutoriais/tutoriais_class.php');
-        require_once($this->diretorio_tema.'/includes/competencias/competencias_class.php');
-        require_once($this->diretorio_tema.'/includes/competencias/lentes_class.php');
-        require_once($this->diretorio_tema.'/includes/evidencias/evidencias_class.php');
-        require_once($this->diretorio_tema.'/includes/evidencias/processa_evidencias_class.php');
-        require_once($this->diretorio_tema.'/includes/competencias/processa_competencias_class.php');
-        require_once($this->diretorio_tema.'/includes/ferramentas/ferramentas_class.php');
+        //Classes de intevenção no wordpress
+            //Classe que faz as intevenções no ACF
+            require_once($this->diretorio_tema.'/includes/wordpress/customizaacf_class.php');
+            //Classe padrão para a criação de custom post types
+            require_once($this->diretorio_tema.'/includes/wordpress/cpt_class.php'); 
+            //Classe que cria as operações e campos relacionadas ao usuário do wordpress
+            require_once($this->diretorio_tema.'/includes/wordpress/user_oni_class.php');
+        
+
+        //Classes que criam os custom post types e seus respectivos custom fields
+        require_once($this->diretorio_tema.'/includes/post_types/advertencias_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/avaliacoes_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/competencias_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/comunicados_class.php');  
+        require_once($this->diretorio_tema.'/includes/post_types/evidencias_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/evolucoes_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/integracoes_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/feedbacks_cliente_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/feedbacks_time_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/ferias_class.php'); 
+        require_once($this->diretorio_tema.'/includes/post_types/ferramentas_class.php'); 
+        require_once($this->diretorio_tema.'/includes/post_types/lentes_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/metodos_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/papeis_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/projetos_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/tutoriais_class.php');
+        
+
+        //Classes que lidam com o fechamento mensal e folha
         require_once($this->diretorio_tema.'/includes/fechamento_mensal/fechamento_mensal_class.php');
-        require_once($this->diretorio_tema.'/includes/ferias/ferias_class.php');
-        require_once($this->diretorio_tema.'/includes/papeis/papeis_class.php');
-        require_once($this->diretorio_tema.'/includes/advertencias/advertencias_class.php');
-        require_once($this->diretorio_tema.'/includes/historico/historico_class.php');
-        require_once($this->diretorio_tema.'/includes/projetos/projetos_class.php');
-        require_once($this->diretorio_tema.'/includes/user_oni/user_oni_class.php');
-        require_once($this->diretorio_tema.'/includes/projetos/feedbacks_class.php');
-        require_once($this->diretorio_tema.'/includes/integracoes/integracoes_class.php');
-        require_once($this->diretorio_tema.'/includes/pipefy/pipefy_class.php');
-        require_once($this->diretorio_tema.'/includes/avaliacoes/avaliacoes_class.php');
-        require_once($this->diretorio_tema.'/includes/avaliacoes/processa_avaliacoes_class.php');
 
-        //Pegando as customizações do acf 
-        require_once($this->diretorio_tema.'/includes/acf/acf_class.php');
+        //Classes que lidam com APIs
+        require_once($this->diretorio_tema.'/includes/apis/pipefy_class.php');
 
+        //Classes de processamentos de posts e manipulação de dados
+        require_once($this->diretorio_tema.'/includes/processamento/processa_avaliacoes_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_competencias_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_evidencias_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_integracoes_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_ferias_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_historico_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_papeis_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_metodos_class.php');
+        
+        
      
 
         //acrescentando o menu
@@ -127,7 +147,7 @@ class minha_oni{
         }
      
     }
-
+    
     public function redirecionaLogin(){
 
         global $redirect_to;
@@ -252,10 +272,10 @@ class minha_oni{
         //Pegando o nome do projeto
         $id_projeto = array_search( array( 'id'=> "nome_do_projeto","label" =>"Nome do projeto") , array_column( $table_record_projeto[0]['data']['table_record']['record_fields'], 'field' ));
         $nome_projeto = $table_record_projeto[0]['data']['table_record']['record_fields'][$id_projeto]['value'];
-        integracoes::cadastraIdPipefy($id_table_projeto[0],$nome_projeto);
+        processa_integracoes::cadastraIdPipefy($id_table_projeto[0],$nome_projeto);
 
         //Cadastrando o guardião de método
-        papeis::cadastraPapelMetodo($table_records_frentes);
+        processa_papeis::cadastraPapelMetodo($table_records_frentes);
  
     }
 
@@ -263,4 +283,3 @@ class minha_oni{
 
 //Criando o objeto
 $minha_oni = new minha_oni;
-?>

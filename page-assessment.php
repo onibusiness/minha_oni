@@ -23,7 +23,7 @@ $equivalencia_pontos_onions = array(0 => 0, 1 => 1, 2 => 2, 3 => 4, 4 => 6, 5 =>
         <div class="atomic_card background_white py-4">
             <p class="escala1 bold onipink">Guardião de </p>
             <?php 
-                $papeis = papeis::filtraPapeis($profile_id);
+                $papeis = processa_papeis::filtraPapeis($profile_id);
                 
                 while ( $papeis->have_posts() ) : $papeis->the_post(); 
 

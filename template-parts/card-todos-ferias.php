@@ -1,7 +1,7 @@
 <div class="atomic_card background_white ">
       
     <?php 
-    $ferias_da_oni = ferias::feriasDaOni($hoje);
+    $ferias_da_oni = processa_ferias::feriasDaOni($hoje);
     ?>
 
     <div class="row">

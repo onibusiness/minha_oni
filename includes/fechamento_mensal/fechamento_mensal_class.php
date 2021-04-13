@@ -16,14 +16,14 @@ class fechamentos_mensais{
     //disparando a classe
     public function __construct(){
 
-        add_action('init', array($this,'adicionar_custom_post_type')); 
-        add_action('init', array($this,'adicionar_campos_ACF')); 
-        add_action('init', array($this,'check_flush_rewrite_rules')); 
+        add_action('init', array($this,'adicionarCustomPostType')); 
+        add_action('init', array($this,'adicionarCamposACF')); 
+        add_action('init', array($this,'checkFlushRewriteRules')); 
 
     }
 
     //Adicionando o custom post type
-    public function adicionar_custom_post_type(){
+    public function adicionarCustomPostType(){
         
             $labels = array(
             'name'               => ucwords($this->nome_singular),
@@ -62,7 +62,7 @@ class fechamentos_mensais{
     }
 
     //Adicionando os campos do ACF
-    public function adicionar_campos_ACF(){
+    public function adicionarCamposACF(){
         if( function_exists('acf_add_local_field_group') ):
 
             acf_add_local_field_group(array(
@@ -293,7 +293,7 @@ class fechamentos_mensais{
     }
 
     //Função pronta que dá um refresh nos permalinks
-    public function check_flush_rewrite_rules(){
+    public function checkFlushRewriteRules(){
         $has_been_flushed = get_option($this->post_slug . '_flush_rewrite_rules');
         //if we haven't flushed re-write rules, flush them (should be triggered only once)
         if($has_been_flushed != true){
@@ -315,14 +315,14 @@ class pagamentos{
     //disparando a classe
     public function __construct(){
 
-        add_action('init', array($this,'adicionar_custom_post_type')); 
-        add_action('init', array($this,'adicionar_campos_ACF')); 
-        add_action('init', array($this,'check_flush_rewrite_rules')); 
+        add_action('init', array($this,'adicionarCustomPostType')); 
+        add_action('init', array($this,'adicionarCamposACF')); 
+        add_action('init', array($this,'checkFlushRewriteRules')); 
 
     }
 
     //Adicionando o custom post type
-    public function adicionar_custom_post_type(){
+    public function adicionarCustomPostType(){
             $labels = array(
             'name'               => ucwords($this->nome_singular),
             'nome_singular'      => ucwords($this->nome_singular),
@@ -360,7 +360,7 @@ class pagamentos{
     }
 
     //Adicionando os campos do ACF
-    public function adicionar_campos_ACF(){
+    public function adicionarCamposACF(){
         if( function_exists('acf_add_local_field_group') ):
 
             acf_add_local_field_group(array(
@@ -1023,7 +1023,7 @@ class pagamentos{
     }
 
     //Função pronta que dá um refresh nos permalinks
-    public function check_flush_rewrite_rules(){
+    public function checkFlushRewriteRules(){
         $has_been_flushed = get_option($this->post_slug . '_flush_rewrite_rules');
         //if we haven't flushed re-write rules, flush them (should be triggered only once)
         if($has_been_flushed != true){

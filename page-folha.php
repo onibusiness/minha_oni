@@ -180,7 +180,7 @@ Template Name: Folha
                     
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['advertencias'];?></span> Advertências</p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_competencia'];?></span> Onions de competencias </p>
-                            <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_lente'];?></span> Onions de lentes </p>
+                            <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_lentes'];?></span> Onions de lentes </p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_papeis'];?></span> Onions de papeis </p>
                             <?php
                             foreach($folha['guardas'] as $papel){

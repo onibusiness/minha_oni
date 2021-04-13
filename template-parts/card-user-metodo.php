@@ -3,7 +3,7 @@
     
         <?php 
         
-        $metodos = metodos::pegaMetodos();
+        $metodos = processa_metodos::pegaMetodos();
         $competencias_do_oni = $competencias->competencias_por_oni[$profile_obj->data->user_nicename];
 
         foreach($metodos->posts as $metodo){

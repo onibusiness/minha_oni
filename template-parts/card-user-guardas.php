@@ -1,7 +1,7 @@
 <div class="atomic_card  py-2">
     <p class="escala0 bold onipink mb-2">Guardião de </p>
     <?php 
-        $papeis = papeis::filtraPapeis($profile_id);
+        $papeis = processa_papeis::filtraPapeis($profile_id);
   
         
           while ( $papeis->have_posts() ) : $papeis->the_post(); 

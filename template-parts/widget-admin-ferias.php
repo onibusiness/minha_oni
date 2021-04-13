@@ -1,6 +1,6 @@
 <div class="main">
     <?php 
-    $ferias_pendentes = ferias::feriasPendentes();
+    $ferias_pendentes = processa_ferias::feriasPendentes();
     $ferias_pendentes = $ferias_pendentes->posts;
     ?>
     <h3><strong>Pedidos de férias pendentes</strong></h3>

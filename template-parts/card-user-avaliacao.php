@@ -1,7 +1,7 @@
 <div class="atomic_card background_white">
     <p class="escala1 bold mb-1">Feedbacks do time </p>
     <?php 
-    $avaliacoes = processa_avaliacoes::filtraAvaliacoes($current_user);
+    $avaliacoes = processa_avaliacoes::filtraAvaliacoes($profile_obj);
     $n_avaliacoes = $avaliacoes->post_count;
     ?>
         <p class=" escala-1 grey"><?php echo "Vendo ".$n_avaliacoes." avaliações";?> </p>
@@ -23,7 +23,7 @@
     endwhile;
 
     foreach($compilacao_avaliacao as $aspecto => $respostas){
-        if(!in_array($aspecto, array("Oni avaliado", "Oni avaliador", "Quais desses atributos esse oni representa:" ,"Validate Email"))){
+        if(!in_array($aspecto, array("Oni avaliado", "Oni avaliador", "Selecione todos os atributos que esse oni representa:" ,"Validate Email"))){
             ?>
             <p class='escala0 bold onipink mt-4'><?php echo $aspecto;?></h3>
             <div class='d-inline-flex' >
@@ -69,7 +69,7 @@
             </div>
             <?php
         } 
-        if(in_array($aspecto, array("Quais desses atributos esse oni representa:"))){
+        if(in_array($aspecto, array("Selecione todos os atributos que esse oni representa:"))){
             ?>
             <p class='escala0 bold onipink mt-4'><?php echo $aspecto;?></h3>
             <div class='d-inline-flex' >

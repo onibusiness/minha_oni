@@ -2,7 +2,7 @@
     <p class="escala1 bold onipink"> Guardiões de método </p>
     <div class="duas-colunas">
         <?php 
-        $metodos = metodos::pegaMetodos();
+        $metodos = processa_metodos::pegaMetodos();
 
         foreach($metodos->posts as $metodo){
             $fields = get_fields($metodo->ID);
