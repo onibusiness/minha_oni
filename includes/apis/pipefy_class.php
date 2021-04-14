@@ -41,7 +41,7 @@ class pipefy{
   *  [
   *  'projeto_alterado'    => (array) com o ID do projeto alterado
   *      [
-  *      (string) ID do table record de projeto
+  *      (string) ID do card de projeto
   *      ]    
   *  'frentes_alteradas'    => (array) com os IDs das frentes alteradas
   *      [
@@ -53,15 +53,16 @@ class pipefy{
 
     $data = $request->get_json_params();        
     $requisita = self::puxaCard($data['data']['card']['id']);
-    set_transient('api', $requisita);
+  
     if(is_array($requisita['data']['card']['fields'])){
       $fields =  array_column($requisita['data']['card']['fields'], 'name');
       $id_frentes_alteradas = array_search('Frentes alteradas', $fields);
       $frentes_alteradas = $requisita['data']['card']['fields'][$id_frentes_alteradas]['array_value'];
-      set_transient('frentes_alteradas', $frentes_alteradas);
+
+      //Retorna o card do projeto
       $id_projeto_alterado = array_search('Projeto que precisa de alteração', $fields);
       $projeto_alterado = $requisita['data']['card']['fields'][$id_projeto_alterado]['array_value'];
-      set_transient('projeto_alterado', $projeto_alterado);
+
     }
     $tables_alteradas = array(
       'projeto_alterado' => $projeto_alterado,
@@ -72,6 +73,45 @@ class pipefy{
 
 
   }
+
+    /**
+  * Escuta a requisição vinda do https://minha.oni.com.br/wp-json/apioni/v1/cadastraprojeto/
+  *
+  * @return Array com o projeto cadastrado e as frentes
+  *  [
+  *  'projeto_cadastrado'    => (array) com o ID do projeto alterado
+  *      [
+  *      (string) ID do table record de projeto
+  *      ]    
+  *  'frentes_cadastradas'    => (array) com os IDs das frentes alteradas
+  *      [
+  *      (string) ID do table record de frente alterada
+  *      ]    
+  *  ]  
+  */
+  public function escutaCadastroProjeto( $request ) {
+
+    $data = $request->get_json_params();        
+    $fase_origem = $data['data']['from'];
+    $fase_destino = $data['data']['to'];
+    $requisita = self::puxaCard($data['data']['card']['id']);
+
+    if(is_array($requisita['data']['card']['fields'])){
+      $fields =  array_column($requisita['data']['card']['fields'], 'name');
+      $id_frentes_cadastradas = array_search('Frentes', $fields);
+      $frentes_cadastradas = $requisita['data']['card']['fields'][$id_frentes_cadastradas]['array_value'];
+
+      $id_projeto_cadastrado = array_search('Cadastro do projeto', $fields);
+      $projeto_cadastrado = $requisita['data']['card']['fields'][$id_projeto_cadastrado]['array_value'];
+
+    }
+    $tables_alteradas = array(
+      'projeto_cadastrado' => $projeto_cadastrado,
+      'frentes_cadastradas' => $frentes_cadastradas
+    );
+    return $tables_alteradas;
+  }
+
   /**
   * Puxa record da database de acordo com os IDs
   *
@@ -117,10 +157,7 @@ class pipefy{
       query{
         table_record(id : "'.$id.'"){
           record_fields{
-            field {
-              id
-              label
-            }
+            name
             array_value
             value
           } 
@@ -154,6 +191,25 @@ mutation{
     clientMutationId
   }
 }
+
+mutation{
+  createWebhook(input:{
+    actions:"card.move",
+      "from": {
+      "id": 416328144,
+    },
+    "to": {
+      "id": 411969939,
+    },
+    name:"Projeto ativo"
+    url:"https://minha.oni.com.br/wp-json/apioni/v1/cadastraprojeto/"
+    email:"thiago@email.com"
+    pipe_id:301576474
+    }) {
+    clientMutationId
+  }
+}
+
 
 LISTANDO WEBHOOKS
 query{

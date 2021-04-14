@@ -30,14 +30,15 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/post_types/advertencias_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/avaliacoes_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/competencias_class.php');
-        require_once($this->diretorio_tema.'/includes/post_types/comunicados_class.php');  
+        require_once($this->diretorio_tema.'/includes/post_types/comunicados_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/evolucoes_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/integracoes_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/feedbacks_cliente_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/feedbacks_time_class.php');
-        require_once($this->diretorio_tema.'/includes/post_types/ferias_class.php'); 
-        require_once($this->diretorio_tema.'/includes/post_types/ferramentas_class.php'); 
+        require_once($this->diretorio_tema.'/includes/post_types/ferias_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/ferramentas_class.php');
+        require_once($this->diretorio_tema.'/includes/post_types/frentes_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/lentes_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/metodos_class.php');
         require_once($this->diretorio_tema.'/includes/post_types/papeis_class.php');
@@ -244,7 +245,12 @@ class minha_oni{
      * 
      */
     public function criarWebhook(){
-     
+
+        register_rest_route( 'apioni/v1', '/cadastraprojeto', array(
+            'methods'  => [ 'POST', 'GET' ], 
+            'callback' =>  array($this, 'escutaCadastroProjeto'),
+        ) );
+
         register_rest_route( 'apioni/v1', '/alteraprojeto', array(
             'methods'  => [ 'POST', 'GET' ], 
             'callback' =>  array($this, 'escutaAlteraProjeto'),
@@ -253,10 +259,13 @@ class minha_oni{
 
     }
     public function escutaAlteraProjeto( $request ) {
+
+        //pegando os table records das frentes
         $tables_alteradas = pipefy::escutaAlteraProjeto($request);
         $table_records_frentes = pipefy::puxaDaTabela($tables_alteradas['frentes_alteradas']);
         set_transient('tables', $table_records_frentes);
 
+        //pega os dados do card do projeto alterado
         $card_projeto = pipefy::puxaCard($tables_alteradas['projeto_alterado'][0]);
         set_transient('projetos', $card_projeto);
 
@@ -277,6 +286,23 @@ class minha_oni{
         //Cadastrando o guardião de método
         processa_papeis::cadastraPapelMetodo($table_records_frentes);
  
+    }
+
+    public function escutaCadastroProjeto( $request ) {
+        $projeto_cadastrado = pipefy::escutaCadastroProjeto($request);
+
+        $table_records_frentes = pipefy::puxaDaTabela($projeto_cadastrado['frentes_cadastradas']);
+        set_transient('tables', $table_records_frentes);
+        //pega os dados do card do projeto alterado
+        $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado'][0]);
+        set_transient('table_record_projeto',$table_record_projeto);
+        //
+        //Fazer um método de cadastro de frentes
+        //
+
+        //Cadastrando o guardião de método
+        processa_papeis::cadastraPapelMetodo($table_records_frentes);
+        
     }
 
 }
