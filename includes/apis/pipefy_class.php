@@ -94,22 +94,25 @@ class pipefy{
     $data = $request->get_json_params();        
     $fase_origem = $data['data']['from'];
     $fase_destino = $data['data']['to'];
-    $requisita = self::puxaCard($data['data']['card']['id']);
-
-    if(is_array($requisita['data']['card']['fields'])){
-      $fields =  array_column($requisita['data']['card']['fields'], 'name');
-      $id_frentes_cadastradas = array_search('Frentes', $fields);
-      $frentes_cadastradas = $requisita['data']['card']['fields'][$id_frentes_cadastradas]['array_value'];
-
-      $id_projeto_cadastrado = array_search('Cadastro do projeto', $fields);
-      $projeto_cadastrado = $requisita['data']['card']['fields'][$id_projeto_cadastrado]['array_value'];
-
+    //implementar o disparo de cadastro de projeto apenas quando:
+    if($fase_destino['name'] == "Projeto ativo"){
+      $requisita = self::puxaCard($data['data']['card']['id']);
+  
+      if(is_array($requisita['data']['card']['fields'])){
+        $fields =  array_column($requisita['data']['card']['fields'], 'name');
+        $id_frentes_cadastradas = array_search('Frentes', $fields);
+        $frentes_cadastradas = $requisita['data']['card']['fields'][$id_frentes_cadastradas]['array_value'];
+  
+        $id_projeto_cadastrado = array_search('Cadastro do projeto', $fields);
+        $projeto_cadastrado = $requisita['data']['card']['fields'][$id_projeto_cadastrado]['array_value'];
+  
+      }
+      $tables_alteradas = array(
+        'projeto_cadastrado' => $projeto_cadastrado,
+        'frentes_cadastradas' => $frentes_cadastradas
+      );
+      return $tables_alteradas;
     }
-    $tables_alteradas = array(
-      'projeto_cadastrado' => $projeto_cadastrado,
-      'frentes_cadastradas' => $frentes_cadastradas
-    );
-    return $tables_alteradas;
   }
 
   /**
@@ -156,6 +159,7 @@ class pipefy{
       $query = '
       query{
         table_record(id : "'.$id.'"){
+          id
           record_fields{
             name
             array_value

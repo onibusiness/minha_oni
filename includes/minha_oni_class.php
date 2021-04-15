@@ -58,8 +58,10 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/processamento/processa_evidencias_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_integracoes_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_ferias_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_frentes_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_historico_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_papeis_class.php');
+        require_once($this->diretorio_tema.'/includes/processamento/processa_projetos_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_metodos_class.php');
         
         
@@ -241,6 +243,7 @@ class minha_oni{
     /**
      * Registra os seguintes endpoints na API REST
      *
+     * https://minha.oni.com.br/wp-json/apioni/v1/cadastraprojeto/
      * https://minha.oni.com.br/wp-json/apioni/v1/alteraprojeto/
      * 
      */
@@ -289,16 +292,21 @@ class minha_oni{
     }
 
     public function escutaCadastroProjeto( $request ) {
+        set_transient('request', $request);
         $projeto_cadastrado = pipefy::escutaCadastroProjeto($request);
-
+        set_transient('projeto_cadastrado', $projeto_cadastrado);
         $table_records_frentes = pipefy::puxaDaTabela($projeto_cadastrado['frentes_cadastradas']);
-        set_transient('tables', $table_records_frentes);
+        set_transient('table_records_frentes', $table_records_frentes);
         //pega os dados do card do projeto alterado
-        $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado'][0]);
+        $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado']);
+        $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][0]['value'];
         set_transient('table_record_projeto',$table_record_projeto);
-        //
-        //Fazer um método de cadastro de frentes
-        //
+
+        //Fazendo o cadastro das integrações e projetos
+        processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
+
+        //Fazendo o cadastro das frentes  
+        processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
 
         //Cadastrando o guardião de método
         processa_papeis::cadastraPapelMetodo($table_records_frentes);
