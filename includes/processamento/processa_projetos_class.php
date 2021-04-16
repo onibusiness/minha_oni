@@ -25,14 +25,14 @@ class processa_projetos{
         );
         $the_query = new WP_Query( $args );
         if ( !$the_query->have_posts() ){
-            $my_post = array(
+            $my_post_projeto = array(
                 'post_title' => $nome_projeto,
                 'post_status' => 'publish',
                 'post_type' => 'projetos',
             );
-            $post_id = wp_insert_post($my_post);
-            $id_projeto_wordpress = $post_id;
-            update_field('projeto', $nome_projeto, $post_id);
+            $projeto_post_id = wp_insert_post($my_post_projeto);
+            $id_projeto_wordpress = $projeto_post_id;
+            update_field('projeto', $nome_projeto, $projeto_post_id);
             wp_reset_postdata();
             
 
@@ -44,6 +44,7 @@ class processa_projetos{
             $post_id = wp_insert_post($my_post);
             update_post_meta( $post_id, 'projeto_id_wordpress', $id_projeto_wordpress );
             update_field('projeto_id_pipefy', $id_projeto_pipefy, $post_id);
+            update_field('status', 'Ativo', $post_id);
             wp_reset_postdata();
         } 
         wp_reset_query();

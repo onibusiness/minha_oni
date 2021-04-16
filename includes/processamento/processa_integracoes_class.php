@@ -38,7 +38,7 @@ class processa_integracoes{
             update_field('projeto_id_pipefy', $id, $post_id);
         
             wp_reset_postdata();
-            $this->cadastraProjetoMinhaOni($nome);
+            //$this->cadastraProjetoMinhaOni($nome);
         endif;
     }
 

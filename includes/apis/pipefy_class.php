@@ -112,6 +112,8 @@ class pipefy{
         'frentes_cadastradas' => $frentes_cadastradas
       );
       return $tables_alteradas;
+    }else{
+      return false;
     }
   }
 

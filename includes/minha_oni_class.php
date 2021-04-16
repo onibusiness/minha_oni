@@ -286,31 +286,33 @@ class minha_oni{
         $nome_projeto = $table_record_projeto[0]['data']['table_record']['record_fields'][$id_projeto]['value'];
         processa_integracoes::cadastraIdPipefy($id_table_projeto[0],$nome_projeto);
 
-        //Cadastrando o guardião de método
-        processa_papeis::cadastraPapelMetodo($table_records_frentes);
- 
+        //Fazendo o cadastro das frentes  
+        processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
     }
 
     public function escutaCadastroProjeto( $request ) {
         set_transient('request', $request);
         $projeto_cadastrado = pipefy::escutaCadastroProjeto($request);
         set_transient('projeto_cadastrado', $projeto_cadastrado);
-        $table_records_frentes = pipefy::puxaDaTabela($projeto_cadastrado['frentes_cadastradas']);
-        set_transient('table_records_frentes', $table_records_frentes);
-        //pega os dados do card do projeto alterado
-        $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado']);
-        $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][0]['value'];
-        set_transient('table_record_projeto',$table_record_projeto);
+        if($projeto_cadastrado){
 
-        //Fazendo o cadastro das integrações e projetos
-        processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
+            $table_records_frentes = pipefy::puxaDaTabela($projeto_cadastrado['frentes_cadastradas']);
+            set_transient('table_records_frentes', $table_records_frentes);
+            //pega os dados do card do projeto alterado
+            $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado']);
+            $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][0]['value'];
+            set_transient('table_record_projeto',$table_record_projeto);
+    
+            //Fazendo o cadastro das integrações e projetos
+            processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
+    
+            //Fazendo o cadastro das frentes  
+            processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
+    
+            //Cadastrando o guardião de método
+            processa_papeis::cadastraPapelMetodo($table_records_frentes);
 
-        //Fazendo o cadastro das frentes  
-        processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
-
-        //Cadastrando o guardião de método
-        processa_papeis::cadastraPapelMetodo($table_records_frentes);
-        
+        }
     }
 
 }
