@@ -51,7 +51,7 @@ class evidencias{
                         'key' => 'field_5f68c025cefa0',
                         'label' => 'Evidência',
                         'name' => 'evidencia',
-                        'type' => 'textarea',
+                        'type' => 'wysiwyg',
                         'instructions' => 'Preencha a evidência respondendo:</br>
                                                                     <span class="escala-1">- O que eu fiz no processo?</span></br>
                                                                     <span class="escala-1">- Por quê foi bom tecnicamente?</span></br>
@@ -64,10 +64,11 @@ class evidencias{
                             'id' => '',
                         ),
                         'default_value' => '',
-                        'placeholder' => '',
-                        'maxlength' => '',
-                        'rows' => '',
-                        'new_lines' => '',
+                        'tabs' => 'all',
+                        'toolbar' => 'full',
+                        'media_upload' => 0,
+                        'delay' => 0,
+
                     ),
                     array(
                         'key' => 'field_603eb54ee2a71',

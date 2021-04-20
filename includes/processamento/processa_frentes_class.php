@@ -24,6 +24,7 @@ class processa_frentes{
         $the_query = new WP_Query( $args );
         if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
             $id_projeto_wordpress = get_field('projeto_id_wordpress');
+            $projeto_id_clickup = get_field('projeto_id_clickup');
             $nome_projeto = get_the_title($id_projeto_wordpress);
        endwhile;endif;
        wp_reset_query();
@@ -63,6 +64,22 @@ class processa_frentes{
                 update_field('data_de_inicio', $data_de_inicio, $post_id);
                 update_field('data_de_fim', $data_de_fim, $post_id);
                 update_field('horas', $horas, $post_id);
+                //Implementar função para pegar o id do usuário do clickup
+                $guardiao = '3107782';
+                //Processando as datas
+                $data_de_inicio_obj = DateTime::createFromFormat('d/m/Y', $data_de_inicio);
+                $data_de_inicio_ts = $data_de_inicio_obj->getTimestamp();
+                $data_de_fim = DateTime::createFromFormat('d/m/Y', $data_de_fim);
+                $data_de_fim = $data_de_fim->getTimestamp();
+                $frente_id_clickup = clickup::clickCriaList($nome_da_frente,$data_de_inicio_ts,$data_de_fim,$guardiao, $projeto_id_clickup);
+                update_field('id_da_frente_clickup', $frente_id_clickup, $post_id);
+                set_transient('criamissoes',
+                array(
+                    $frente_id_clickup, $data_de_inicio_obj, $guardiao
+                ));
+                //Cria as missões de gestão NAO TESTADO
+                clickup::clickMissoesGestao($frente_id_clickup, $data_de_inicio_obj, $guardiao);
+
             endif; 
             wp_reset_query();
         }

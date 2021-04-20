@@ -167,6 +167,25 @@ class frentes{
                         'append' => '',
                         'maxlength' => '',
                     ),
+                    array(
+                        'key' => 'field_607ed2fdb9275',
+                        'label' => 'ID da frente clickup',
+                        'name' => 'id_da_frente_clickup',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
                 ),
                 'location' => array(
                     array(

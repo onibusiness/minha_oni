@@ -24,6 +24,8 @@ class minha_oni{
             require_once($this->diretorio_tema.'/includes/wordpress/cpt_class.php'); 
             //Classe que cria as operações e campos relacionadas ao usuário do wordpress
             require_once($this->diretorio_tema.'/includes/wordpress/user_oni_class.php');
+            //Classe que cria as páginas de opções
+            require_once($this->diretorio_tema.'/includes/wordpress/options_oni_class.php');
         
 
         //Classes que criam os custom post types e seus respectivos custom fields
@@ -51,6 +53,7 @@ class minha_oni{
 
         //Classes que lidam com APIs
         require_once($this->diretorio_tema.'/includes/apis/pipefy_class.php');
+        require_once($this->diretorio_tema.'/includes/apis/clickup_class.php');
 
         //Classes de processamentos de posts e manipulação de dados
         require_once($this->diretorio_tema.'/includes/processamento/processa_avaliacoes_class.php');
@@ -65,7 +68,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/processamento/processa_metodos_class.php');
         
         
-     
+        
 
         //acrescentando o menu
         add_action('init', array($this,'adicionaMenu')); 
@@ -85,6 +88,8 @@ class minha_oni{
 
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
         //$this->puxaPagamentosAntigosBI();
+
+
 
     }
 
@@ -239,7 +244,7 @@ class minha_oni{
         }
         return round( $workdays, 2);
     }
-    
+   
     /**
      * Registra os seguintes endpoints na API REST
      *
@@ -314,6 +319,8 @@ class minha_oni{
 
         }
     }
+
+
 
 }
 

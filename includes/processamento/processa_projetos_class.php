@@ -45,7 +45,14 @@ class processa_projetos{
             update_post_meta( $post_id, 'projeto_id_wordpress', $id_projeto_wordpress );
             update_field('projeto_id_pipefy', $id_projeto_pipefy, $post_id);
             update_field('status', 'Ativo', $post_id);
+
+            //Cria o folder do projeto no clickup [NÃO TESTADO]
+            $projeto_id_clickup = clickup::clickCriaFolder($nome_projeto);
+            update_field('projeto_id_clickup', $projeto_id_clickup, $post_id);
+
             wp_reset_postdata();
+
+
         } 
         wp_reset_query();
     } 
