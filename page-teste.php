@@ -5,14 +5,22 @@
 <?php get_header(); ?>
 
 <?php
+$data_de_inicio_obj = DateTime::createFromFormat('d/m/Y', '19/04/2021');
+$data_de_fim_obj = DateTime::createFromFormat('d/m/Y', '04/05/2021');
+$interval = $data_de_inicio_obj->diff($data_de_fim_obj);
+$semanas = ceil($interval->days/7);
+echo "<pre>";
+var_dump($semanas);
+echo "</pre>";
+
+
 $criamissao = get_transient('criamissoes');
+
+/* 
 echo "<pre>";
-var_dump($criamissao);
+var_dump(clickup::clickMissoesGestao($criamissao[0], $criamissao[1],$criamissao[1], '3118731'));
 echo "</pre>";
-// 
-echo "<pre>";
-var_dump(clickup::clickMissoesGestao($criamissao[0], $criamissao[1], $criamissao[2]));
-echo "</pre>";
+*/
 
 
 

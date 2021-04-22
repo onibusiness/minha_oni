@@ -69,16 +69,16 @@ class processa_frentes{
                 //Processando as datas
                 $data_de_inicio_obj = DateTime::createFromFormat('d/m/Y', $data_de_inicio);
                 $data_de_inicio_ts = $data_de_inicio_obj->getTimestamp();
-                $data_de_fim = DateTime::createFromFormat('d/m/Y', $data_de_fim);
-                $data_de_fim = $data_de_fim->getTimestamp();
-                $frente_id_clickup = clickup::clickCriaList($nome_da_frente,$data_de_inicio_ts,$data_de_fim,$guardiao, $projeto_id_clickup);
+                $data_de_fim_obj = DateTime::createFromFormat('d/m/Y', $data_de_fim);
+                $data_de_fim_ts = $data_de_fim_obj->getTimestamp();
+                $frente_id_clickup = clickup::clickCriaList($nome_da_frente,$data_de_inicio_ts,$data_de_fim_ts,$guardiao, $horas,$projeto_id_clickup);
                 update_field('id_da_frente_clickup', $frente_id_clickup, $post_id);
                 set_transient('criamissoes',
                 array(
                     $frente_id_clickup, $data_de_inicio_obj, $guardiao
                 ));
                 //Cria as missões de gestão NAO TESTADO
-                clickup::clickMissoesGestao($frente_id_clickup, $data_de_inicio_obj, $guardiao);
+                clickup::clickMissoesGestao($frente_id_clickup, $data_de_inicio_obj,$data_de_fim_obj, $guardiao);
 
             endif; 
             wp_reset_query();

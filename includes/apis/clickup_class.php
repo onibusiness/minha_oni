@@ -17,7 +17,9 @@ class clickup{
     public function __construct(){
         $this->clickupSetaClienteAPI();
     }
-  
+
+    
+
     public function clickupSetaClienteAPI(){
         require __DIR__."/../../vendor/autoload.php";
         self::$cliente = new \GuzzleHttp\Client([
@@ -59,7 +61,14 @@ class clickup{
         
     }
 
-    public function clickCriaList($nome_frente, $data_inicio, $data_fim, $assignee, $folder_id){
+    public function clickCriaList($nome_frente, $data_inicio, $data_fim, $assignee, $horas, $folder_id){
+        //Pegando o id do clickup pelo nome do usuário
+        $user_query = new WP_User_Query( array( 'search' => $assignee ) );
+        $authors = $user_query->get_results();
+        foreach ($authors as $author)
+        {   
+            $id_do_clickup = get_field('id_do_clickup', 'user_'. $author->ID);
+        }
         $list_criada = self::$cliente->request('POST','folder/'.$folder_id.'/list',
             array(
                 'form_params' => array(
@@ -69,8 +78,8 @@ class clickup{
                     'start_date_time' => 'false',
                     'due_date' => $data_fim.'000',
                     'due_date_time' => 'false',
-                    'assignee' => $assignee,
-                    'time_estimate' => 8640000
+                    'assignee' => $id_do_clickup,
+                    'time_estimate' => strval($horas*60*60*1000)
 
                 )
             )
@@ -82,50 +91,35 @@ class clickup{
         
     }
 
-    public function clickMissoesGestao($list_id, $data_inicio,$guardiao){
+    public function clickMissoesGestao($list_id, $data_inicio,$data_fim,$guardiao){
+        //Tratar tipos de gestoresa 
+        
         $missoes_start_frente = get_field('start_de_frente', 'missoes_de_gestao');
         $missoes_andamento_frente = get_field('andamento_da_frente', 'missoes_de_gestao');
         $missoes_fechamento_frente = get_field('fechamento_de_frente', 'missoes_de_gestao');
-        /*
+        //Pegando o id do clickup pelo nome do usuário
         $user_query = new WP_User_Query( array( 'search' => $guardiao ) );
         $authors = $user_query->get_results();
         foreach ($authors as $author)
         {   
             $id_do_clickup = get_field('id_do_clickup', 'user_'. $author->ID);
-        }*/
-        //Rodar um foreach em cima de um template, cadastrado como options
-        set_transient('missao',
-                array(
-                    $missoes_start_frente
-                )
-            );
+        }
+        //Fazendo as missões de abertura de frente
         foreach($missoes_start_frente as $key => $missao_start_frente){
 
             $dias_antes = '- '.$missao_start_frente['dias_antes_do_start_da_frente'].' day';
             $data_da_missao = $data_inicio->modify($dias_antes);
             $data_da_missao = $data_inicio->getTimestamp();
-            set_transient('missao',
-                array(
-                    $dias_antes,
-                    $data_inicio,
-
-                    $missao_start_frente['missao'],
-                    $data_da_missao.'000',
-                    $data_da_missao.'000',
-                    $missao_start_frente['tempo']*60*60,
-                    $guardiao
-                )
-            );
-            // NÃO ESTÁ CRIANDO O TEMPO NEM COLOCANDO OS REPONSÁVEIS
             $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
                 array(
-                    'form_params' => array(
-                        'name' => $missao_start_frente['missao'].$guardiao,
-                        'assignee' => $guardiao,
-                        'tags' => ['1', '2'],
+                    'json' => array(
+                        'name' => $missao_start_frente['missao'],
+                        'description' => $missao_start_frente['descricao'],
+                        'assignees' => [$guardiao],
+                        'tags' => ['1.planejamento de frente'],
                         'due_date' => $data_da_missao.'000',
                         'due_date_time' => 'false',
-                        'time_estimate' => $missao_start_frente['tempo'],
+                        'time_estimate' => strval($missao_start_frente['tempo']*60*60*1000),
                         'start_date' => $data_da_missao.'000',
                         'start_date_time' => 'false',
                     )
@@ -133,9 +127,95 @@ class clickup{
             );
             $task_criada = $task_criada->getBody();
             $task_criada = json_decode($task_criada);
-            //retornando o id da missao
+            foreach($missao_start_frente['subtasks'] as $subtask){
+                $subtask_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                array(
+                    'json' => array(
+                        'name' => $subtask['subtask'],
+                        'parent' => $task_criada->id,
+                        
+                    )
+                )
+            );
+                
+            }
         }
-        return $task_criada->id;
+
+       //Fazendo as missões de acompanhamento de frente
+       foreach($missoes_andamento_frente as $key => $missao_andamento_frente){
+            $interval = $data_de_inicio->diff($data_de_fim);
+            $semanas = ceil($interval->days/7);
+            $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                array(
+                    'json' => array(
+                        'name' => $missao_andamento_frente['missao'],
+                        'description' => $missao_start_frente['descricao'],
+                        'assignees' => [$guardiao],
+                        'tags' => ['2. acompanhamento de frente'],
+                        'due_date' => $data_de_fim.'000',
+                        'due_date_time' => 'false',
+                        'time_estimate' => strval($semanas*$missao_andamento_frente['tempo']*60*60*1000),
+                        'start_date' => $data_de_inicio.'000',
+                        'start_date_time' => 'false',
+                    )
+                )
+            );
+            $task_criada = $task_criada->getBody();
+            $task_criada = json_decode($task_criada);
+
+            foreach($missao_andamento_frente['subtasks'] as $subtask){
+                $subtask_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                array(
+                    'json' => array(
+                        'name' => $subtask['subtask'],
+                        'parent' => $task_criada->id,
+                        
+                    )
+                )
+            );
+                
+            }
+        }
+
+
+
+        //Fazendo as missões de fechamento de frente
+        foreach($missoes_fechamento_frente as $key => $missao_fechamento_frente){
+
+            $dias_depois = '+ '.$missao_fechamento_frente['dias_depois_do_termino_da_frente'].' day';
+            $data_da_missao = $data_fim->modify($dias_depois);
+            $data_da_missao = $data_fim->getTimestamp();
+            $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                array(
+                    'json' => array(
+                        'name' => $missao_fechamento_frente['missao'],
+                        'description' => $missao_start_frente['descricao'],
+                        'assignees' => [$guardiao],
+                        'tags' => ['3. fechamento de frente'],
+                        'due_date' => $data_da_missao.'000',
+                        'due_date_time' => 'false',
+                        'time_estimate' => strval($missao_fechamento_frente['tempo']*60*60*1000),
+                        'start_date' => $data_da_missao.'000',
+                        'start_date_time' => 'false',
+                    )
+                )
+            );
+            $task_criada = $task_criada->getBody();
+            $task_criada = json_decode($task_criada);
+            foreach($missao_fechamento_frente['subtasks'] as $subtask){
+                $subtask_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                array(
+                    'json' => array(
+                        'name' => $subtask['subtask'],
+                        'parent' => $task_criada->id,
+                        
+                    )
+                )
+            );
+                
+            }
+        }
+
     }
 
 
