@@ -67,7 +67,146 @@ class processa_papeis{
         
         return $papeis_filtrados;
     }
-    
+
+     /**
+    * Cadastra os papeis de visão e time vindo o pipefy
+    *
+    * @param Array com o projeto cadastrado
+    *     
+    */
+    public function cadastraPapelVisaoETime($projeto,$id_projeto){
+        //Busca a key dos record fields e retorna o nome do projeto
+        $key_nome_projeto = array_search('Nome do projeto', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $nome_projeto = $projeto[0]['data']['table_record']['record_fields'][$key_nome_projeto]['value'];
+        //Busca a key dos record fields e retorna o guardião de visão
+        $key_guardiao_visao = array_search('Guardião de visão', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $guardiao_visao = $projeto[0]['data']['table_record']['record_fields'][$key_guardiao_visao]['value'];
+        //Busca a key dos record fields e retorna o guardião de time
+        $key_guardiao_time = array_search('Guardião de time', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $guardiao_time = $projeto[0]['data']['table_record']['record_fields'][$key_guardiao_time]['value'];
+        //Busca a key dos record fields e retorna a data de início
+        $key_data_inicio = array_search('Data de início', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $data_de_inicio = $projeto[0]['data']['table_record']['record_fields'][$key_data_inicio]['value'];
+        //Busca a key dos record fields e retorna a data de fim
+        $key_data_fim = array_search('Data de término', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $data_de_fim = $projeto[0]['data']['table_record']['record_fields'][$key_data_fim]['value'];     
+        //Pegando o usuário do guardiao de visao
+        if($guardiao_visao){
+            $user_query = new WP_User_Query( array( 'search' => $guardiao_visao ) );
+            $authors = $user_query->get_results();
+            foreach ($authors as $author)
+            {   
+                $obj_guardiao_visao = $author;
+            }
+            
+        }
+        wp_reset_query();
+        //Pegando o usuário do guardião de time
+        if($guardiao_time){
+            $user_query = new WP_User_Query( array( 'search' => $guardiao_time ) );
+            $authors = $user_query->get_results();
+            foreach ($authors as $author)
+            {   
+                $obj_guardiao_time = $author;
+            }
+            
+        }
+        wp_reset_query();
+        // Puxando o id projeto no wordpress 
+        $args = array(
+            'posts_per_page' => -1,
+            'no_found_rows' => true,
+            'post_type'		=> 'integracoes',
+            'post_status'   => 'publish',
+            'meta_key'		=> 'projeto_id_pipefy',
+            'meta_value'	=> $id_projeto
+        );
+        $the_query = new WP_Query( $args );
+        if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+            $id_projeto_wordpress = get_field('projeto_id_wordpress');
+        endwhile;endif; 
+        set_transient("id_projeto",$id_projeto_wordpress);
+        wp_reset_query();
+
+        //Fazendo o loop de cadastro de visão
+        $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'papeis',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'oni',
+                    'value' => $obj_guardiao_visao->ID,
+                    'compare' => '='
+                ),
+        
+                array(
+                    'key' => 'projeto',
+                    'value' => $id_projeto_wordpress->ID,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ($the_query->have_posts() ) :
+        else:
+            $my_post = array(
+                'post_title' => $nome_projeto.' - Visão '.$nome_da_frente.' - '.$obj_guardiao_visao->user_nicename,
+                'post_status' => 'publish',
+                'post_type' => 'papeis',
+            );
+            
+            $post_id = wp_insert_post($my_post);
+            update_post_meta( $post_id, 'oni', $obj_guardiao_visao->ID );
+             update_field('data_de_inicio', $data_de_inicio, $post_id);
+            update_field('data_de_terminio', $data_de_fim, $post_id);        
+            update_field('papel', 'guardiao_visao', $post_id);
+            update_field('projeto', $id_projeto_wordpress, $post_id);
+            wp_reset_postdata();
+        endif;
+
+        //Fazendo o loop de cadastro de time
+        $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'papeis',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'oni',
+                    'value' => $obj_guardiao_time->ID,
+                    'compare' => '='
+                ),
+        
+                array(
+                    'key' => 'projeto',
+                    'value' => $id_projeto_wordpress->ID,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ($the_query->have_posts() ) :
+        else:
+            $my_post = array(
+                'post_title' => $nome_projeto.' - Time '.$nome_da_frente.' - '.$obj_guardiao_time->user_nicename,
+                'post_status' => 'publish',
+                'post_type' => 'papeis',
+            );
+            
+            $post_id = wp_insert_post($my_post);
+            update_post_meta( $post_id, 'oni', $obj_guardiao_time->ID );
+             update_field('data_de_inicio', $data_de_inicio, $post_id);
+            update_field('data_de_terminio', $data_de_fim, $post_id);        
+            update_field('papel', 'guardiao_time', $post_id);
+            update_field('projeto', $id_projeto_wordpress, $post_id);
+            wp_reset_postdata();
+        endif;
+
+    }
+
+   
     /**
     * Cadastra o método vindo o pipefy
     *
@@ -76,10 +215,22 @@ class processa_papeis{
     */
     public function cadastraPapelMetodo($frentes){
         foreach($frentes as $frente){
-            $nome_da_frente = $frente['data']['table_record']['record_fields'][4]['value'];
-            $data_de_inicio = $frente['data']['table_record']['record_fields'][1]['value'];
-            $data_de_fim = $frente['data']['table_record']['record_fields'][0]['value'];
-            $guardiao_metodo = $frente['data']['table_record']['record_fields'][2]['value'];
+            //Busca a key dos record fields e retorna o nome da frente
+            $key_nome_frente = array_search('Nome da frente', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $nome_da_frente = $frente['data']['table_record']['record_fields'][$key_nome_frente]['value'];
+            //Busca a key dos record fields e retorna a data de inicio
+            $key_data_de_inicio = array_search('Data de início', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $data_de_inicio = $frente['data']['table_record']['record_fields'][$key_data_de_inicio]['value'];
+            //Busca a key dos record fields e retorna a data de término
+            $key_data_de_fim = array_search('Data de término', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $data_de_fim = $frente['data']['table_record']['record_fields'][$key_data_de_fim]['value'];
+            //Busca a key dos record fields e retorna as horas
+            $key_horas = array_search('Horas', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $horas = $frente['data']['table_record']['record_fields'][$key_horas]['value'];
+            //Busca a key dos record fields e retorna o guardiao de método
+            $key_guardiao_metodo = array_search('Guardião de método', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $guardiao_metodo =   $frente['data']['table_record']['record_fields'][$key_guardiao_metodo]['value'];
+            //Pega o ID da frente
             $id_da_frente_pipefy =  $frente['data']['table_record']['id'];
             if($guardiao_metodo){
                 $user_query = new WP_User_Query( array( 'search' => $guardiao_metodo ) );
@@ -90,9 +241,10 @@ class processa_papeis{
                 }
                 
             }
- 
-            $nome_projeto = $frente['data']['table_record']['record_fields'][5]['value'];
-            $id_projeto = $frente['data']['table_record']['record_fields'][5]['array_value'][0];
+            //Busca a key dos record fields e retorna o projeto
+            $key_projeto = array_search('Projeto', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $nome_projeto = $frente['data']['table_record']['record_fields'][$key_projeto]['value'];
+            $id_projeto = $frente['data']['table_record']['record_fields'][$key_projeto]['array_value'][0];
 
              // Puxando o id da frente no wordpress 
                 $args = array(

@@ -91,31 +91,100 @@ class clickup{
         
     }
 
-    public function clickMissoesGestao($list_id, $data_inicio,$data_fim,$guardiao){
-        //Tratar tipos de gestoresa 
-        
+    public function clickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$guardiao){
+        //FAZER UMA FUNÇÃO PARA PUXAR OS GUARDIÕES DE VISÃO E TIME
         $missoes_start_frente = get_field('start_de_frente', 'missoes_de_gestao');
         $missoes_andamento_frente = get_field('andamento_da_frente', 'missoes_de_gestao');
         $missoes_fechamento_frente = get_field('fechamento_de_frente', 'missoes_de_gestao');
-        //Pegando o id do clickup pelo nome do usuário
+        //Pegando o id do clickup do guardião de método pelo nome do usuário
         $user_query = new WP_User_Query( array( 'search' => $guardiao ) );
         $authors = $user_query->get_results();
+   
         foreach ($authors as $author)
-        {   
-            $id_do_clickup = get_field('id_do_clickup', 'user_'. $author->ID);
+        {      
+            $guardiao_metodo_id_do_clickup = get_field('informacoes_gerais', 'user_'. $author->ID);
+            $guardiao_metodo_id_do_clickup = $guardiao_metodo_id_do_clickup['id_do_clickup'];      
         }
+        wp_reset_query();
+        //Puxando o guardiao de visao
+        $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'papeis',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'papel',
+                    'value' => 'guardiao_visao',
+                    'compare' => '='
+                ),
+        
+                array(
+                    'key' => 'projeto',
+                    'value' => $id_projeto_wordpress,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+            $guardiao_visao =   get_field('oni');
+            $guardiao_visao_id_do_clickup = get_field('informacoes_gerais', 'user_'. $guardiao_visao);
+            $guardiao_visao_id_do_clickup = $guardiao_visao_id_do_clickup['id_do_clickup'];
+        endwhile;endif;
+        wp_reset_query();
+
+
+         //Puxando o guardiao de time
+         $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'papeis',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'papel',
+                    'value' => 'guardiao_time',
+                    'compare' => '='
+                ),
+        
+                array(
+                    'key' => 'projeto',
+                    'value' => $id_projeto_wordpress,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+            $guardiao_time =   get_field('oni');
+            $guardiao_time_id_do_clickup = get_field('informacoes_gerais', 'user_'. $guardiao_time);
+            $guardiao_time_id_do_clickup = $guardiao_time_id_do_clickup['id_do_clickup'];
+        endwhile;endif;
+        wp_reset_query();
+
         //Fazendo as missões de abertura de frente
         foreach($missoes_start_frente as $key => $missao_start_frente){
-
+            $assignee = 00000;
+            if($missao_start_frente['responsavel'] == "guardiao_metodo"){
+                $assignee = $guardiao_metodo_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_visao"){
+                $assignee = $guardiao_visao_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_time"){
+                $assignee = $guardiao_time_id_do_clickup;
+            }
             $dias_antes = '- '.$missao_start_frente['dias_antes_do_start_da_frente'].' day';
             $data_da_missao = $data_inicio->modify($dias_antes);
             $data_da_missao = $data_inicio->getTimestamp();
+
             $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
                 array(
                     'json' => array(
                         'name' => $missao_start_frente['missao'],
                         'description' => $missao_start_frente['descricao'],
-                        'assignees' => [$guardiao],
+                        'assignees' => [$assignee],
                         'tags' => ['1.planejamento de frente'],
                         'due_date' => $data_da_missao.'000',
                         'due_date_time' => 'false',
@@ -143,19 +212,31 @@ class clickup{
 
        //Fazendo as missões de acompanhamento de frente
        foreach($missoes_andamento_frente as $key => $missao_andamento_frente){
-            $interval = $data_de_inicio->diff($data_de_fim);
+            $assignee = 00000;
+            if($missao_start_frente['responsavel'] == "guardiao_metodo"){
+                $assignee = $guardiao_metodo_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_visao"){
+                $assignee = $guardiao_visao_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_time"){
+                $assignee = $guardiao_time_id_do_clickup;
+            }
+            $interval = $data_inicio->diff($data_fim);
             $semanas = ceil($interval->days/7);
+            $data_inicio_ts = $data_inicio->getTimestamp();
+            $data_fim_ts = $data_fim->getTimestamp();
             $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
                 array(
                     'json' => array(
                         'name' => $missao_andamento_frente['missao'],
                         'description' => $missao_start_frente['descricao'],
-                        'assignees' => [$guardiao],
+                        'assignees' => [$assignee],
                         'tags' => ['2. acompanhamento de frente'],
-                        'due_date' => $data_de_fim.'000',
+                        'due_date' => $data_fim_ts.'000',
                         'due_date_time' => 'false',
                         'time_estimate' => strval($semanas*$missao_andamento_frente['tempo']*60*60*1000),
-                        'start_date' => $data_de_inicio.'000',
+                        'start_date' => $data_inicio_ts.'000',
                         'start_date_time' => 'false',
                     )
                 )
@@ -181,7 +262,16 @@ class clickup{
 
         //Fazendo as missões de fechamento de frente
         foreach($missoes_fechamento_frente as $key => $missao_fechamento_frente){
-
+            $assignee = 00000;
+            if($missao_start_frente['responsavel'] == "guardiao_metodo"){
+                $assignee = $guardiao_metodo_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_visao"){
+                $assignee = $guardiao_visao_id_do_clickup;
+            }
+            if($missao_start_frente['responsavel'] == "guardiao_time"){
+                $assignee = $guardiao_time_id_do_clickup;
+            }
             $dias_depois = '+ '.$missao_fechamento_frente['dias_depois_do_termino_da_frente'].' day';
             $data_da_missao = $data_fim->modify($dias_depois);
             $data_da_missao = $data_fim->getTimestamp();
@@ -190,7 +280,7 @@ class clickup{
                     'json' => array(
                         'name' => $missao_fechamento_frente['missao'],
                         'description' => $missao_start_frente['descricao'],
-                        'assignees' => [$guardiao],
+                        'assignees' => [$assignee],
                         'tags' => ['3. fechamento de frente'],
                         'due_date' => $data_da_missao.'000',
                         'due_date_time' => 'false',

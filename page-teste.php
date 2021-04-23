@@ -5,6 +5,13 @@
 <?php get_header(); ?>
 
 <?php
+
+
+//processa_frentes::cadastraFrente(get_transient('table_records_frentes'),get_transient('projeto_cadastrado')['projeto_cadastrado'][0]);
+/*
+
+TESTANDO AQUI O CÁLCULO DAS SEMANAS DA FRENTE
+
 $data_de_inicio_obj = DateTime::createFromFormat('d/m/Y', '19/04/2021');
 $data_de_fim_obj = DateTime::createFromFormat('d/m/Y', '04/05/2021');
 $interval = $data_de_inicio_obj->diff($data_de_fim_obj);
@@ -12,17 +19,20 @@ $semanas = ceil($interval->days/7);
 echo "<pre>";
 var_dump($semanas);
 echo "</pre>";
-
-
-$criamissao = get_transient('criamissoes');
-
-/* 
-echo "<pre>";
-var_dump(clickup::clickMissoesGestao($criamissao[0], $criamissao[1],$criamissao[1], '3118731'));
-echo "</pre>";
 */
 
 
+/*
+
+TESTANDO AQUI A CRIAÇÃO DAS MISSÕES DE GESTÃO DA FRENTE
+
+$frentes_cadastradas = get_transient('criamissoes');
+foreach($frentes_cadastradas as $frentes_cadastrada){
+
+    clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
+
+} 
+*/
 
 /*
 $today = DateTime::createFromFormat('d/m/Y', '17/03/2021');

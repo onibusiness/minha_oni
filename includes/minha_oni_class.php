@@ -305,17 +305,29 @@ class minha_oni{
             set_transient('table_records_frentes', $table_records_frentes);
             //pega os dados do card do projeto alterado
             $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado']);
-            $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][0]['value'];
+            //Busca a key dos record fields e retorna o nome do projeto
+            $key_nome_projeto = array_search('Nome do projeto', array_column($table_record_projeto[0]['data']['table_record']['record_fields'], 'name'));
+            $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][$key_nome_projeto]['value'];
             set_transient('table_record_projeto',$table_record_projeto);
     
             //Fazendo o cadastro das integrações e projetos
             processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
-    
+        
             //Fazendo o cadastro das frentes  
-            processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
+            $frentes_cadastradas = processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
     
+            //Cadastrando os guadiões de visão e de time
+            processa_papeis::cadastraPapelVisaoETime($table_record_projeto,$projeto_cadastrado['projeto_cadastrado'][0]);
+
             //Cadastrando o guardião de método
             processa_papeis::cadastraPapelMetodo($table_records_frentes);
+
+            //Criar missoes de gestao
+            foreach($frentes_cadastradas as $frentes_cadastrada){
+
+                clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
+
+            }       
 
         }
     }
