@@ -30,6 +30,7 @@ class processa_frentes{
             $nome_projeto = get_the_title($id_projeto_wordpress);
        endwhile;endif;
        wp_reset_query();
+
         foreach($frentes as $frente){
             //Busca a key dos record fields e retorna o nome da frente
             $key_nome_frente = array_search('Nome da frente', array_column($frente['data']['table_record']['record_fields'], 'name'));
@@ -60,7 +61,7 @@ class processa_frentes{
             $the_query = new WP_Query( $args );
             //Se tiver a frente ele altera em outra função
             if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-                processa_papeis::atualizaPapelMetodo($nome_projeto,$nome_da_frente,$id_da_frente_pipefy,$guardiao, $data_de_inicio, $data_de_fim);
+                //processa_papeis::atualizaPapelMetodo($nome_projeto,$nome_da_frente,$id_da_frente_pipefy,$guardiao, $data_de_inicio, $data_de_fim);
             endwhile;
             //Se não tiver frente ele cria uma nova
             else:
@@ -78,13 +79,14 @@ class processa_frentes{
                 update_field('data_de_fim', $data_de_fim, $post_id);
                 update_field('horas', $horas, $post_id);
                 //Processando as datas
-                $data_de_inicio_obj = DateTime::createFromFormat('d/m/Y', $data_de_inicio);
+                $data_de_inicio_obj = DateTimeImmutable::createFromFormat('d/m/Y', $data_de_inicio);
                 $data_de_inicio_ts = $data_de_inicio_obj->getTimestamp();
-                $data_de_fim_obj = DateTime::createFromFormat('d/m/Y', $data_de_fim);
+                $data_de_fim_obj = DateTimeImmutable::createFromFormat('d/m/Y', $data_de_fim);
                 $data_de_fim_ts = $data_de_fim_obj->getTimestamp();
                 $frente_id_clickup = clickup::clickCriaList($nome_da_frente,$data_de_inicio_ts,$data_de_fim_ts,$guardiao, $horas,$projeto_id_clickup);
 
-        
+                update_field('id_da_frente_clickup', $frente_id_clickup, $post_id);
+                
                 $frentes_cadastradas[] = array(
                     $id_projeto_wordpress,$frente_id_clickup, $data_de_inicio_obj,$data_de_fim_obj, $guardiao
                );

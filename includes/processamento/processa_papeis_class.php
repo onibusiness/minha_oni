@@ -92,7 +92,7 @@ class processa_papeis{
         $data_de_fim = $projeto[0]['data']['table_record']['record_fields'][$key_data_fim]['value'];     
         //Pegando o usuário do guardiao de visao
         if($guardiao_visao){
-            $user_query = new WP_User_Query( array( 'search' => $guardiao_visao ) );
+            $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_visao,2,-2) ) );
             $authors = $user_query->get_results();
             foreach ($authors as $author)
             {   
@@ -103,7 +103,7 @@ class processa_papeis{
         wp_reset_query();
         //Pegando o usuário do guardião de time
         if($guardiao_time){
-            $user_query = new WP_User_Query( array( 'search' => $guardiao_time ) );
+            $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_time,2,-2) ) );
             $authors = $user_query->get_results();
             foreach ($authors as $author)
             {   
@@ -143,7 +143,7 @@ class processa_papeis{
         
                 array(
                     'key' => 'projeto',
-                    'value' => $id_projeto_wordpress->ID,
+                    'value' => $id_projeto_wordpress,
                     'compare' => '='
                 )
             )
@@ -163,9 +163,9 @@ class processa_papeis{
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_visao', $post_id);
             update_field('projeto', $id_projeto_wordpress, $post_id);
-            wp_reset_postdata();
         endif;
-
+        wp_reset_postdata();
+        
         //Fazendo o loop de cadastro de time
         $args = array(
             'numberposts'	=> -1,
@@ -181,7 +181,7 @@ class processa_papeis{
         
                 array(
                     'key' => 'projeto',
-                    'value' => $id_projeto_wordpress->ID,
+                    'value' => $id_projeto_wordpress,
                     'compare' => '='
                 )
             )
@@ -201,8 +201,8 @@ class processa_papeis{
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_time', $post_id);
             update_field('projeto', $id_projeto_wordpress, $post_id);
-            wp_reset_postdata();
         endif;
+        wp_reset_postdata();
 
     }
 
@@ -233,7 +233,7 @@ class processa_papeis{
             //Pega o ID da frente
             $id_da_frente_pipefy =  $frente['data']['table_record']['id'];
             if($guardiao_metodo){
-                $user_query = new WP_User_Query( array( 'search' => $guardiao_metodo ) );
+                $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_metodo,2,-2) ) );
                 $authors = $user_query->get_results();
                 foreach ($authors as $author)
                 {   
@@ -258,6 +258,7 @@ class processa_papeis{
                 $the_query = new WP_Query( $args );
                 if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
                     $id_frente_wordpress = get_the_ID();
+                    
             endwhile;endif; 
             wp_reset_postdata();
 
@@ -290,8 +291,8 @@ class processa_papeis{
                     ),
             
                     array(
-                        'key' => 'projeto',
-                        'value' => $id_projeto_wordpress->ID,
+                        'key' => 'frente',
+                        'value' => $id_frente_wordpress,
                         'compare' => '='
                     )
                 )
@@ -315,8 +316,8 @@ class processa_papeis{
                 update_field('data_de_terminio', $data_de_fim, $post_id);        
                 update_field('papel', 'guardiao_metodo', $post_id);
                 update_field('projeto', $id_projeto_wordpress, $post_id);
-                wp_reset_postdata();
             endif;
+            wp_reset_postdata();
         }
            
     }
