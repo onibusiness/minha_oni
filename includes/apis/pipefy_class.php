@@ -166,8 +166,12 @@ class pipefy{
             name
             array_value
             value
+          }
+          status{
+            name
           } 
         }
+       
       }
       ';
       $requisita = self::queryPipefy($query);

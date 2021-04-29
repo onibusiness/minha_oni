@@ -86,6 +86,9 @@ class minha_oni{
         //Criando o endpoint
         add_action( 'rest_api_init', array($this,'criarWebhook'));
 
+        //Filtrando os usuários inativos
+        add_action('pre_get_users', array($this,'filtaOnisInativos'));
+     
         //Fazendo uma função temporária para conseguir importar os pagamentos a  partir do json gerado pelo Bi
         //$this->puxaPagamentosAntigosBI();
 
@@ -244,7 +247,28 @@ class minha_oni{
         }
         return round( $workdays, 2);
     }
-   
+
+
+    /**
+     * Filtro dos usuários inativos
+     *
+     */
+    public function filtaOnisInativos($query){
+              
+            if(is_admin()){
+                return;
+            }
+             
+            $query->query_vars['meta_key'] = 'status';
+            $query->query_vars['meta_value'] = 'ativo'; 
+            $query->query_vars['meta_compare'] = '=';
+            return $query;
+            
+  
+
+    }
+
+
     /**
      * Registra os seguintes endpoints na API REST
      *
@@ -266,34 +290,7 @@ class minha_oni{
     
 
     }
-    public function escutaAlteraProjeto( $request ) {
 
-        //pegando os table records das frentes
-        $tables_alteradas = pipefy::escutaAlteraProjeto($request);
-        $table_records_frentes = pipefy::puxaDaTabela($tables_alteradas['frentes_alteradas']);
-        set_transient('tables', $table_records_frentes);
-
-        //pega os dados do card do projeto alterado
-        $card_projeto = pipefy::puxaCard($tables_alteradas['projeto_alterado'][0]);
-        set_transient('projetos', $card_projeto);
-
-        if(is_array($card_projeto['data']['card']['fields'])){
-            $fields =  array_column($card_projeto['data']['card']['fields'], 'name');
-            $id_projeto_alterado = array_search('Cadastro do projeto', $fields);
-            $id_table_projeto = $card_projeto['data']['card']['fields'][$id_projeto_alterado]['array_value'];
-            set_transient('id_table_projeto', $id_table_projeto);
-          }
-
-        $table_record_projeto = pipefy::puxaDaTabela($id_table_projeto);
-        set_transient('table_record_projeto', $table_record_projeto);
-        //Pegando o nome do projeto
-        $id_projeto = array_search( array( 'id'=> "nome_do_projeto","label" =>"Nome do projeto") , array_column( $table_record_projeto[0]['data']['table_record']['record_fields'], 'field' ));
-        $nome_projeto = $table_record_projeto[0]['data']['table_record']['record_fields'][$id_projeto]['value'];
-        processa_integracoes::cadastraIdPipefy($id_table_projeto[0],$nome_projeto);
-
-        //Fazendo o cadastro das frentes  
-        processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
-    }
 
     public function escutaCadastroProjeto( $request ) {
         set_transient('request', $request);
@@ -322,16 +319,54 @@ class minha_oni{
             //Cadastrando o guardião de método
             processa_papeis::cadastraPapelMetodo($table_records_frentes);
 
+            set_transient('frentes_cadastradas', $frentes_cadastradas);
             //Criar missoes de gestao
             foreach($frentes_cadastradas as $frentes_cadastrada){
-
                 clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
-
+                sleep(60);
             }       
-
+            set_transient('status_criacao', 'criou missões de frentes cadastrados');
         }
     }
 
+    public function escutaAlteraProjeto( $request ) {
+
+        //pegando os table records das frentes
+        $projeto_alterado = pipefy::escutaAlteraProjeto($request);
+        $table_records_frentes_alteradas = pipefy::puxaDaTabela($projeto_alterado['frentes_alteradas']);
+        set_transient('table_alterada', $table_records_frentes_alteradas);
+
+        //pega os dados do card do projeto alterado
+        $card_projeto = pipefy::puxaCard($projeto_alterado['projeto_alterado'][0]);
+        set_transient('projeto_alterado', $card_projeto);
+
+        if(is_array($card_projeto['data']['card']['fields'])){
+            $fields =  array_column($card_projeto['data']['card']['fields'], 'name');
+            $id_projeto_alterado = array_search('Cadastro do projeto', $fields);
+            $id_table_projeto = $card_projeto['data']['card']['fields'][$id_projeto_alterado]['array_value'];
+            set_transient('id_table_projeto_alterado', $id_table_projeto);
+          }
+
+        $table_record_projeto = pipefy::puxaDaTabela($id_table_projeto);
+        set_transient('table_record_projeto_alterado', $table_record_projeto);
+        //Pegando o nome do projeto
+        $id_projeto = array_search( array( 'id'=> "nome_do_projeto","label" =>"Nome do projeto") , array_column( $table_record_projeto[0]['data']['table_record']['record_fields'], 'field' ));
+        $nome_projeto = $table_record_projeto[0]['data']['table_record']['record_fields'][$id_projeto]['value'];
+
+        //Alterando as frentes cadastradas
+        $frentes_alteradas = processa_frentes::alteraFrente($table_records_frentes_alteradas,$id_table_projeto);
+
+        //Alterando os papéis de visão de time caso o projeto tenha que ser implementado
+        processa_papeis::alteraPapelVisaoETime($table_record_projeto,$id_table_projeto);
+
+        //Alteando os papéis de método
+        processa_papeis::alteraPapelMetodo($table_records_frentes_alteradas);
+
+        //Alterar as missões de gestão - [IMPLEMENTAR AINDA]
+        foreach($frentes_cadastradas as $frentes_cadastrada){
+            //clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
+        }  
+    }
 
 
 }

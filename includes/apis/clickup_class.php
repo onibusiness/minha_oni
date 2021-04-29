@@ -75,9 +75,9 @@ class clickup{
                     'name' => $nome_frente,
                     'description' => $descricao,
                     'start_date' => $data_inicio.'000',
-                    'start_date_time' => 'false',
+                    'start_date_time' => false,
                     'due_date' => $data_fim.'000',
-                    'due_date_time' => 'false',
+                    'due_date_time' => false,
                     'assignee' => $id_do_clickup,
                     'time_estimate' => strval($horas*60*60*1000)
 
@@ -92,6 +92,7 @@ class clickup{
     }
 
     public function clickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$guardiao){
+        set_transient('status_criacao_missoes', 'abriu a funcao');
         //FAZER UMA FUNÇÃO PARA PUXAR OS GUARDIÕES DE VISÃO E TIME
         $missoes_start_frente = get_field('start_de_frente', 'missoes_de_gestao');
         $missoes_andamento_frente = get_field('andamento_da_frente', 'missoes_de_gestao');
@@ -183,15 +184,18 @@ class clickup{
             $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
                 array(
                     'json' => array(
+
+
                         'name' => $missao_start_frente['missao'],
                         'description' => $missao_start_frente['descricao'],
                         'assignees' => [$assignee],
                         'tags' => ['1.planejamento de frente'],
                         'due_date' => $data_inicio_ts.'000',
-                        'due_date_time' => 'false',
+                        'due_date_time' => false,
                         'time_estimate' => strval($missao_start_frente['tempo']*60*60*1000),
                         'start_date' => $data_da_missao.'000',
-                        'start_date_time' => 'false',
+                        'start_date_time' => false,
+                    
                     )
                 )
             );
@@ -235,10 +239,10 @@ class clickup{
                         'assignees' => [$assignee],
                         'tags' => ['2. acompanhamento de frente'],
                         'due_date' => $data_fim_ts.'000',
-                        'due_date_time' => 'false',
+                        'due_date_time' => false,
                         'time_estimate' => strval($semanas*$missao_andamento_frente['tempo']*60*60*1000),
                         'start_date' => $data_inicio_ts.'000',
-                        'start_date_time' => 'false',
+                        'start_date_time' => false,
                     )
                 )
             );
@@ -285,10 +289,10 @@ class clickup{
                         'assignees' => [$assignee],
                         'tags' => ['3. fechamento de frente'],
                         'due_date' => $data_da_missao.'000',
-                        'due_date_time' => 'false',
+                        'due_date_time' => false,
                         'time_estimate' => strval($missao_fechamento_frente['tempo']*60*60*1000),
                         'start_date' => $data_fim_ts.'000',
-                        'start_date_time' => 'false',
+                        'start_date_time' => false,
                     )
                 )
             );

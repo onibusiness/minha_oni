@@ -6,29 +6,13 @@
 
 <?php
 
+$wp_cron_tasks = get_option( 'cron' );
 
-
-$args = array(
-    'posts_per_page' => -1,
-    'no_found_rows' => true,
-    'post_type'		=> 'frentes',
-    'post_status'   => 'publish',
-    'meta_key'		=> 'id_da_frente_pipefy',
-    'meta_value'	=> '418477931'
-);
-$the_query = new WP_Query( $args );
-if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-    $id_frente_wordpress = get_the_ID();
-    echo "<pre>";
-    var_dump($id_frente_wordpress);
-    echo "</pre>";
-endwhile;endif; 
-wp_reset_postdata();
-
- $table_records_frentes = get_transient('table_records_frentes');
- echo "<pre>";
- var_dump($table_records_frentes);
- echo "</pre>";
+wp_schedule_single_event( time() + 600, 'admin_action_criar_missoes_clickup' ); 
+//wp_clear_scheduled_hook(  'admin_action_criar_missoes_clickup' );
+echo "<pre>";
+var_dump($wp_cron_tasks);
+echo "</pre>";
 
 //processa_frentes::cadastraFrente(get_transient('table_records_frentes'),get_transient('projeto_cadastrado')['projeto_cadastrado'][0]);
 /*
