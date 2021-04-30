@@ -5,14 +5,57 @@
 <?php get_header(); ?>
 
 <?php
+         $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'papeis',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'frente',
+                    'value' => $id_frente_wordpress,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ($the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
 
+            $oni = get_field('oni');
+            $informacoes_oni = get_field('informacoes_gerais', 'user_'.$oni['ID']);
+            echo "<pre>";
+            var_dump($informacoes_oni['id_do_clickup']);
+            echo "</pre>";
+        endwhile;endif;
+
+
+$alteramissoes = get_transient('alteramissoes');
+echo "<pre>";
+var_dump($alteramissoes);
+echo "</pre>";
+
+
+
+
+$status_altera_missao = get_transient('status_altera_missao');
+echo "<pre>";
+var_dump($status_altera_missao);
+echo "</pre>";
+
+
+$tasks_alteradas = get_transient('tasks_alteradas');
+echo "<pre>";
+var_dump($tasks_alteradas);
+echo "</pre>";
+
+/*
+TESTANDO AS FUNÇÕES DE CRON
 $wp_cron_tasks = get_option( 'cron' );
 
 wp_schedule_single_event( time() + 600, 'admin_action_criar_missoes_clickup' ); 
-//wp_clear_scheduled_hook(  'admin_action_criar_missoes_clickup' );
-echo "<pre>";
-var_dump($wp_cron_tasks);
-echo "</pre>";
+wp_clear_scheduled_hook(  'admin_action_criar_missoes_clickup' );
+*/
+
 
 //processa_frentes::cadastraFrente(get_transient('table_records_frentes'),get_transient('projeto_cadastrado')['projeto_cadastrado'][0]);
 /*

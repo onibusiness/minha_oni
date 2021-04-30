@@ -142,6 +142,7 @@ class processa_frentes{
             $key_data_de_fim = array_search('Data de término', array_column($frente['data']['table_record']['record_fields'], 'name'));
             $data_de_fim = $frente['data']['table_record']['record_fields'][$key_data_de_fim]['value'];
             $data_de_fim_ymd =  DateTime::createFromFormat('d/m/Y',  $data_de_fim )->format("Ymd");
+            $data_de_fim_obj =  DateTime::createFromFormat('d/m/Y',  $data_de_fim );
             //Busca a key dos record fields e retorna as horas
             $key_horas = array_search('Horas', array_column($frente['data']['table_record']['record_fields'], 'name'));
             $horas = $frente['data']['table_record']['record_fields'][$key_horas]['value'];
@@ -164,6 +165,7 @@ class processa_frentes{
             $the_query = new WP_Query( $args );
             //Se tiver a frente ele altera em outra função
             if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                $frente_id_clickup = get_field('id_da_frente_clickup');
                 $post_id = get_the_ID();
                 $hoje_obj =  new DateTime('NOW');
                 // Se a frente estiver desativada no pipefy e ainda não estiver começado ele deleta a frente no wp
@@ -196,17 +198,18 @@ class processa_frentes{
                     update_field('data_de_fim', $data_de_fim_ymd, $post_id);
                     update_field('horas', $horas, $post_id);
                     //Processando as datas
-                    $data_de_inicio_obj = DateTimeImmutable::createFromFormat('d/m/Y', $data_de_inicio);
-                    $data_de_inicio_ts = $data_de_inicio_obj->getTimestamp();
                     $data_de_fim_obj = DateTimeImmutable::createFromFormat('d/m/Y', $data_de_fim);
                     $data_de_fim_ts = $data_de_fim_obj->getTimestamp();
+                    $data_de_inicio_obj = DateTimeImmutable::createFromFormat('d/m/Y', $data_de_inicio);
+                    $data_de_inicio_ts = $data_de_inicio_obj->getTimestamp();
                     $frente_id_clickup = clickup::clickCriaList($nome_da_frente,$data_de_inicio_ts,$data_de_fim_ts,$guardiao, $horas,$projeto_id_clickup);
-        
+                    //Fazer um altera list futuramente
+
                     update_field('id_da_frente_clickup', $frente_id_clickup, $post_id);
                 }
             endif; 
-            $frentes_cadastradas[] = array(
-                $id_projeto_wordpress,$frente_id_clickup, $data_de_inicio_obj,$data_de_fim_obj, $guardiao
+            $frentes_alteradas[] = array(
+                $id_projeto_wordpress, $frente_id_clickup, $data_de_inicio_obj, $data_de_fim_obj, $guardiao
            );
             wp_reset_query();
         }

@@ -462,6 +462,7 @@ class processa_papeis{
     *     
     */
     public function alteraPapelMetodo($frentes){
+        $frente_e_guardioes_metodo = array();
         foreach($frentes as $frente){
             //Busca a key dos record fields e retorna o nome da frente
             $key_nome_frente = array_search('Nome da frente', array_column($frente['data']['table_record']['record_fields'], 'name'));
@@ -538,12 +539,6 @@ class processa_papeis{
                 'meta_query' => array(
                     'relation' => 'AND',
                     array(
-                        'key' => 'oni',
-                        'value' => $obj_guardiao_metodo->ID,
-                        'compare' => '='
-                    ),
-            
-                    array(
                         'key' => 'frente',
                         'value' => $id_frente_wordpress,
                         'compare' => '='
@@ -552,6 +547,9 @@ class processa_papeis{
             );
             $the_query = new WP_Query( $args );
             if ($the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                $oni = get_field('oni');
+                $informacoes_oni = get_field('informacoes_gerais', 'user_'.$oni['ID']);
+                $guardiao_antigo = $informacoes_oni['id_do_clickup'];
                 $post_id = get_the_ID();
                 $hoje_obj =  new DateTime('NOW');
                 // Se a frente estiver desativada no pipefy e ainda não estiver começado ele deleta a frente no wp
@@ -583,6 +581,8 @@ class processa_papeis{
                 update_field('projeto', $id_projeto_wordpress, $post_id);
             endif;
             wp_reset_postdata();
+            //Criei esse array para conseguir puxar na atualização das missões de gestão e substituir o assignee antigo pelo novo.
+            $frente_e_guardioes_metodo[$id_frente_wordpress] = $guardiao_antigo;
         }
          
     }

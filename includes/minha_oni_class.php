@@ -362,9 +362,11 @@ class minha_oni{
         //Alteando os papéis de método
         processa_papeis::alteraPapelMetodo($table_records_frentes_alteradas);
 
+        set_transient('status_altera_missao', $frentes_alteradas);
         //Alterar as missões de gestão - [IMPLEMENTAR AINDA]
-        foreach($frentes_cadastradas as $frentes_cadastrada){
-            //clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
+        foreach($frentes_alteradas as $frentes_alterada){
+            set_transient('status_altera_missao', 'entrou no foreach');
+            clickup::alteraClickMissoesGestao($frentes_alterada[0],$frentes_alterada[1], $frentes_alterada[2],$frentes_alterada[3], $frentes_alterada[4]);
         }  
     }
 

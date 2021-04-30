@@ -81,7 +81,7 @@ class processa_evidencias{
             'posts_per_page' => -1,
             'meta_key'			=> 'data',
             'orderby'			=> 'meta_value',
-            'order'				=> 'ASC',
+            'order'				=> 'DESC',
             'meta_query' => $meta_query
         );
         $evidencias_filtradas = new WP_Query( $args ); 

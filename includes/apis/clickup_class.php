@@ -86,7 +86,7 @@ class clickup{
         );
         $list_criada = $list_criada->getBody();
         $list_criada = json_decode($list_criada);
-        //retornando o id do folder recém criado
+        //retornando o id da lista recém criado
         return $list_criada->id;
         
     }
@@ -299,7 +299,7 @@ class clickup{
             $task_criada = $task_criada->getBody();
             $task_criada = json_decode($task_criada);
             foreach($missao_fechamento_frente['subtasks'] as $subtask){
-                $subtask_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
+                $subtask_criada = self::$cliente->request('POST','list/'.$list_id.'/task?archived=false',
                 array(
                     'json' => array(
                         'name' => $subtask['subtask'],
@@ -314,6 +314,85 @@ class clickup{
 
     }
 
+    public function alteraClickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$guardiao){
+        set_transient('status_altera_missao', 'abriu funcao com');
+       //classes utilitárias da função
+       $data_fim_ts = $data_fim->getTimestamp();
+       $hoje_obj =  new DateTime('NOW');
+       set_transient('status_altera_missao', 'vai puxar guardiao');
+        //Pegando o id do clickup do guardião de método pelo nome do usuário
+        $user_query = new WP_User_Query( array( 'search' => substr($guardiao,2,-2)  ) );
+        $authors = $user_query->get_results();
+        foreach ($authors as $author)
+        {      
+            $guardiao_metodo_id_do_clickup = get_field('informacoes_gerais', 'user_'. $author->ID);
+            $assignee = $guardiao_metodo_id_do_clickup['id_do_clickup'];      
+        };
+
+        set_transient('status_altera_missao', 'vai puxar missoes de '.$list_id);
+       // pegar a lista alterada e fazer uma GET das missões do clickup
+       $lista = self::$cliente->request('GET','list/'.$list_id.'/task?archived=false');
+       $lista = $lista->getBody();
+       $lista = json_decode($lista);
+
+       set_transient('tasks_alteradas', $lista);
+       set_transient('status_altera_missao', 'vai conferir data');
+        
+       // deletar as missões das frentes que ainda nao começaram
+       if( $data_inicio > $hoje_obj){
+        set_transient('status_altera_missao', 'frente não comecou');
+        
+        // Não fazer nada com as missões das frentes que já acabaram
+       }elseif($data_fim < $hoje_obj ){
+        set_transient('status_altera_missao', 'frente já acabou');
+
+        // Ajustar as missões das frentes em andamento
+       }else{
+        set_transient('status_altera_missao', 'frente em andamento');
+           //loop de ajuste de missões em andamento
+           foreach ($lista->tasks as $task){
+               
+               //confere se a task é de acompanhamento
+               $tag_acompanhamento = array_filter(
+                   $task->tags,
+                   function ($e){
+                       return $e->name == '2. acompanhamento de frente';
+                   }
+               );
+               if($tag_acompanhamento){
+                   set_transient('status_altera_missao', 'achou missão de acompanhamento');
+                   //Ver se é de método, remover o atual e adicionar o novo gestor
+                   $task_atualizada = self::$cliente->request('PUT','task/'.$task->id.'',
+                    array(
+                        'json' => array(
+                            'assignees' => ['add' => [$assignee]],
+                            'due_date' => $data_fim_ts.'000',
+                            'due_date_time' => false,
+                        )
+                    )
+                );
+                set_transient('status_altera_missao', $task_atualizada);
+               }
+               //confere se a task é de fechamento
+               $tag_fechamento = array_filter(
+                   $task->tags,
+                   function ($e){
+                       return $e->name == '3. fechamento de frente';
+                   }
+               );
+               if($tag_fechamento){
+                  
+               }
+    
+    
+               
+           }
+       }
+
+
+            
+
+    }
 
     //SPACES AND TEAMS
     //$res = $cliente->request('GET','team/3059599/space?archived=false');
