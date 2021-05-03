@@ -5,6 +5,31 @@
 */
 
 class processa_projetos{
+    public $projetos;//Todos os projetos vigentes
+
+
+    //Iniciando a classe
+    public function __construct(){
+        $this->pegaProjetos();
+    }
+
+    /**
+    * Busca todos os projetos do minha.oni
+    *
+    * @return Query com os posts  
+    */
+    public function pegaProjetos(){
+
+        $args = array(  
+            'post_type' => 'projetos' ,
+            'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
+            'posts_per_page' => -1,
+        );
+        $projetos = new WP_Query( $args ); 
+        $this->projetos = $projetos;
+
+    }
+
   
     
     /**
@@ -60,6 +85,5 @@ class processa_projetos{
 
 //Criando o objeto
 $processa_projetos = new processa_projetos;
-
 
 ?>

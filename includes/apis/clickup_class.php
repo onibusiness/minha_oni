@@ -12,20 +12,27 @@ class clickup{
     static $organization_id = '3059599';
     //Está com o id do space Sandbox
     static $space_id = '3209515';
-
+    //Chave do clickup
+    static $chave_clickup;
+    
     //disparando a classe
     public function __construct(){
+        $this->pegaChaveClickup();
         $this->clickupSetaClienteAPI();
+    
     }
 
-    
+    //Pegando a chave do clickup da página de opções
+    public function pegaChaveClickup(){
+        self::$chave_clickup = get_field('chave_clickup', 'option');
+    }
 
     public function clickupSetaClienteAPI(){
         require __DIR__."/../../vendor/autoload.php";
         self::$cliente = new \GuzzleHttp\Client([
             'base_uri' => 'https://api.clickup.com/api/v2/',
             'headers' => [
-                'Authorization' => 'pk_3107782_NEBGITMKOL2CCD4ECS3WPAZUR200G1MU',
+                'Authorization' => self::$chave_clickup,
             ]
         ]);
     }

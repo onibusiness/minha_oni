@@ -245,6 +245,7 @@ class customizaacf{
         $parecer = get_field('parecer',$post_id);
         $oni = get_field('oni',$post_id);
         $competencia = get_field('competencia',$post_id);
+        $competencia = get_field('lente',$post_id);
         if($post_type_atual == 'evidencias' && $parecer == 'onion_up' ){
         $args = array(
             'numberposts'	=> -1,
@@ -265,6 +266,7 @@ class customizaacf{
             $nova_evolucao = wp_insert_post($my_post);
             update_field('data', $data, $nova_evolucao);
             update_field('competencia', $competencia, $nova_evolucao);
+            update_field('lente', $competencia, $nova_evolucao);
             update_field('oni', $oni, $nova_evolucao);
             update_field('evidencia', $post_id, $nova_evolucao);
             update_field('nivel', 1, $nova_evolucao);

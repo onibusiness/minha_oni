@@ -181,6 +181,14 @@ Template Name: Folha
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['advertencias'];?></span> Advertências</p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_competencia'];?></span> Onions de competencias </p>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_lentes'];?></span> Onions de lentes </p>
+                            <?php
+                            foreach($folha['lentes'] as $lente){
+              
+                                ?>
+                                <p class="escala-2 mb-0 grey"> <?php echo $lente['lente'];?> </p>
+                            <?php
+                            }
+                            ?>
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_papeis'];?></span> Onions de papeis </p>
                             <?php
                             foreach($folha['guardas'] as $papel){

@@ -66,8 +66,7 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/processamento/processa_papeis_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_projetos_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_metodos_class.php');
-        
-        
+        require_once($this->diretorio_tema.'/includes/processamento/processa_feedbacks_class.php');
         
 
         //acrescentando o menu

@@ -6,15 +6,25 @@
 */
 
 class pipefy{
+  static $chave_pipefy;
   //disparando a classe
   public function __construct(){
+    $this->pegaChavePipefy();
+  }
 
+  
+    //Pegando a chave do pipefy da página de opções
+    public function pegaChavePipefy(){
+      self::$chave_pipefy = get_field('chave_pipefy', 'option');
   }
   
   public function queryPipefy(string $query){
       $headers = ['Content-Type: application/json'];
-      $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyIjp7ImlkIjo3NTU5NzksImVtYWlsIjoidGhpYWdvQG9uaS5jb20uYnIiLCJhcHBsaWNhdGlvbiI6MzAwMDkyODg3fX0.HzYQ9GazuMWPpwcuMcTbiFHU3P9ESW8km2MlpasrlcYZNwiMn91_5528inaU_NzaZBx99RpvRYu4xwc1oK1ABw";
+      $token = self::$chave_pipefy;
       $headers[] = "Authorization: Bearer $token";
+      echo "<pre>";
+      var_dump($headers);
+      echo "</pre>";
       $endpoint = 'https://api.pipefy.com/graphql';
   
 
@@ -184,6 +194,7 @@ class pipefy{
 
 //Criando o objeto
 $pipefy = new pipefy;
+
 
 
 //$dados = query_pipefy($query);

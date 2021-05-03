@@ -5,6 +5,49 @@
 <?php get_header(); ?>
 
 <?php
+echo "<pre>";
+var_dump($pipefy);
+echo "</pre>";
+
+
+echo "<pre>";
+var_dump($clickup);
+echo "</pre>";
+
+$args = array(
+    'posts_per_page' => -1,
+    'no_found_rows' => true,
+    'post_type'		=> 'evidencias',
+    'post_status'   => 'publish',
+    'meta_key'		=> 'parecer',
+    'meta_value'	=> 'onion_up'
+);
+$the_query = new WP_Query( $args );
+if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+    $fields = get_fields();
+    $id = get_the_ID();
+    
+    echo $fields['oni']->data->display_name."</br>";
+    echo $fields['Lente']->post_title."</br>";
+    $args = array(
+        'posts_per_page' => -1,
+        'no_found_rows' => true,
+        'post_type'		=> 'evolucoes',
+        'post_status'   => 'publish',
+        'meta_key'		=> 'evidencia',
+        'meta_value'	=> $id
+    );
+    $quar = new WP_Query( $args );
+    if ( $quar->have_posts() ) : while ( $quar->have_posts() ) : $quar->the_post();
+    $ied = get_the_ID();
+    echo $ied."</br>";
+    echo "<hr>";
+    endwhile;endif;
+
+endwhile;endif;
+
+
+
          $args = array(
             'numberposts'	=> -1,
             'post_type'		=> 'papeis',
