@@ -233,6 +233,25 @@ class papeis{
                         'return_format' => 'd/m/Y',
                         'first_day' => 1,
                     ),
+                    array(
+                        'key' => 'field_6091a96af5cfc',
+                        'label' => 'Oniid',
+                        'name' => 'oniid',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
                 ),
                 'location' => array(
                     array(

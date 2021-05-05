@@ -71,10 +71,12 @@ class processa_frentes{
                     'post_title' => $nome_projeto.' | '.$nome_da_frente,
                     'post_status' => 'publish',
                     'post_type' => 'frentes',
+                    'post_author' => 1
                 );
                 
                 $post_id = wp_insert_post($my_post);              
-                update_post_meta( $post_id, 'projeto', $id_projeto_wordpress );
+                //update_post_meta( $post_id, 'projeto', $id_projeto_wordpress );
+                update_field('field_6076de315f6c9', $id_projeto_wordpress, $post_id);
                 update_field('nome_da_frente', $nome_da_frente, $post_id);
                 update_field('id_da_frente_pipefy', $id_da_frente_pipefy, $post_id);
                 update_field('data_de_inicio', $data_de_inicio_ymd, $post_id);
@@ -188,10 +190,12 @@ class processa_frentes{
                         'post_title' => $nome_projeto.' | '.$nome_da_frente,
                         'post_status' => 'publish',
                         'post_type' => 'frentes',
+                        'post_author' => 1
                     );
                     
                     $post_id = wp_insert_post($my_post);              
-                    update_post_meta( $post_id, 'projeto', $id_projeto_wordpress );
+                    //update_post_meta( $post_id, 'projeto', $id_projeto_wordpress );
+                    update_field('field_6076de315f6c9', $id_projeto_wordpress, $post_id);
                     update_field('nome_da_frente', $nome_da_frente, $post_id);
                     update_field('id_da_frente_pipefy', $id_da_frente_pipefy, $post_id);
                     update_field('data_de_inicio', $data_de_inicio_ymd, $post_id);

@@ -22,7 +22,8 @@ class processa_projetos{
 
         $args = array(  
             'post_type' => 'projetos' ,
-            'post_status' => array('publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'inherit'),
+            'no_found_rows' => true,
+            'post_status' => array('publish'),
             'posts_per_page' => -1,
         );
         $projetos = new WP_Query( $args ); 
@@ -58,6 +59,9 @@ class processa_projetos{
             $projeto_post_id = wp_insert_post($my_post_projeto);
             $id_projeto_wordpress = $projeto_post_id;
             update_field('projeto', $nome_projeto, $projeto_post_id);
+            update_field('status', 'ativo', $projeto_post_id);
+            update_field('scpre', '1', $projeto_post_id);
+            update_post_meta( $projeto_post_id, 'status', 'ativo' );
             wp_reset_postdata();
             
 
@@ -67,14 +71,14 @@ class processa_projetos{
                 'post_type' => 'integracoes',
             );
             $post_id = wp_insert_post($my_post);
-            update_post_meta( $post_id, 'projeto_id_wordpress', $id_projeto_wordpress );
+            //update_post_meta( $post_id, 'projeto_id_wordpress', $id_projeto_wordpress );
+            update_field('projeto_id_wordpress', $id_projeto_wordpress, $post_id);
+            //update_post_meta( $post_id, 'projeto_id_pipefy', $id_projeto_pipefy );
             update_field('projeto_id_pipefy', $id_projeto_pipefy, $post_id);
-            update_field('status', 'Ativo', $post_id);
-
             //Cria o folder do projeto no clickup 
             $projeto_id_clickup = clickup::clickCriaFolder($nome_projeto);
+            //update_post_meta( $post_id, 'projeto_id_clickup', $projeto_id_clickup );
             update_field('projeto_id_clickup', $projeto_id_clickup, $post_id);
-
             wp_reset_postdata();
 
 

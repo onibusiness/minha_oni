@@ -309,7 +309,7 @@ class minha_oni{
             //Fazendo o cadastro das integrações e projetos
             processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
         
-            //Fazendo o cadastro das frentes  
+            //Fazendo o cadastro das frentes 
             $frentes_cadastradas = processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
     
             //Cadastrando os guadiões de visão e de time

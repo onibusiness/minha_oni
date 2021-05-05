@@ -25,6 +25,7 @@ class clickup{
     //Pegando a chave do clickup da página de opções
     public function pegaChaveClickup(){
         self::$chave_clickup = get_field('chave_clickup', 'option');
+     
     }
 
     public function clickupSetaClienteAPI(){
@@ -113,7 +114,7 @@ class clickup{
             $guardiao_metodo_id_do_clickup = get_field('informacoes_gerais', 'user_'. $author->ID);
             $guardiao_metodo_id_do_clickup = $guardiao_metodo_id_do_clickup['id_do_clickup'];      
         }
-        wp_reset_query();
+         wp_reset_query();
         //Puxando o guardiao de visao
         $args = array(
             'numberposts'	=> -1,
@@ -129,16 +130,18 @@ class clickup{
         
                 array(
                     'key' => 'projeto',
-                    'value' => $id_projeto_wordpress,
+                    'value' => $id_projeto_wordpress->ID,
                     'compare' => '='
                 )
             )
         );
+        
         $the_query = new WP_Query( $args );
         if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
             $guardiao_visao =   get_field('oni');
-            $guardiao_visao_id_do_clickup = get_field('informacoes_gerais', 'user_'. $guardiao_visao);
+            $guardiao_visao_id_do_clickup = get_field('informacoes_gerais', 'user_'.$guardiao_visao['ID']);
             $guardiao_visao_id_do_clickup = $guardiao_visao_id_do_clickup['id_do_clickup'];
+          
         endwhile;endif;
         wp_reset_query();
 
@@ -158,7 +161,7 @@ class clickup{
         
                 array(
                     'key' => 'projeto',
-                    'value' => $id_projeto_wordpress,
+                    'value' => $id_projeto_wordpress->ID,
                     'compare' => '='
                 )
             )
@@ -166,11 +169,11 @@ class clickup{
         $the_query = new WP_Query( $args );
         if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
             $guardiao_time =   get_field('oni');
-            $guardiao_time_id_do_clickup = get_field('informacoes_gerais', 'user_'. $guardiao_time);
+            $guardiao_time_id_do_clickup = get_field('informacoes_gerais', 'user_'. $guardiao_time['ID']);
             $guardiao_time_id_do_clickup = $guardiao_time_id_do_clickup['id_do_clickup'];
         endwhile;endif;
         wp_reset_query();
-
+ 
         //Fazendo as missões de abertura de frente
         foreach($missoes_start_frente as $key => $missao_start_frente){
             $assignee = 00000;
@@ -187,7 +190,6 @@ class clickup{
             $data_inicio_ts = $data_inicio->getTimestamp();
             $data_da_missao = $data_inicio->modify($dias_antes);
             $data_da_missao = $data_inicio->getTimestamp();
-
             $task_criada = self::$cliente->request('POST','list/'.$list_id.'/task',
                 array(
                     'json' => array(
@@ -206,6 +208,7 @@ class clickup{
                     )
                 )
             );
+
             $task_criada = $task_criada->getBody();
             $task_criada = json_decode($task_criada);
             foreach($missao_start_frente['subtasks'] as $subtask){

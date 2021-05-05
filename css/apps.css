@@ -475,7 +475,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "\f058 ";
 	margin-right:0.5em;
 }
-.sim::after{
+.sim:not(.sem-label)::after{
 	content: "Sim";
 }
 
@@ -492,7 +492,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "\f057 ";
 	margin-right:0.5em;
 }
-.nao::after{
+.nao:not(.sem-label)::after{
 	content: "Não";
 }
 

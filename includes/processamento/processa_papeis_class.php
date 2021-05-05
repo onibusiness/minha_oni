@@ -99,6 +99,7 @@ class processa_papeis{
             foreach ($authors as $author)
             {   
                 $obj_guardiao_visao = $author;
+                $id_guardiao_visao = $obj_guardiao_visao->ID;
             }
             
         }
@@ -110,6 +111,7 @@ class processa_papeis{
             foreach ($authors as $author)
             {   
                 $obj_guardiao_time = $author;
+                $id_guardiao_time = $obj_guardiao_time->ID;
             }
             
         }
@@ -139,7 +141,7 @@ class processa_papeis{
                 'relation' => 'AND',
                 array(
                     'key' => 'oni',
-                    'value' => $obj_guardiao_visao->ID,
+                    'value' => $id_guardiao_visao,
                     'compare' => '='
                 ),
         
@@ -154,14 +156,17 @@ class processa_papeis{
         if ($the_query->have_posts() ) :
         else:
             $my_post = array(
-                'post_title' => $nome_projeto.' - Visão '.$nome_da_frente.' - '.$obj_guardiao_visao->user_nicename,
+                'post_title' => $nome_projeto.' - Visão '.$nome_da_frente.' - '.$obj_guardiao_visao->display_name,
                 'post_status' => 'publish',
                 'post_type' => 'papeis',
+                'post_author' => 1
             );
             
             $post_id = wp_insert_post($my_post);
-            update_post_meta( $post_id, 'oni', $obj_guardiao_visao->ID );
-             update_field('data_de_inicio', $data_de_inicio, $post_id);
+            update_field('field_5fa2b397170ec', $id_guardiao_visao , $post_id);
+            update_post_meta( $post_id, 'oni', $id_guardiao_visao );
+            update_field('oniid', $id_guardiao_visao , $post_id);
+            update_field('data_de_inicio', $data_de_inicio, $post_id);
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_visao', $post_id);
             update_field('projeto', $id_projeto_wordpress, $post_id);
@@ -177,7 +182,7 @@ class processa_papeis{
                 'relation' => 'AND',
                 array(
                     'key' => 'oni',
-                    'value' => $obj_guardiao_time->ID,
+                    'value' => $id_guardiao_time,
                     'compare' => '='
                 ),
         
@@ -192,14 +197,17 @@ class processa_papeis{
         if ($the_query->have_posts() ) :
         else:
             $my_post = array(
-                'post_title' => $nome_projeto.' - Time '.$nome_da_frente.' - '.$obj_guardiao_time->user_nicename,
+                'post_title' => $nome_projeto.' - Time '.$nome_da_frente.' - '.$obj_guardiao_time->display_name,
                 'post_status' => 'publish',
                 'post_type' => 'papeis',
+                'post_author' => 1
             );
             
             $post_id = wp_insert_post($my_post);
-            update_post_meta( $post_id, 'oni', $obj_guardiao_time->ID );
-             update_field('data_de_inicio', $data_de_inicio, $post_id);
+            update_field('field_5fa2b397170ec', $id_guardiao_time, $post_id);
+            update_post_meta( $post_id, 'oni', $id_guardiao_time );
+            update_field('oniid', $id_guardiao_time, $post_id);
+            update_field('data_de_inicio', $data_de_inicio, $post_id);
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_time', $post_id);
             update_field('projeto', $id_projeto_wordpress, $post_id);
@@ -239,7 +247,8 @@ class processa_papeis{
             $authors = $user_query->get_results();
             foreach ($authors as $author)
             {   
-                $obj_guardiao_visao = $author;
+                $obj_guardiao_visao = $author; 
+                $id_guardiao_visao = $obj_guardiao_visao->ID;
             }
             
         }
@@ -251,6 +260,7 @@ class processa_papeis{
             foreach ($authors as $author)
             {   
                 $obj_guardiao_time = $author;
+                $id_guardiao_time = $obj_guardiao_time->ID;
             }
             
         }
@@ -280,7 +290,7 @@ class processa_papeis{
                 'relation' => 'AND',
                 array(
                     'key' => 'oni',
-                    'value' => $obj_guardiao_visao->ID,
+                    'value' => $id_guardiao_visao,
                     'compare' => '='
                 ),
         
@@ -294,7 +304,9 @@ class processa_papeis{
         $the_query = new WP_Query( $args );
         if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
             $post_id = get_the_ID();
-            update_post_meta( $post_id, 'oni', $obj_guardiao_visao->ID );
+            update_field('field_5fa2b397170ec',  $id_guardiao_visao , $post_id);
+            update_post_meta( $post_id, 'oni', $id_guardiao_visao );
+            update_field('oniid',  $id_guardiao_visao , $post_id);
             update_field('data_de_inicio', $data_de_inicio, $post_id);
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_visao', $post_id);
@@ -311,7 +323,7 @@ class processa_papeis{
                 'relation' => 'AND',
                 array(
                     'key' => 'oni',
-                    'value' => $obj_guardiao_time->ID,
+                    'value' => $id_guardiao_time,
                     'compare' => '='
                 ),
         
@@ -325,7 +337,9 @@ class processa_papeis{
         $the_query = new WP_Query( $args );
         if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
             $post_id = get_the_ID();
-            update_post_meta( $post_id, 'oni', $obj_guardiao_time->ID );
+            update_field('field_5fa2b397170ec', $id_guardiao_time, $post_id);
+            update_post_meta( $post_id, 'oni', $id_guardiao_time );
+            update_field('oniid', $id_guardiao_time, $post_id);
             update_field('data_de_inicio', $data_de_inicio, $post_id);
             update_field('data_de_terminio', $data_de_fim, $post_id);        
             update_field('papel', 'guardiao_time', $post_id);
@@ -370,6 +384,7 @@ class processa_papeis{
                 foreach ($authors as $author)
                 {   
                     $obj_guardiao_metodo = $author;
+                    $id_guardiao_metodo =  $obj_guardiao_metodo->ID;
                 }
                 
             }
@@ -419,7 +434,7 @@ class processa_papeis{
                     'relation' => 'AND',
                     array(
                         'key' => 'oni',
-                        'value' => $obj_guardiao_metodo->ID,
+                        'value' => $id_guardiao_metodo,
                         'compare' => '='
                     ),
             
@@ -436,15 +451,18 @@ class processa_papeis{
             if ($the_query->have_posts() ) :
             else:
                 $my_post = array(
-                    'post_title' => substr($nome_projeto,2,-2).' - Método '.$nome_da_frente.' - '.$obj_guardiao_metodo->user_nicename,
+                    'post_title' => substr($nome_projeto,2,-2).' - Método '.$nome_da_frente.' - '.$obj_guardiao_metodo->display_name,
                     'post_status' => 'publish',
                     'post_type' => 'papeis',
+                    'post_author' => 1
                 );
                 
                 $post_id = wp_insert_post($my_post);
-                update_post_meta( $post_id, 'oni', $obj_guardiao_metodo->ID );
-                update_post_meta( $post_id, 'frente', $id_frente_wordpress );
-
+                update_field('field_5fa2b397170ec', $obj_guardiao_metodo->ID, $post_id);
+                update_post_meta( $post_id, 'oni', $id_guardiao_metodo);
+                update_field('oniid', $obj_guardiao_metodo->ID, $post_id);
+                //update_post_meta( $post_id, 'frente', $id_frente_wordpress );
+                update_field('frente', $id_frente_wordpress, $post_id);
                 update_field('data_de_inicio', $data_de_inicio, $post_id);
                 update_field('data_de_terminio', $data_de_fim, $post_id);        
                 update_field('papel', 'guardiao_metodo', $post_id);
@@ -492,6 +510,7 @@ class processa_papeis{
                 foreach ($authors as $author)
                 {   
                     $obj_guardiao_metodo = $author;
+                    $id_guardiao_metodo = $obj_guardiao_metodo->ID;
                 }
                 
             }
@@ -547,7 +566,7 @@ class processa_papeis{
             );
             $the_query = new WP_Query( $args );
             if ($the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-                $oni = get_field('oni');
+                $oni = get_field('field_5fa2b397170ec');
                 $informacoes_oni = get_field('informacoes_gerais', 'user_'.$oni['ID']);
                 $guardiao_antigo = $informacoes_oni['id_do_clickup'];
                 $post_id = get_the_ID();
@@ -557,8 +576,10 @@ class processa_papeis{
                     wp_delete_post($post_id);
                 }else{
                 //Se a frente já tiver começado ele faz a atualização normal, independente de estar concluída ou não
-                    update_post_meta( $post_id, 'oni', $obj_guardiao_metodo->ID );
-                    update_post_meta( $post_id, 'frente', $id_frente_wordpress );
+                    update_field('field_5fa2b397170ec', $id_guardiao_metodo, $post_id);
+                    update_post_meta( $post_id, 'oni', $id_guardiao_metodo);
+                    //update_post_meta( $post_id, 'frente', $id_frente_wordpress );
+                    update_field('frente', $id_frente_wordpress, $post_id);
                     update_field('data_de_inicio', $data_de_inicio, $post_id);
                     update_field('data_de_terminio', $data_de_fim, $post_id);        
                     update_field('papel', 'guardiao_metodo', $post_id);
@@ -566,14 +587,17 @@ class processa_papeis{
                 }
             endwhile; else:
                 $my_post = array(
-                    'post_title' => substr($nome_projeto,2,-2).' - Método '.$nome_da_frente.' - '.$obj_guardiao_metodo->user_nicename,
+                    'post_title' => substr($nome_projeto,2,-2).' - Método '.$nome_da_frente.' - '.$obj_guardiao_metodo->display_name,
                     'post_status' => 'publish',
                     'post_type' => 'papeis',
+                    'post_author' => 1
                 );
                 
                 $post_id = wp_insert_post($my_post);
-                update_post_meta( $post_id, 'oni', $obj_guardiao_metodo->ID );
-                update_post_meta( $post_id, 'frente', $id_frente_wordpress );
+                update_field('field_5fa2b397170ec', $id_guardiao_metodo, $post_id);
+                update_post_meta( $post_id, 'oni', $id_guardiao_metodo );
+                //update_post_meta( $post_id, 'frente', $id_frente_wordpress );
+                update_field('frente', $id_frente_wordpress, $post_id);
 
                 update_field('data_de_inicio', $data_de_inicio, $post_id);
                 update_field('data_de_terminio', $data_de_fim, $post_id);        
