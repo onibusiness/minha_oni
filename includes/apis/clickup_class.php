@@ -324,22 +324,34 @@ class clickup{
 
     }
 
-    public function alteraClickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$guardiao){
-        set_transient('status_altera_missao', 'abriu funcao com');
+    public function alteraClickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$status_da_frente,$frente_e_guardioes){
        //classes utilitárias da função
        $data_fim_ts = $data_fim->getTimestamp();
-       $hoje_obj =  new DateTime('NOW');
-       set_transient('status_altera_missao', 'vai puxar guardiao');
-        //Pegando o id do clickup do guardião de método pelo nome do usuário
-        $user_query = new WP_User_Query( array( 'search' => substr($guardiao,2,-2)  ) );
-        $authors = $user_query->get_results();
-        foreach ($authors as $author)
-        {      
-            $guardiao_metodo_id_do_clickup = get_field('informacoes_gerais', 'user_'. $author->ID);
-            $assignee = $guardiao_metodo_id_do_clickup['id_do_clickup'];      
-        };
 
-        set_transient('status_altera_missao', 'vai puxar missoes de '.$list_id);
+       $hoje_obj =  new DateTime('NOW');
+       //semana que vem
+       $hoje_obj->modify('+1 week'); 
+
+        //pegando os papéis da frente
+        $args = array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'frentes',
+            'post_status'   => 'publish',
+            'meta_query' => array(
+                'relation' => 'AND',
+                array(
+                    'key' => 'id_da_frente_clickup',
+                    'value' => $list_id,
+                    'compare' => '='
+                )
+            )
+        );
+        $the_query = new WP_Query( $args );
+        if ($the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+            $id_da_frente_wordpress = get_the_ID();    
+        endwhile; endif;
+        wp_reset_postdata();
+
        // pegar a lista alterada e fazer uma GET das missões do clickup
        $lista = self::$cliente->request('GET','list/'.$list_id.'/task?archived=false');
        $lista = $lista->getBody();
@@ -347,11 +359,20 @@ class clickup{
 
        set_transient('tasks_alteradas', $lista);
        set_transient('status_altera_missao', 'vai conferir data');
-        
-       // deletar as missões das frentes que ainda nao começaram
+
+
+       // Atualizar dados das frentes que ainda não começaram
        if( $data_inicio > $hoje_obj){
         set_transient('status_altera_missao', 'frente não comecou');
-        
+        //pega o status das frentes que ainda não começaram, se estiver marcada comom concluída ele deleta as missões
+        if($status_da_frente == "Concluído"){
+            //Deletar a lista [IMPLEMENTAR]
+            $lista_deletada = self::$cliente->request('DELETE','list/'.$list_id.'');
+        }else{
+            //Deletar a lista e criar uma nova usando o clickMissoesGestao()
+            //$this->clickCriaList($nome_frente, $data_inicio, $data_fim, $assignee, $horas, $folder_id)
+            $this->clickMissoesGestao($id_projeto_wordpress,$list_id, $data_inicio,$data_fim,$guardiao[$list_id]['guardiao_metodo_novo']);
+        }
         // Não fazer nada com as missões das frentes que já acabaram
        }elseif($data_fim < $hoje_obj ){
         set_transient('status_altera_missao', 'frente já acabou');
@@ -371,11 +392,10 @@ class clickup{
                );
                if($tag_acompanhamento){
                    set_transient('status_altera_missao', 'achou missão de acompanhamento');
-                   //Ver se é de método, remover o atual e adicionar o novo gestor
+                   //Não posso trocar o método senão eu desconsidero as horas já realizadas
                    $task_atualizada = self::$cliente->request('PUT','task/'.$task->id.'',
                     array(
                         'json' => array(
-                            'assignees' => ['add' => [$assignee]],
                             'due_date' => $data_fim_ts.'000',
                             'due_date_time' => false,
                         )

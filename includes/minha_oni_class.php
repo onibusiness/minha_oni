@@ -68,6 +68,9 @@ class minha_oni{
         require_once($this->diretorio_tema.'/includes/processamento/processa_metodos_class.php');
         require_once($this->diretorio_tema.'/includes/processamento/processa_feedbacks_class.php');
         
+        //Classes de automações
+        require_once($this->diretorio_tema.'/includes/automacoes/cria_projetos_class.php');
+
 
         //acrescentando o menu
         add_action('init', array($this,'adicionaMenu')); 
@@ -292,28 +295,29 @@ class minha_oni{
 
 
     public function escutaCadastroProjeto( $request ) {
-        set_transient('request', $request);
+        //Função que processa o projeto cadastrado e devolve um array com o DB entry do projeto e das frentes
         $projeto_cadastrado = pipefy::escutaCadastroProjeto($request);
         set_transient('projeto_cadastrado', $projeto_cadastrado);
+        
         if($projeto_cadastrado){
-
+            
+            $id_projeto_cadastrado = $projeto_cadastrado['projeto_cadastrado'][0];
+            //Pegando os database records das frentes cadastradas
             $table_records_frentes = pipefy::puxaDaTabela($projeto_cadastrado['frentes_cadastradas']);
-            set_transient('table_records_frentes', $table_records_frentes);
             //pega os dados do card do projeto alterado
             $table_record_projeto = pipefy::puxaDaTabela($projeto_cadastrado['projeto_cadastrado']);
             //Busca a key dos record fields e retorna o nome do projeto
             $key_nome_projeto = array_search('Nome do projeto', array_column($table_record_projeto[0]['data']['table_record']['record_fields'], 'name'));
             $nome_projeto_cadastrado = $table_record_projeto[0]['data']['table_record']['record_fields'][$key_nome_projeto]['value'];
-            set_transient('table_record_projeto',$table_record_projeto);
     
             //Fazendo o cadastro das integrações e projetos
-            processa_projetos::cadastraProjeto($projeto_cadastrado['projeto_cadastrado'][0],$nome_projeto_cadastrado);
+            processa_projetos::cadastraProjeto($id_projeto_cadastrado,$nome_projeto_cadastrado);
         
             //Fazendo o cadastro das frentes 
-            $frentes_cadastradas = processa_frentes::cadastraFrente($table_records_frentes,$projeto_cadastrado['projeto_cadastrado'][0]);
+            $frentes_cadastradas = processa_frentes::cadastraFrente($table_records_frentes,$id_projeto_cadastrado);
     
             //Cadastrando os guadiões de visão e de time
-            processa_papeis::cadastraPapelVisaoETime($table_record_projeto,$projeto_cadastrado['projeto_cadastrado'][0]);
+            processa_papeis::cadastraPapelVisaoETime($table_record_projeto,$id_projeto_cadastrado);
 
             //Cadastrando o guardião de método
             processa_papeis::cadastraPapelMetodo($table_records_frentes);
@@ -325,6 +329,7 @@ class minha_oni{
                 sleep(60);
             }       
             set_transient('status_criacao', 'criou missões de frentes cadastrados');
+            
         }
     }
 
@@ -355,18 +360,24 @@ class minha_oni{
         //Alterando as frentes cadastradas
         $frentes_alteradas = processa_frentes::alteraFrente($table_records_frentes_alteradas,$id_table_projeto);
 
+        //Conferindo os papeis alterados
+        set_transient('frente_e_guardioes', 'pre_funcao');
+        $frente_e_guardioes = processa_papeis::confereGuardioes($table_record_projeto,$table_records_frentes_alteradas,$id_table_projeto);
+        set_transient('frente_e_guardioes', $frente_e_guardioes);
+        
         //Alterando os papéis de visão de time caso o projeto tenha que ser implementado
         processa_papeis::alteraPapelVisaoETime($table_record_projeto,$id_table_projeto);
 
         //Alteando os papéis de método
         processa_papeis::alteraPapelMetodo($table_records_frentes_alteradas);
-
-        set_transient('status_altera_missao', $frentes_alteradas);
+        
+        set_transient('frentes_alteradas', $frentes_alteradas);
         //Alterar as missões de gestão - [IMPLEMENTAR AINDA]
         foreach($frentes_alteradas as $frentes_alterada){
             set_transient('status_altera_missao', 'entrou no foreach');
-            clickup::alteraClickMissoesGestao($frentes_alterada[0],$frentes_alterada[1], $frentes_alterada[2],$frentes_alterada[3], $frentes_alterada[4]);
+            clickup::alteraClickMissoesGestao($frentes_alterada[0],$frentes_alterada[1], $frentes_alterada[2],$frentes_alterada[3], $frentes_alterada[4], $frente_e_guardioes);
         }  
+        
     }
 
 

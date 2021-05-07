@@ -35,8 +35,6 @@ class processa_projetos{
     
     /**
     * Cadastra a projeto vindo o pipefy
-    *
-    * @param Array com as projeto
     *     
     */
     public function cadastraProjeto($id_projeto_pipefy,$nome_projeto){
@@ -60,7 +58,7 @@ class processa_projetos{
             $id_projeto_wordpress = $projeto_post_id;
             update_field('projeto', $nome_projeto, $projeto_post_id);
             update_field('status', 'ativo', $projeto_post_id);
-            update_field('scpre', '1', $projeto_post_id);
+            update_field('score', '1', $projeto_post_id);
             update_post_meta( $projeto_post_id, 'status', 'ativo' );
             wp_reset_postdata();
             

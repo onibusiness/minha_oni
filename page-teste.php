@@ -5,30 +5,19 @@
 <?php get_header(); ?>
 
 <?php
-$frentes_cadastradas = get_transient('frentes_cadastradas');
-//Criar missoes de gestao
-foreach($frentes_cadastradas as $frentes_cadastrada){
-    clickup::clickMissoesGestao($frentes_cadastrada[0],$frentes_cadastrada[1], $frentes_cadastrada[2],$frentes_cadastrada[3], $frentes_cadastrada[4]);
-}       
-
-$args = array(
-    'posts_per_page' => -1,
-    'no_found_rows' => true,
-    'post_type'		=> 'papeis',
-    'post_status'   => 'publish',
-
-);
-$the_query = new WP_Query( $args );
-if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
-
-    $fields = get_fields();
-    echo "<pre>";
-    var_dump($fields);
-    echo "</pre>";
-
-endwhile;endif;
-
-
+$id_guardiao_metodo = 7;
+$dados_guardiao_metodo = get_field('informacoes_gerais', 'user_'.$id_guardiao_metodo);
+$id_clickup_guardiao_metodo = get_field('id_do_clickup', 'user_'.$id_guardiao_metodo);
+echo "<pre>";
+var_dump($id_clickup_guardiao_metodo);
+echo "</pre>";
+/*
+$projeto_cadastrado = get_transient('projeto_cadastrado');
+$cadastra_projetos = new cadastra_projetos($projeto_cadastrado);
+echo "<pre>";
+var_dump($cadastra_projetos);
+echo "</pre>";
+*/
 
 
 /*

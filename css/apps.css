@@ -462,10 +462,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "Aguardando";
 }
 
-.sim{
+.sim:not(.sem-label){
 	color: white;
 	background-color: var(--green);
 	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.8em;
+}
+.sim.sem-label{
+	color: var(--green);
 	border-radius: 1em;
 	font-size: 0.8em;
 }
@@ -479,10 +484,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 	content: "Sim";
 }
 
-.nao{
+.nao:not(.sem-label){
 	color: white;
 	background-color: var(--orange);
 	padding: 0.2em 1em ;
+	border-radius: 1em;
+	font-size: 0.8em;
+}
+.nao.sem-label{
+	color: var(--orange);
 	border-radius: 1em;
 	font-size: 0.8em;
 }
@@ -524,14 +534,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--petro)'
 }
 
 .notifica{
-	color: white;
+	color: white !important;
 	background-color: var(--onipink);
 	padding: 0.2em 0.7em ;
 	border-radius: 1em;
 	font-size: 0.7em;
 	margin-left: 0.5em;
 }
-
+.notifica:hover{
+	color: white !important;
+}
 
 .vermais.collapsed::before{
 	font-family: "Font Awesome 5 Free"; 

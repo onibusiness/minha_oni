@@ -165,7 +165,7 @@ class processa_frentes{
                 'meta_value'	=> $id_da_frente_pipefy
             );
             $the_query = new WP_Query( $args );
-            //Se tiver a frente ele altera em outra função
+            //Se tiver a frente ele altera
             if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
                 $frente_id_clickup = get_field('id_da_frente_clickup');
                 $post_id = get_the_ID();
@@ -213,7 +213,7 @@ class processa_frentes{
                 }
             endif; 
             $frentes_alteradas[] = array(
-                $id_projeto_wordpress, $frente_id_clickup, $data_de_inicio_obj, $data_de_fim_obj, $guardiao
+                $id_projeto_wordpress, $frente_id_clickup, $data_de_inicio_obj, $data_de_fim_obj,$status_da_frente
            );
             wp_reset_query();
         }

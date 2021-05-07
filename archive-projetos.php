@@ -38,13 +38,13 @@ $processa_projetos = new processa_projetos;
                             wp_reset_postdata();
                             ?>
                             <div class="">
-                                <p class="escala-2 pl-3 mt-1 mb-1 sem-label  <?php echo $fields['status'] ? "sim": "nao"; ?>">
+                                <p class="escala-2 mt-1 mb-1 sem-label  <?php echo $fields['status'] ? "sim": "nao"; ?>">
                                     <span > Ativo </span> 
                                 </p>
-                                <p class="escala-2 pl-3 mt-1 mb-1 sem-label   <?php echo $fields_integracoes['projeto_id_pipefy'] ? "sim": "nao"; ?>">
+                                <p class="escala-2 mt-1 mb-1 sem-label   <?php echo $fields_integracoes['projeto_id_pipefy'] ? "sim": "nao"; ?>">
                                     <span > Pipefy </span> 
                                 </p>
-                                <p class="escala-2 pl-3 mt-1 mb-1 sem-label   <?php echo $fields_integracoes['projeto_id_clickup'] ? "sim": "nao"; ?>">
+                                <p class="escala-2 mt-1 mb-1 sem-label   <?php echo $fields_integracoes['projeto_id_clickup'] ? "sim": "nao"; ?>">
                                     <span > Clickup </span> 
                                 </p>
                             </div>
@@ -136,7 +136,17 @@ $processa_projetos = new processa_projetos;
                             <div class="col-8">
 
                                 <p class="escala0 bold petro mb-0"><?php echo $fields_frentes['nome_da_frente'];?> - <?php echo $fields_frentes['horas'];?>h</p>
-                                <p class="escala-1 petro "><?php echo $fields_frentes['data_de_inicio'];?> a <?php echo $fields_frentes['data_de_fim'];?></p>
+                                <p class="escala-1 petro mb-0"><?php echo $fields_frentes['data_de_inicio'];?> a <?php echo $fields_frentes['data_de_fim'];?></p>
+                                <div class='row'>
+                                    <p class="col-5 escala-2 pl-3 mt-1 mb-1 sem-label   <?php echo $fields_frentes['id_da_frente_pipefy'] ? "sim": "nao"; ?>">
+                                        <span > Pipefy </span> 
+                                    </p>
+                                    <p class="col-5  escala-2 pl-3 mt-1 mb-1 sem-label   <?php echo $fields_frentes['id_da_frente_clickup'] ? "sim": "nao"; ?>">
+                                        <span > Clickup </span> 
+                                    </p>
+                                
+                                </div>
+                            
                             </div>
                             <?php
                             //Colocar aqui os guardiões de visão e time do projeto
@@ -172,6 +182,35 @@ $processa_projetos = new processa_projetos;
                             </div>
                             
                         </div>
+                        <?php 
+                               $args = array(
+                                'numberposts'	=> -1,
+                                'post_type'		=> 'feedbacks_cliente',
+                                'post_status'   => 'publish',
+                                'meta_query' => array(
+                                    'relation' => 'AND',
+                                    array(
+                                        'key' => 'frente',
+                                        'value' => $id_frente,
+                                        'compare' => '='
+                                    )
+                                )
+                            );
+                            $query_feedbacks = new WP_Query( $args );
+                            if ( !$query_feedbacks->have_posts() ) :
+                                
+                                $data_de_fim_obj = DateTimeImmutable::createFromFormat('d/m/Y', $fields_frentes['data_de_fim']);
+                                $hoje_obj =  new DateTime('NOW');
+                                if($data_de_fim_obj < $hoje_obj ){
+                                ?>
+                                    <p id="link" onclick="copyDivToClipboard()"  class=" escala-1 bold onipink my-2" link_feedback="<?php echo site_url()."/feedback/?projeto=".$id_do_projeto."&frente=".$id_frente ?>">Hora de pegar feedback do cliente, clique nesse texto para copiar o link.</p>
+                        
+                                                                    
+                                <?php
+                                }
+                            endif;
+                            wp_reset_postdata();
+                        ?>
                         <hr>
                     <?php
                     endwhile;endif;
@@ -187,6 +226,21 @@ $processa_projetos = new processa_projetos;
     endwhile;
     ?>
 </div>
+<script>
+      
+        function copyDivToClipboard() {
+            var range = document.createRange();
+            range.selectNode(document.getElementById("link"));
+            var link = document.getElementById("link").getAttribute('link_feedback');
+            var textArea = document.createElement("textarea");
+            textArea.value = link;
+            document.body.appendChild(textArea)
+            textArea.select();
+            document.execCommand("copy");
+            document.getElementById('link').innerHTML = "Copiado!";
+            document.body.removeChild(textArea);
+        }
+    </script>
 <?php
     get_footer();
 ?>

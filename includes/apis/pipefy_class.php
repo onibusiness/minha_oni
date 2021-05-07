@@ -22,9 +22,6 @@ class pipefy{
       $headers = ['Content-Type: application/json'];
       $token = self::$chave_pipefy;
       $headers[] = "Authorization: Bearer $token";
-      echo "<pre>";
-      var_dump($headers);
-      echo "</pre>";
       $endpoint = 'https://api.pipefy.com/graphql';
   
 

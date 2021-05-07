@@ -12,7 +12,7 @@
         </p>
         <p>
             <label for="h_planejada">Horas</label> <br class="clear">
-            <input type='number' name='h_planejada'  class="regular-text" />
+            <input type='number' step=".1" name='h_planejada'  class="regular-text" />
         </p>
         <p>
             <input type="submit" value="Criar missões!" class="button button-primary" />

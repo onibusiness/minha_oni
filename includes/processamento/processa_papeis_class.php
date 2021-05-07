@@ -293,7 +293,11 @@ class processa_papeis{
                     'value' => $id_guardiao_visao,
                     'compare' => '='
                 ),
-        
+                array(
+                    'key' => 'papel',
+                    'value' => 'guardiao_visao',
+                    'compare' => '='
+                ),
                 array(
                     'key' => 'projeto',
                     'value' => $id_projeto_wordpress,
@@ -326,7 +330,11 @@ class processa_papeis{
                     'value' => $id_guardiao_time,
                     'compare' => '='
                 ),
-        
+                array(
+                    'key' => 'papel',
+                    'value' => 'guardiao_time',
+                    'compare' => '='
+                ),
                 array(
                     'key' => 'projeto',
                     'value' => $id_projeto_wordpress,
@@ -435,6 +443,11 @@ class processa_papeis{
                     array(
                         'key' => 'oni',
                         'value' => $id_guardiao_metodo,
+                        'compare' => '='
+                    ),
+                    array(
+                        'key' => 'papel',
+                        'value' => 'guardiao_metodo',
                         'compare' => '='
                     ),
             
@@ -561,6 +574,11 @@ class processa_papeis{
                         'key' => 'frente',
                         'value' => $id_frente_wordpress,
                         'compare' => '='
+                    ),
+                    array(
+                        'key' => 'papel',
+                        'value' => 'guardiao_metodo',
+                        'compare' => '='
                     )
                 )
             );
@@ -606,7 +624,150 @@ class processa_papeis{
             endif;
             wp_reset_postdata();
             //Criei esse array para conseguir puxar na atualização das missões de gestão e substituir o assignee antigo pelo novo.
-            $frente_e_guardioes_metodo[$id_frente_wordpress] = $guardiao_antigo;
+            return $frente_e_guardioes_metodo[$id_frente_wordpress] = $guardiao_antigo;
+        }
+         
+    }
+
+     /**
+    * Confere os guardiões antigos e novos
+    *
+    * @param Array com as frentes, guardiões antigos e novos
+    *     
+    */
+    public function confereGuardioes($projeto,$frentes,$id_projeto){
+        set_transient('frente_e_guardioes', 'abriu funcao');
+        $frente_e_guardioes = array();
+        //Busca a key dos record fields e retorna o guardião de visão
+        $key_guardiao_visao = array_search('Guardião de visão', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $guardiao_visao = $projeto[0]['data']['table_record']['record_fields'][$key_guardiao_visao]['value'];
+        //Pegando o usuário do guardiao de visao novo
+        if($guardiao_visao){
+            $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_visao,2,-2) ) );
+            $authors = $user_query->get_results();
+            foreach ($authors as $author)
+            {   
+                $obj_guardiao_visao = $author; 
+                $informacoes_oni = get_field('informacoes_gerais', 'user_'.$obj_guardiao_visao->ID);
+                $guardiao_visao_novo = $informacoes_oni['id_do_clickup'];
+            }
+            
+        }
+        wp_reset_query();
+        
+        //Busca a key dos record fields e retorna o guardião de time
+        $key_guardiao_time = array_search('Guardião de time', array_column($projeto[0]['data']['table_record']['record_fields'], 'name'));
+        $guardiao_time = $projeto[0]['data']['table_record']['record_fields'][$key_guardiao_time]['value'];
+        //Pegando o usuário do guardião de time novo
+        if($guardiao_time){
+            $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_time,2,-2) ) );
+            $authors = $user_query->get_results();
+            foreach ($authors as $author)
+            {   
+                $obj_guardiao_time = $author;
+                $informacoes_oni = get_field('informacoes_gerais', 'user_'.$obj_guardiao_time->ID);
+                $guardiao_time_novo = $informacoes_oni['id_do_clickup'];
+            }
+            
+        }
+        wp_reset_query();
+
+        // Puxando o id projeto no wordpress 
+        $args = array(
+            'posts_per_page' => -1,
+            'no_found_rows' => true,
+            'post_type'		=> 'integracoes',
+            'post_status'   => 'publish',
+            'meta_key'		=> 'projeto_id_pipefy',
+            'meta_value'	=> $id_projeto
+        );
+        $the_query = new WP_Query( $args );
+        if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+            $id_projeto_wordpress = get_field('projeto_id_wordpress');
+        endwhile;endif; 
+        wp_reset_query();
+       
+        foreach($frentes as $frente){
+            //Busca a key dos record fields e retorna o guardiao de método
+            $key_guardiao_metodo = array_search('Guardião de método', array_column($frente['data']['table_record']['record_fields'], 'name'));
+            $guardiao_metodo =   $frente['data']['table_record']['record_fields'][$key_guardiao_metodo]['value'];
+            //Pegando o usuario do guardião de metodo novo
+            if($guardiao_metodo){
+                $user_query = new WP_User_Query( array( 'search' =>  substr($guardiao_metodo,2,-2) ) );
+                $authors = $user_query->get_results();
+                foreach ($authors as $author)
+                {   
+                    $obj_guardiao_metodo = $author;
+                    $informacoes_oni = get_field('informacoes_gerais', 'user_'.$obj_guardiao_metodo->ID);
+                    $guardiao_metodo_novo = $informacoes_oni['id_do_clickup'];
+                }
+                
+            }
+
+
+            //Pega o ID da frente
+            $id_da_frente_pipefy =  $frente['data']['table_record']['id'];
+            // Puxando o id da frente no wordpress 
+                $args = array(
+                    'posts_per_page' => -1,
+                    'no_found_rows' => true,
+                    'post_type'		=> 'frentes',
+                    'post_status'   => 'publish',
+                    'meta_key'		=> 'id_da_frente_pipefy',
+                    'meta_value'	=> $id_da_frente_pipefy
+                );
+                $the_query = new WP_Query( $args );
+                if ( $the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                    $id_frente_wordpress = get_the_ID();
+                    
+            endwhile;endif; 
+            wp_reset_postdata();
+           
+            set_transient('id_projeto_wordpress' , $id_projeto_wordpress);
+
+           //Fazendo uma query de papés já existentes
+            $args = array(
+                'numberposts'	=> -1,
+                'post_type'		=> 'papeis',
+                'post_status'   => 'publish',
+                'meta_query' => array(
+                    'relation' => 'AND',
+                    array(
+                        'key' => 'projeto',
+                        'value' => $id_projeto_wordpress->ID,
+                        'compare' => '='
+                    )
+                )
+            );
+            $the_query = new WP_Query( $args );
+            if ($the_query->have_posts() ) : while ( $the_query->have_posts() ) : $the_query->the_post();
+                $papel = get_field('papel');
+                $oni = get_field('field_5fa2b397170ec');
+                $informacoes_oni = get_field('informacoes_gerais', 'user_'.$oni['ID']);
+                if($papel == 'guardiao_visao'){
+                    $guardiao_visao_antigo = $informacoes_oni['id_do_clickup'];
+                }
+                if($papel == 'guardiao_time'){
+                    $guardiao_time_antigo = $informacoes_oni['id_do_clickup'];
+                }
+                if($papel == 'guardiao_metodo'){
+                    $guardiao_metodo_antigo = $informacoes_oni['id_do_clickup'];
+                }
+                
+             
+            endwhile; endif;
+            wp_reset_postdata();
+            //Criei esse array para conseguir puxar na atualização das missões de gestão e substituir o assignee antigo pelo novo.
+            $frente_e_guardioes[$id_frente_wordpress] = 
+                array(
+                    'guardiao_visao_antigo' => $guardiao_visao_antigo,
+                    'guardiao_time_antigo' => $guardiao_time_antigo,
+                    'guardiao_metodo_antigo' => $guardiao_metodo_antigo,
+                    'guardiao_visao_novo' => $guardiao_visao_novo,
+                    'guardiao_time_novo' => $guardiao_time_novo,
+                    'guardiao_metodo_novo' => $guardiao_metodo_novo
+                );
+            return $frente_e_guardioes;
         }
          
     }
