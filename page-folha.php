@@ -192,21 +192,26 @@ Template Name: Folha
                             <p class="escala0 mb-0"><span class="bold escala1"><?php echo $folha['onions_papeis'];?></span> Onions de papeis </p>
                             <?php
                             foreach($folha['guardas'] as $papel){
+
+                                if($papel["com_rodinhas"] == false){
                                 ?>
                                 <p class="escala-2 mb-0 grey"> <?php echo "[".$papel['papel']."] ".$papel['projeto']->post_title;?> </p>
                             <?php
+                                }
                             }
                             ?>
-
+                            <p class="escala0 mb-0 onipink"><span class="bold escala1"><?php echo $folha['onions_de_ferias'];?></span> Onions descontados </p>
                             <p class="escala3 bold mb-0"><span class="onipink">Ø </span><?php echo $folha['onions'];?></p>
                             <p class="escala0 bold mb-2">Onions</p>
                         </div>
                         <div class="col-12 col-md-6">
+                            <p class="escala1 bold mb-0"><span class="onipink">R$ </span><?php echo number_format($folha['onions_lentes']*$processa_folha->valor_do_onion,2,",",".");?></p>
+                            <p class="escala0 bold mb-2">Lentes  </p>
                             <p class="escala1 bold mb-0"><span class="onipink">R$ </span><?php echo number_format(($folha['onions_competencia']+$folha['gap_trainee'])*$processa_folha->valor_do_onion,2,",",".");?></p>
                             <?php
                             if($folha['gap_trainee'] > 0){
                                     ?>
-                                    <p class="escala-2 mb-0 onipink">Considerando 20 onions </p>
+                                    <p class="escala-2 mb-0 onipink">Considerando 20 onions (subtraídos os onions de lente) </p>
                                 <?php
                                 
                             }

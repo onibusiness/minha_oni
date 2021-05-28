@@ -40,7 +40,8 @@ class cpt{
             'has_archive'       => true,
             'menu_position'     => 20,
             'show_in_admin_bar' => true,
-            'menu_icon'         => 'dashicons-format-status'
+            'menu_icon'         => 'dashicons-format-status',
+            'show_in_rest' => true
         );
         
         register_post_type($post_slug, $args);      

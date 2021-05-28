@@ -5,19 +5,17 @@
 <?php get_header(); ?>
 
 <?php
+
+ 
+/*
 $id_guardiao_metodo = 7;
 $dados_guardiao_metodo = get_field('informacoes_gerais', 'user_'.$id_guardiao_metodo);
-$id_clickup_guardiao_metodo = get_field('id_do_clickup', 'user_'.$id_guardiao_metodo);
+$id_clickup_guardiao_metodo = $dados_guardiao_metodo['id_do_clickup'];
 echo "<pre>";
 var_dump($id_clickup_guardiao_metodo);
 echo "</pre>";
-/*
-$projeto_cadastrado = get_transient('projeto_cadastrado');
-$cadastra_projetos = new cadastra_projetos($projeto_cadastrado);
-echo "<pre>";
-var_dump($cadastra_projetos);
-echo "</pre>";
 */
+
 
 
 /*

@@ -70,6 +70,7 @@ class minha_oni{
         
         //Classes de automações
         require_once($this->diretorio_tema.'/includes/automacoes/cria_projetos_class.php');
+        require_once($this->diretorio_tema.'/includes/automacoes/missao_nao_preenchida_class.php');
 
 
         //acrescentando o menu

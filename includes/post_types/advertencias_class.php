@@ -88,6 +88,30 @@ class advertencias{
                         'new_lines' => '',
                         'acfe_textarea_code' => 0,
                     ),
+                    array(
+                        'key' => 'field_60afd4e32fbee',
+                        'label' => 'Desconta onion',
+                        'name' => 'desconta_onion',
+                        'type' => 'radio',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'choices' => array(
+                            'sim' => 'sim',
+                            'nao' => 'nao',
+                        ),
+                        'allow_null' => 0,
+                        'other_choice' => 0,
+                        'default_value' => '',
+                        'layout' => 'vertical',
+                        'return_format' => 'value',
+                        'save_other_choice' => 0,
+                    ),
                 ),
                 'location' => array(
                     array(

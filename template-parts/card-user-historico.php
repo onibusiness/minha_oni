@@ -39,6 +39,9 @@
                                     <!-- Card de remuneração  -->
                                     <div class="row">
                                         <div class="col-12">
+                                        <p class="escala3 bold grey mb-0"> <span class="onipink">Ø</span> <?php echo 0+$historico_pagamentos[$mes['classe']]['onions_lentes'];?></p>
+                                            <p class="escala0 bold mb-1 pb-1">Onions de lentes</p>
+
                                             <p class="escala3 bold grey mb-0"> <span class="onipink">Ø</span> <?php echo $historico_pagamentos[$mes['classe']]['onions_competencia'];?></p>
                                             <p class="escala0 bold mb-1 pb-1">Onions de competencia</p>
 
@@ -48,7 +51,7 @@
                                             <p class="escala3 bold mb-0"> <span class="onipink">Ø</span> <?php echo $historico_pagamentos[$mes['classe']]['onions_competencia']+$historico_pagamentos[$mes['classe']]['onions_papeis'];?></p>
                                             <p class="escala0 bold mb-1 pb-1">Total de onions</p>
 
-                                            <p class="escala3 bold mb-0"> <span class="onipink">R$</span> <?php echo $historico_pagamentos[$mes['classe']]['remuneracao'];?></p>
+                                            <p class="escala3 bold mb-0"> <span class="onipink">R$</span> <?php echo round($historico_pagamentos[$mes['classe']]['remuneracao'],2);?></p>
                                             <p class="escala0 bold mb-4 pb-4">Valor da NF-e</p>
 
                                         

@@ -54,6 +54,13 @@ class clickup{
         return $folders;
     }
 
+    public function clickupPegaTask($id){
+        $task = self::$cliente->request('GET','task/'.$id.'');
+        $task = $task->getBody();
+        $task = json_decode($task);
+        return $task;
+    }
+
     public function clickCriaFolder($nome_projeto){
         $folder_criado = self::$cliente->request('POST','space/'.self::$space_id.'/folder',
             array(

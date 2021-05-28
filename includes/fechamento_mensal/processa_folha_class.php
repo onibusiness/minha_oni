@@ -495,7 +495,10 @@ class processa_folha{
                 //somando onions de papel do oni e do sistema
                 foreach($oni['guardas'] as $guarda){
                     //Stags e guardas com rodinhas não contam
+           
+                  
                     if($guarda['com_rodinhas'] == false && $oni['funcao'] !== 'um_stag'){
+
                         $this->onions_papeis += $equivalencia_guarda*$guarda['percentual'];
                         $this->onis[$key]['onions_papeis'] += $equivalencia_guarda*$guarda['percentual'];
                     }

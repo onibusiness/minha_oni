@@ -410,7 +410,8 @@ class cadastra_projetos{
                 array(
                     'form_params' => array(
                         'name' => $frente['nome_da_frente'],
-                        'description' => $frente['horas']."h",
+                        'content' => "# ".$frente['horas']."h #",
+                        'description' => "# ".$frente['horas']."h #",
                         'start_date' => $frente['data_de_inicio_ts'].'000',
                         'start_date_time' => false,
                         'due_date' => $frente['data_de_fim_ts'].'000',

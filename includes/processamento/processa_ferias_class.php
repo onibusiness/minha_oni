@@ -68,7 +68,10 @@ class processa_ferias{
         $args = array(  
             'post_type' => 'ferias' ,
             'post_status' => array('publish'),
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
+            'meta_key'			=> 'primeiro_dia_fora',
+            'orderby'			=> 'meta_value',
+            'order'				=> 'ASC'
         );
         $ferias = new WP_Query( $args ); 
         while ( $ferias->have_posts() ) : $ferias->the_post(); 
