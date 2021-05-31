@@ -15,6 +15,9 @@ class evidencias{
     public function __construct(){
         add_action('init', array($this,'initCPT'));
         add_action('init', array($this,'adicionarCamposACF')); 
+        add_filter('manage_'.$this->post_slug.'_posts_columns', array($this,'criarColunasAdmin')); 
+        add_filter('manage_edit-'.$this->post_slug.'_sortable_columns', array($this,'criarColunasAdmin')); 
+        add_action('manage_'.$this->post_slug.'_posts_custom_column', array($this,'exibirColunasAdmin'),10,2); 
         
     }
     public function initCPT(){
@@ -397,6 +400,41 @@ class evidencias{
             ));
             
             endif;
+    }
+
+    //Mostrando os campos como colunas na lista do admin
+    public function criarColunasAdmin($columns){
+        return array_merge ( $columns, array ( 
+            'oni' => __ ( 'Oni' ),
+            'lente_ou_competencia' => __ ( '' ),
+            'competencia' => __ ( 'Competência' ),
+            'parecer' => __ ( 'Parecer' )
+
+            ) );
+    }
+    public function exibirColunasAdmin( $column, $post_id ) {
+        switch ( $column ) {
+            case 'oni':
+            $oni = get_field('oni',$post_id);
+            echo $oni->data->display_name;
+    
+            break;
+            case 'lente_ou_competencia':
+                $lente_ou_competencia = get_field('lente_ou_competencia',$post_id);
+                echo $lente_ou_competencia;
+        
+            break;
+            case 'competencia':
+                $competencia = get_field('competencia',$post_id);
+                echo $competencia->post_title;
+        
+            break;
+            case 'parecer':
+                $parecer = get_field('parecer',$post_id);
+                echo $parecer;
+        
+            break;
+        }
     }
 
  

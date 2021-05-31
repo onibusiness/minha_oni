@@ -16,6 +16,9 @@ class ferias{
     public function __construct(){
         add_action('init', array($this,'initCPT'));
         add_action('init', array($this,'adicionarCamposACF')); 
+        add_filter('manage_'.$this->post_slug.'_posts_columns', array($this,'criarColunasAdmin')); 
+        add_filter('manage_edit-'.$this->post_slug.'_sortable_columns', array($this,'criarColunasAdmin')); 
+        add_action('manage_'.$this->post_slug.'_posts_custom_column', array($this,'exibirColunasAdmin'),10,2); 
     }
     public function initCPT(){
         cpt::adicionarCustomPostType($this->nome_singular,$this->nome_plural, $this->post_slug);
@@ -160,6 +163,34 @@ class ferias{
             ));
             
             endif;
+    }
+    //Mostrando os campos como colunas na lista do admin
+    public function criarColunasAdmin($columns){
+        return array_merge ( $columns, array ( 
+            'oni' => __ ( 'Oni' ),
+            'primeiro_dia_fora' => __ ( 'Primeiro dia' ),
+            'ultimo_dia_fora' => __ ( 'Último dia' )
+
+            ) );
+    }
+    public function exibirColunasAdmin( $column, $post_id ) {
+        switch ( $column ) {
+            case 'oni':
+            $oni = get_field('oni',$post_id);
+            echo $oni->data->display_name;
+    
+            break;
+            case 'primeiro_dia_fora':
+                $primeiro_dia_fora = get_field('primeiro_dia_fora',$post_id);
+                echo $primeiro_dia_fora;
+        
+            break;
+            case 'ultimo_dia_fora':
+                $ultimo_dia_fora = get_field('ultimo_dia_fora',$post_id);
+                echo $ultimo_dia_fora;
+        
+            break;
+        }
     }
 }
 

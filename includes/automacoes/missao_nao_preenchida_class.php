@@ -48,6 +48,7 @@ class missao_nao_preenchida{
         "Você não preencheu uma missão no clickup depois da deadline ter chegado. Missão: ".$this->task_click->name.". Projeto: ".$this->task_click->project->name.". Link da missão: ".$this->link_da_task;
         update_field('explicacao', $explicacao, $this->id_advertencia); 
         //Pegando os usuários e registrando o id e email do oni
+        $user_encontrado = false;
         $authors = get_users();
         foreach ($authors as $author)
         {      
@@ -56,6 +57,7 @@ class missao_nao_preenchida{
             if($id_clickup == $this->task_click->assignees[0]->id){
                 $this->oni_id = $author->ID;
                 $this->oni_email = $author->user_email;
+                $user_encontrado = true;
             }
         }
         $data = get_the_date('Ymd',$this->id_advertencia);
@@ -65,16 +67,18 @@ class missao_nao_preenchida{
         update_field('field_5fb3cc7608aad', $data, $this->id_advertencia); 
 
         /* PUXAR O DISPARO DE EMAIL A PARTIR DESSA OCORRÊNCIA AQUI */
-        $to = $this->oni_email;
-        $subject = 'Ei, você podia ter perdido um onion';
-        ob_start();
-        include(get_template_directory().'/includes/email/template_email_bot.php');
-        $body = ob_get_contents();
-        ob_end_clean();
-        $headers = array('Content-Type: text/html; charset=UTF-8','From: minha.oni <minha@oni.com.br>');
-        
-        wp_mail( $to, $subject, $body, $headers );
+        if($user_encontrado == true){
+            $to = $this->oni_email;
+            $subject = 'Ei, você podia ter perdido um onion';
+            ob_start();
+            include(get_template_directory().'/includes/email/template_email_bot.php');
+            $body = ob_get_contents();
+            ob_end_clean();
+            $headers = array('Content-Type: text/html; charset=UTF-8','From: minha.oni <minha@oni.com.br>');
+            
+            wp_mail( $to, $subject, $body, $headers );
+        }
     }
-}
+} 
  
 $missao_nao_preenchida = new missao_nao_preenchida;

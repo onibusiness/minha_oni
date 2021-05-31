@@ -15,6 +15,9 @@ class papeis{
     public function __construct(){
         add_action('init', array($this,'initCPT'));
         add_action('init', array($this,'adicionarCamposACF')); 
+        add_filter('manage_'.$this->post_slug.'_posts_columns', array($this,'criarColunasAdmin')); 
+        add_filter('manage_edit-'.$this->post_slug.'_sortable_columns', array($this,'criarColunasAdmin')); 
+        add_action('manage_'.$this->post_slug.'_posts_custom_column', array($this,'exibirColunasAdmin'),10,2); 
     }
     public function initCPT(){
         cpt::adicionarCustomPostType($this->nome_singular,$this->nome_plural, $this->post_slug);
@@ -296,6 +299,53 @@ class papeis{
             
         endif;
     }
+        //Mostrando os campos como colunas na lista do admin
+        public function criarColunasAdmin($columns){
+            return array_merge ( $columns, array ( 
+                'oni' => __ ( 'Oni' ),
+                'projeto' => __ ( 'Projeto' ),
+                'papel' => __ ( 'Papel' ),
+                'data_de_inicio' => __ ( 'Início' ),
+                'data_de_terminio' => __ ( 'Fim' ),
+                'com_rodinhas' => __ ( 'Rodinhas?' ),
+    
+                ) );
+        }
+        public function exibirColunasAdmin( $column, $post_id ) {
+            switch ( $column ) {
+                case 'oni':
+                $oni = get_field('oni',$post_id);
+                echo $oni['display_name'];
+        
+                break;
+                case 'projeto':
+                    $projeto = get_field('projeto',$post_id);
+                    echo $projeto->post_title;
+            
+                break;
+                case 'papel':
+                    $papel = get_field('papel',$post_id);
+                    echo $papel;
+            
+                break;
+                case 'data_de_inicio':
+                    $data_de_inicio = get_field('data_de_inicio',$post_id);
+                    echo $data_de_inicio;
+            
+                break;
+                case 'data_de_terminio':
+                    $data_de_terminio = get_field('data_de_terminio',$post_id);
+                    echo $data_de_terminio;
+            
+                break;
+                case 'com_rodinhas':
+                    $com_rodinhas = get_field('com_rodinhas',$post_id);
+                    
+                    echo ($com_rodinhas == 1)? "Sim ":'' ;
+            
+                break;
+            }
+        }
 }
 
 //Criando o objeto

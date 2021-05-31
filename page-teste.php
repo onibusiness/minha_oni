@@ -13,11 +13,24 @@ $dados_guardiao_metodo = get_field('informacoes_gerais', 'user_'.$id_guardiao_me
 $id_clickup_guardiao_metodo = $dados_guardiao_metodo['id_do_clickup'];
 echo "<pre>";
 var_dump($id_clickup_guardiao_metodo);
-echo "</pre>";
+echo "</pre>"; 
 */
 
+echo "oia";
+$my_posts = new WP_Query( array( 'p' => 6787, 'post_type' => 'advertencias' ) );
 
+if($my_posts->have_posts()) : 
+    
+    while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
 
+        $campos = get_fields();
+        echo "<pre>";
+        var_dump($campos);
+        echo "</pre>";
+
+    endwhile; //end the while loop
+
+endif; // end of the loop. 
 /*
 TESTANDO AS FUNÇÕES DE CRON
 $wp_cron_tasks = get_option( 'cron' );
