@@ -14,6 +14,9 @@ class feedback_time{
     public function __construct(){
         add_action('init', array($this,'initCPT'));
         add_action('init', array($this,'adicionarCamposACF')); 
+        add_filter('manage_'.$this->post_slug.'_posts_columns', array($this,'criarColunasAdmin')); 
+        add_filter('manage_edit-'.$this->post_slug.'_sortable_columns', array($this,'criarColunasAdmin')); 
+        add_action('manage_'.$this->post_slug.'_posts_custom_column', array($this,'exibirColunasAdmin'),10,2); 
     }
     public function initCPT(){
         cpt::adicionarCustomPostType($this->nome_singular,$this->nome_plural, $this->post_slug);
@@ -238,6 +241,47 @@ class feedback_time{
             
             endif;
     }
+    //Mostrando os campos como colunas na lista do admin
+    public function criarColunasAdmin($columns){
+        return array_merge ( $columns, array ( 
+            'Projeto' => __ ( 'Projeto' ),
+            'frente' => __ ( 'Frente' ),
+            'de_1_a_5_quanto_a_inteligencia_de_projeto_e_informacoes_passadas_foram_suficientes_para_sua_atuacao' => __ ( 'Inteligência ajudou?' ),
+            'de_1_a_5_quanto_voce_se_sentiu_amparada_e_acompanhada_no_processo_de_desenvolvimento' => __ ( 'Se sentiu amparada?' ),
+            'de_1_a_5_quanto_o_tempo_disponivel_para_o_desenvolvimento_foi_adequado' => __ ( 'Tempo adequado?' )
+
+            ) );
+    }
+    public function exibirColunasAdmin( $column, $post_id ) {
+        switch ( $column ) {
+            case 'Projeto':
+            $projeto = get_field('Projeto',$post_id);
+            echo $projeto->post_title;
+    
+            break;
+            case 'frente':
+                $frente = get_field('frente',$post_id);
+                echo $frente;
+        
+            break;
+            case 'de_1_a_5_quanto_a_inteligencia_de_projeto_e_informacoes_passadas_foram_suficientes_para_sua_atuacao':
+                $de_1_a_5_quanto_a_inteligencia_de_projeto_e_informacoes_passadas_foram_suficientes_para_sua_atuacao = get_field('de_1_a_5_quanto_a_inteligencia_de_projeto_e_informacoes_passadas_foram_suficientes_para_sua_atuacao',$post_id);
+                echo $de_1_a_5_quanto_a_inteligencia_de_projeto_e_informacoes_passadas_foram_suficientes_para_sua_atuacao;
+        
+            break;
+            case 'de_1_a_5_quanto_voce_se_sentiu_amparada_e_acompanhada_no_processo_de_desenvolvimento':
+                $de_1_a_5_quanto_voce_se_sentiu_amparada_e_acompanhada_no_processo_de_desenvolvimento = get_field('de_1_a_5_quanto_voce_se_sentiu_amparada_e_acompanhada_no_processo_de_desenvolvimento',$post_id);
+                echo $de_1_a_5_quanto_voce_se_sentiu_amparada_e_acompanhada_no_processo_de_desenvolvimento;
+        
+            break;
+            case 'de_1_a_5_quanto_o_tempo_disponivel_para_o_desenvolvimento_foi_adequado':
+                $de_1_a_5_quanto_o_tempo_disponivel_para_o_desenvolvimento_foi_adequado = get_field('de_1_a_5_quanto_o_tempo_disponivel_para_o_desenvolvimento_foi_adequado',$post_id);
+                echo $de_1_a_5_quanto_o_tempo_disponivel_para_o_desenvolvimento_foi_adequado;
+        
+            break;
+        }
+    }
+    
 }
 
 //Criando o objeto

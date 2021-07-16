@@ -190,20 +190,7 @@ class evolucoes{
                 'label_placement' => 'left',
                 'instruction_placement' => 'label',
                 'hide_on_screen' => array(
-                    0 => 'permalink',
-                    1 => 'the_content',
-                    2 => 'excerpt',
-                    3 => 'discussion',
-                    4 => 'comments',
-                    5 => 'revisions',
-                    6 => 'slug',
-                    7 => 'author',
-                    8 => 'format',
-                    9 => 'page_attributes',
-                    10 => 'featured_image',
-                    11 => 'categories',
-                    12 => 'tags',
-                    13 => 'send-trackbacks',
+
                 ),
                 'active' => true,
                 'description' => '',
@@ -222,7 +209,8 @@ class evolucoes{
         return array_merge ( $columns, array ( 
             'oni' => __ ( 'Oni' ),
             'competencia' => __ ( 'Competência' ),
-            'lente' => __ ( 'Lente' )
+            'lente' => __ ( 'Lente' ),
+            'evidencia' => __ ( 'Evidencia' )
 
             ) );
     }
@@ -241,6 +229,13 @@ class evolucoes{
             case 'lente':
                 $lente = get_field('lente',$post_id);
                 echo $lente->post_title;
+        
+            break;
+            case 'evidencia':
+                $evidencia = get_field('evidencia',$post_id);
+                $competencia = get_field('competencia',$evidencia->ID);
+                echo get_the_title($competencia->ID);
+                echo "<a href='https://minha.oni.com.br/wp-admin/post.php?post=".$evidencia->ID."&action=edit'> Link </a>";
         
             break;
         }

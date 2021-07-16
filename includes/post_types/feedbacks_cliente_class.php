@@ -17,6 +17,9 @@ class feedbacks_cliente{
     public function __construct(){
         add_action('init', array($this,'initCPT'));
         add_action('init', array($this,'adicionarCamposACF')); 
+        add_filter('manage_'.$this->post_slug.'_posts_columns', array($this,'criarColunasAdmin')); 
+        add_filter('manage_edit-'.$this->post_slug.'_sortable_columns', array($this,'criarColunasAdmin')); 
+        add_action('manage_'.$this->post_slug.'_posts_custom_column', array($this,'exibirColunasAdmin'),10,2); 
     }
     public function initCPT(){
         cpt::adicionarCustomPostType($this->nome_singular,$this->nome_plural, $this->post_slug);
@@ -195,8 +198,43 @@ class feedbacks_cliente{
             
             endif;
     } 
+    //Mostrando os campos como colunas na lista do admin
+    public function criarColunasAdmin($columns){
+        return array_merge ( $columns, array ( 
+            'projeto' => __ ( 'Projeto' ),
+            'frente' => __ ( 'Frente' ),
+            'em_uma_escala_de_1_a_5_quanto_essa_entrega_atingiu_as_expectativas_' => __ ( 'Atingiu expectativas?' ),
+            'em_uma_escala_de_1_a_5_quanto_nossa_comunicacao_e_acompanhamento_foram_claros' => __ ( 'Comunicação clara?' ),
 
-}
+            ) );
+    }
+    public function exibirColunasAdmin( $column, $post_id ) {
+        switch ( $column ) {
+            case 'projeto':
+            $projeto = get_field('projeto',$post_id);
+            $nome_projeto = get_the_title($projeto);
+            echo $nome_projeto;
+    
+            break;
+            case 'frente':
+                $frente = get_field('frente',$post_id);
+                echo $frente;
+        
+            break;
+            case 'em_uma_escala_de_1_a_5_quanto_essa_entrega_atingiu_as_expectativas_':
+                $em_uma_escala_de_1_a_5_quanto_essa_entrega_atingiu_as_expectativas_ = get_field('em_uma_escala_de_1_a_5_quanto_essa_entrega_atingiu_as_expectativas_',$post_id);
+                echo $em_uma_escala_de_1_a_5_quanto_essa_entrega_atingiu_as_expectativas_;
+        
+            break;
+            case 'em_uma_escala_de_1_a_5_quanto_nossa_comunicacao_e_acompanhamento_foram_claros':
+                $em_uma_escala_de_1_a_5_quanto_nossa_comunicacao_e_acompanhamento_foram_claros = get_field('em_uma_escala_de_1_a_5_quanto_nossa_comunicacao_e_acompanhamento_foram_claros',$post_id);
+                echo $em_uma_escala_de_1_a_5_quanto_nossa_comunicacao_e_acompanhamento_foram_claros;
+        
+            break;
+        }
+    }
+
+}  
 
 //Criando o objeto
 $feedbacks_cliente = new feedbacks_cliente;

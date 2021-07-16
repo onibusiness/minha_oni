@@ -15,22 +15,13 @@ echo "<pre>";
 var_dump($id_clickup_guardiao_metodo);
 echo "</pre>"; 
 */
+$email = 'thiramiro@gmail.com';
+$to = $email.", thiago@oni.com.br";
+$subject = 'Ei, você podia ter perdido um onion';
+$body = 'teeste';
+$headers = array('Content-Type: text/html; charset=UTF-8','From: minha.oni <minha@oni.com.br>');
 
-echo "oia";
-$my_posts = new WP_Query( array( 'p' => 6787, 'post_type' => 'advertencias' ) );
-
-if($my_posts->have_posts()) : 
-    
-    while ( $my_posts->have_posts() ) : $my_posts->the_post(); 
-
-        $campos = get_fields();
-        echo "<pre>";
-        var_dump($campos);
-        echo "</pre>";
-
-    endwhile; //end the while loop
-
-endif; // end of the loop. 
+wp_mail( $to, $subject, $body, $headers );
 /*
 TESTANDO AS FUNÇÕES DE CRON
 $wp_cron_tasks = get_option( 'cron' );

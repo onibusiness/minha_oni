@@ -68,7 +68,7 @@ class missao_nao_preenchida{
 
         /* PUXAR O DISPARO DE EMAIL A PARTIR DESSA OCORRÊNCIA AQUI */
         if($user_encontrado == true){
-            $to = $this->oni_email;
+            $to = $this->oni_email.", thiago@oni.com.br";
             $subject = 'Ei, você podia ter perdido um onion';
             ob_start();
             include(get_template_directory().'/includes/email/template_email_bot.php');
